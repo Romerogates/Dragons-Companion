@@ -1,0 +1,52 @@
+﻿{
+  "id": "c1a55000-0009-4000-8000-000000000009",
+  "name": "Paladin",
+  "hit_die": 10,
+  "primary_ability": [ "Force", "Charisme" ],
+  "proficiencies": {
+    "armor": [ "Légère", "Intermédiaire", "Lourde", "Bouclier" ],
+    "weapons": [ "Courantes", "Guerre" ],
+    "tools": [],
+    "saving_throws": [ "Sagesse", "Charisme" ],
+    "skills": {
+      "choose_count": 2,
+      "options": [ "Athlétisme", "Discrétion", "Dressage", "Intimidation", "Intuition", "Investigation", "Médecine", "Persuasion", "Religion" ]
+    }
+  },
+  "starting_equipment": [
+    {
+      "choice_a": [ "Arme de guerre", "Bouclier" ],
+      "choice_b": [ "Deux armes de guerre" ]
+    },
+    {
+      "choice_a": [ "5 javelines" ],
+      "choice_b": [ "Arme courante de corps à corps" ]
+    },
+    {
+      "choice_a": [ "Sac de religieux" ],
+      "choice_b": [ "Sac d'aventurier" ]
+    },
+    { "fixed": [ "Cotte de mailles", "Symbole sacré" ] }
+  ],
+  "progression_table": [
+    {
+      "level": 1,
+      "prof_bonus": 2,
+      "features": [ "Perception divine", "Imposition des mains" ],
+      "spell_slots": [ 0, 0, 0, 0, 0 ]
+    },
+    {
+      "level": 2,
+      "prof_bonus": 2,
+      "features": [ "Style de combat", "Incantation", "Châtiment divin" ],
+      "spell_slots": [ 2, 0, 0, 0, 0 ]
+    },
+    {
+      "level": 3,
+      "prof_bonus": 2,
+      "features": [ "Santé divine", "Serment sacré" ],
+      "spell_slots": [ 3, 0, 0, 0, 0 ]
+    }
+  ],
+  "subclasses_available_at_level": 3
+}

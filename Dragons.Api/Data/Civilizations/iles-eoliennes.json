@@ -1,0 +1,21 @@
+﻿{
+  "id": "550e8400-e29b-41d4-a716-446655440009",
+  "name": "Éoliennes (Îles)",
+  "randomization": {
+    "dice_min": 66,
+    "dice_max": 71
+  },
+  "demographics": {
+    "primary_species": [ "Gnome des roches", "Humain" ],
+    "secondary_species": [ "Divers" ],
+    "is_cosmopolitan": false
+  },
+  "linguistics": {
+    "official_languages": [ "Gnome" ],
+    "writing_systems": [ "Cyfand" ]
+  },
+  "lore": {
+    "summary": "Archipel d'îles volantes où l'on voyage en néfélytre. Un monde de merveilles aériennes, parfois solitaire, parfois menacé par des pirates.",
+    "keywords": [ "Ciel", "Îles volantes", "Néfélytre", "Exploration", "Plan Astral" ]
+  }
+}

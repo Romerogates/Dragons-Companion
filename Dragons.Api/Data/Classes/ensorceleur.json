@@ -1,0 +1,71 @@
+﻿{
+  "id": "c1a55000-0004-4000-8000-000000000004",
+  "name": "Ensorceleur",
+  "hit_die": 6,
+  "primary_ability": [ "Charisme" ],
+  "spellcasting": {
+    "ability": "Charisme",
+    "type": "Spontaneous"
+  },
+  "proficiencies": {
+    "armor": [],
+    "weapons": [ "Arbalète légère", "Bâton", "Dague", "Fléchette", "Fronde" ],
+    "tools": [],
+    "saving_throws": [ "Constitution", "Charisme" ],
+    "skills": {
+      "choose_count": 2,
+      "options": [ "Arcanes", "Intimidation", "Intuition", "Persuasion", "Survie", "Tromperie" ]
+    }
+  },
+  "starting_equipment": [
+    {
+      "choice_a": [ "Arbalète légère", "20 carreaux" ],
+      "choice_b": [ "Arme courante" ]
+    },
+    {
+      "choice_a": [ "Sacoche à composantes" ],
+      "choice_b": [ "Focaliseur arcanique" ]
+    },
+    {
+      "choice_a": [ "Sac d'explorateur" ],
+      "choice_b": [ "Sac d'aventurier" ]
+    },
+    { "fixed": [ "Deux dagues" ] }
+  ],
+  "progression_table": [
+    {
+      "level": 1,
+      "prof_bonus": 2,
+      "features": [ "Incantation", "Atavisme" ],
+      "spell_slots": [ 2, 0, 0, 0, 0, 0, 0, 0, 0 ],
+      "class_resources": {
+        "sorcery_points": 0,
+        "cantrips_known": 4,
+        "spells_known": 2
+      }
+    },
+    {
+      "level": 2,
+      "prof_bonus": 2,
+      "features": [ "Réserve arcanique" ],
+      "spell_slots": [ 3, 0, 0, 0, 0, 0, 0, 0, 0 ],
+      "class_resources": {
+        "sorcery_points": 2,
+        "cantrips_known": 4,
+        "spells_known": 3
+      }
+    },
+    {
+      "level": 3,
+      "prof_bonus": 2,
+      "features": [ "Métamagie" ],
+      "spell_slots": [ 4, 2, 0, 0, 0, 0, 0, 0, 0 ],
+      "class_resources": {
+        "sorcery_points": 3,
+        "cantrips_known": 4,
+        "spells_known": 4
+      }
+    }
+  ],
+  "subclasses_available_at_level": 1
+}

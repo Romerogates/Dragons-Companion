@@ -1,0 +1,21 @@
+﻿{
+  "id": "550e8400-e29b-41d4-a716-446655440002",
+  "name": "Ajagar",
+  "randomization": {
+    "dice_min": 3,
+    "dice_max": 7
+  },
+  "demographics": {
+    "primary_species": [ "Humain", "Aldaron" ],
+    "secondary_species": [],
+    "is_cosmopolitan": true
+  },
+  "linguistics": {
+    "official_languages": [ "Baashan" ],
+    "writing_systems": [ "Elfique" ]
+  },
+  "lore": {
+    "summary": "Riches cités dirigées par des rajahs, prospérant grâce aux épices et joyaux. Jungles luxuriantes abritant des ruines antiques.",
+    "keywords": [ "Rajahs", "Épices", "Jungle", "Éléphants de guerre", "Sages" ]
+  }
+}

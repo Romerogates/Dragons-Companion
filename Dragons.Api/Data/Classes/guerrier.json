@@ -1,0 +1,57 @@
+﻿{
+  "id": "c1a55000-0005-4000-8000-000000000005",
+  "name": "Guerrier",
+  "hit_die": 10,
+  "primary_ability": [ "Force", "Dextérité" ],
+  "proficiencies": {
+    "armor": [ "Légère", "Intermédiaire", "Lourde", "Bouclier" ],
+    "weapons": [ "Courantes", "Guerre" ],
+    "tools": [],
+    "saving_throws": [ "Force", "Constitution" ],
+    "skills": {
+      "choose_count": 2,
+      "options": [ "Acrobaties", "Athlétisme", "Dressage", "Histoire", "Intimidation", "Intuition", "Perception", "Survie" ]
+    }
+  },
+  "starting_equipment": [
+    {
+      "choice_a": [ "Cotte de mailles" ],
+      "choice_b": [ "Armure de cuir", "Arc long", "20 flèches" ]
+    },
+    {
+      "choice_a": [ "Arme de guerre", "Bouclier" ],
+      "choice_b": [ "Deux armes de guerre" ]
+    },
+    {
+      "choice_a": [ "Arbalète légère", "20 carreaux" ],
+      "choice_b": [ "Deux hachettes" ]
+    },
+    {
+      "choice_a": [ "Sac d'explorateur" ],
+      "choice_b": [ "Sac d'aventurier" ]
+    }
+  ],
+  "progression_table": [
+    {
+      "level": 1,
+      "prof_bonus": 2,
+      "features": [ "Style de combat", "Second souffle" ]
+    },
+    {
+      "level": 2,
+      "prof_bonus": 2,
+      "features": [ "Fougue (1/repos)" ]
+    },
+    {
+      "level": 3,
+      "prof_bonus": 2,
+      "features": [ "Archétype martial" ]
+    },
+    {
+      "level": 5,
+      "prof_bonus": 3,
+      "features": [ "Attaque supplémentaire" ]
+    }
+  ],
+  "subclasses_available_at_level": 3
+}

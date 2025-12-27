@@ -1,0 +1,51 @@
+﻿{
+  "id": "c1a55000-0003-4000-8000-000000000003",
+  "name": "Druide",
+  "hit_die": 8,
+  "primary_ability": [ "Sagesse" ],
+  "spellcasting": {
+    "ability": "Sagesse",
+    "type": "Prepared"
+  },
+  "proficiencies": {
+    "armor": [ "Légère (non-métal)", "Intermédiaire (non-métal)", "Bouclier (non-métal)" ],
+    "weapons": [ "Bâton", "Cimeterre", "Dague", "Faucille", "Fléchette", "Fronde", "Gourdin", "Javeline", "Lance", "Masse d'armes" ],
+    "tools": [ "Nécessaire d'herboristerie" ],
+    "saving_throws": [ "Intelligence", "Sagesse" ],
+    "skills": {
+      "choose_count": 2,
+      "options": [ "Arcanes", "Dressage", "Intuition", "Histoire", "Médecine", "Nature", "Perception", "Religion", "Survie" ]
+    }
+  },
+  "starting_equipment": [
+    {
+      "choice_a": [ "Bouclier de bois" ],
+      "choice_b": [ "Arme courante" ]
+    },
+    {
+      "choice_a": [ "Cimeterre" ],
+      "choice_b": [ "Arme courante de corps à corps" ]
+    },
+    { "fixed": [ "Armure de cuir", "Sac d'aventurier", "Focaliseur druidique" ] }
+  ],
+  "progression_table": [
+    {
+      "level": 1,
+      "prof_bonus": 2,
+      "features": [ "Druidique", "Incantation" ],
+      "spell_slots": [ 2, 0, 0, 0, 0, 0, 0, 0, 0 ],
+      "class_resources": { "cantrips_known": 2 }
+    },
+    {
+      "level": 2,
+      "prof_bonus": 2,
+      "features": [ "Forme animale", "Cercle druidique" ],
+      "spell_slots": [ 3, 0, 0, 0, 0, 0, 0, 0, 0 ],
+      "class_resources": {
+        "cantrips_known": 2,
+        "wild_shape_cr": 0.25
+      }
+    }
+  ],
+  "subclasses_available_at_level": 2
+}

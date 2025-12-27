@@ -1,0 +1,46 @@
+<!-- components/language-detail/language-detail.component.html -->
+<div class="language-detail-container">
+  <a routerLink="/languages" class="back-link">← Retour aux langues</a>
+
+  @if (loading) {
+  <div class="loading">Chargement...</div>
+  } @else if (language) {
+  <header class="language-header" [class]="getCategoryClass(language.category)">
+    <span class="language-icon">{{ getCategoryIcon(language.category) }}</span>
+    <div class="language-title">
+      <h1>{{ language.name }}</h1>
+      <span class="category-badge">{{ language.category }}</span>
+    </div>
+  </header>
+
+  <div class="content-grid">
+    <!-- Lore -->
+    <section class="card lore-card">
+      <h2>📖 Description</h2>
+      <p class="lore-text">{{ language.lore }}</p>
+    </section>
+
+    <!-- Scripts -->
+    <section class="card scripts-card">
+      <h2>✍️ Systèmes d'écriture</h2>
+      <div class="tags">
+        @for (script of language.scripts; track script) {
+        <span class="tag script">{{ script }}</span>
+        }
+      </div>
+    </section>
+
+    <!-- Locuteurs -->
+    <section class="card speakers-card">
+      <h2>👥 Locuteurs typiques</h2>
+      <div class="tags">
+        @for (speaker of language.typicalSpeakers; track speaker) {
+        <span class="tag speaker">{{ speaker }}</span>
+        }
+      </div>
+    </section>
+  </div>
+  } @else {
+  <div class="error">Langue non trouvée</div>
+  }
+</div>

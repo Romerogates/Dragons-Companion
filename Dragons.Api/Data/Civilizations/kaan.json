@@ -1,0 +1,21 @@
+﻿{
+  "id": "550e8400-e29b-41d4-a716-446655440011",
+  "name": "Kaan",
+  "randomization": {
+    "dice_min": 73,
+    "dice_max": 76
+  },
+  "demographics": {
+    "primary_species": [ "Humain", "Merosi", "Orc", "Gobelin", "Gobelours" ],
+    "secondary_species": [ "Hobgobelin", "Kobold", "Ulkani" ],
+    "is_cosmopolitan": false
+  },
+  "linguistics": {
+    "official_languages": [ "Kaani", "Gobelin" ],
+    "writing_systems": [ "Santak" ]
+  },
+  "lore": {
+    "summary": "Immense steppe de clans guerriers. Patrie des Hordes conquérantes menées par des chefs charismatiques comme le légendaire Tamerakh.",
+    "keywords": [ "Steppe", "Guerre", "Horde", "Conquête", "Clans" ]
+  }
+}

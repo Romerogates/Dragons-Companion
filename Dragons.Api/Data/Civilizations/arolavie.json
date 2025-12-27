@@ -1,0 +1,21 @@
+﻿{
+  "id": "550e8400-e29b-41d4-a716-446655440003",
+  "name": "Arolavie",
+  "randomization": {
+    "dice_min": 8,
+    "dice_max": 12
+  },
+  "demographics": {
+    "primary_species": [ "Humain", "Nain gardien", "Aldaron" ],
+    "secondary_species": [],
+    "is_cosmopolitan": false
+  },
+  "linguistics": {
+    "official_languages": [ "Arolave" ],
+    "writing_systems": [ "Cyfand" ]
+  },
+  "lore": {
+    "summary": "Royaume forestier mystérieux dirigé par une dynastie de reines guerrières. Protégé par la garde lunaire et des pactes druidiques.",
+    "keywords": [ "Forêt", "Reines", "Druides", "Garde lunaire", "Frontière" ]
+  }
+}

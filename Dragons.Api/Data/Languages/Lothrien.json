@@ -1,0 +1,8 @@
+{
+  "id": "01a55e00-b00d-4b10-8000-000000000013",
+  "name": "Lothrien",
+  "category": "Base",
+  "scripts": ["Cyfand"],
+  "typical_speakers": ["Lothrienne"],
+  "lore": "Langue d'un royaume féodal rude et superstitieux."
+}

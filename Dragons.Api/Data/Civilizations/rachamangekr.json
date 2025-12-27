@@ -1,0 +1,21 @@
+﻿{
+  "id": "550e8400-e29b-41d4-a716-446655440014",
+  "name": "Rachamangekr",
+  "randomization": {
+    "dice_min": 89,
+    "dice_max": 89
+  },
+  "demographics": {
+    "primary_species": [ "Drakéide", "Humain" ],
+    "secondary_species": [ "Tous (Grandes villes)" ],
+    "is_cosmopolitan": false
+  },
+  "linguistics": {
+    "official_languages": [ "Karphûd" ],
+    "writing_systems": [ "Elfique adapté", "Draconique" ]
+  },
+  "lore": {
+    "summary": "Puissant royaume dirigé par une noblesse drakéide suivant la loi du dragon. Paysages tropicaux et lutte contre les dragons-tortues.",
+    "keywords": [ "Drakéides", "Loi du dragon", "Jungle", "Voyageurs", "Tradition" ]
+  }
+}

@@ -1,0 +1,8 @@
+{
+  "id": "01a55e00-b007-4b10-8000-000000000007",
+  "name": "Gnome",
+  "category": "Base",
+  "scripts": ["Cyfand"],
+  "typical_speakers": ["Gnomes", "Archipel éolien"],
+  "lore": "Langue des inventeurs et des voyageurs des îles volantes."
+}

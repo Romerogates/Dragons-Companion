@@ -1,0 +1,26 @@
+﻿{
+  "id": "a1b2c3d4-e5f6-4a7b-8c9d-000000000006",
+  "name": "Humain",
+  "base_stats": {
+    "ability_bonuses": {
+      "force": 1,
+      "dexterite": 1,
+      "constitution": 1,
+      "intelligence": 1,
+      "sagesse": 1,
+      "charisme": 1
+    },
+    "speed_meters": 9.0,
+    "size_category": "M",
+    "has_darkvision": false,
+    "darkvision_radius_meters": 0
+  },
+  "traits": [
+    {
+      "name": "Adaptabilité",
+      "description": "Apprentissage des langues et outils en deux fois moins de temps (test d'Int)."
+    }
+  ],
+  "languages": [ "Commun", "Choix 1", "Choix 2" ],
+  "subspecies": []
+}

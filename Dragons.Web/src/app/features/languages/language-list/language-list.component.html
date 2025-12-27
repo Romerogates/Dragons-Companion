@@ -1,0 +1,32 @@
+<!-- components/language-list/language-list.component.html -->
+<div class="language-container">
+  <h1>Langues</h1>
+
+  @if (loading) {
+  <div class="loading">Chargement des langues...</div>
+  } @else { @for (category of getCategories(); track category) { @if
+  (getLanguagesByCategory(category).length > 0) {
+  <section class="category-section">
+    <h2 class="category-title" [class]="getCategoryClass(category)">
+      {{ getCategoryIcon(category) }} Langues {{ category }}s
+    </h2>
+    <div class="language-grid">
+      @for (lang of getLanguagesByCategory(category); track lang.id) {
+      <a
+        [routerLink]="['/languages', lang.id]"
+        class="language-card"
+        [class]="getCategoryClass(lang.category)"
+      >
+        <div class="language-icon">{{ getCategoryIcon(lang.category) }}</div>
+        <div class="language-info">
+          <h3>{{ lang.name }}</h3>
+          <span class="category-badge" [class]="getCategoryClass(lang.category)">
+            {{ lang.category }}
+          </span>
+        </div>
+      </a>
+      }
+    </div>
+  </section>
+  } } }
+</div>

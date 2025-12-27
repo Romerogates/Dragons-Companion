@@ -1,0 +1,21 @@
+﻿{
+  "id": "550e8400-e29b-41d4-a716-446655440006",
+  "name": "Cyrillane",
+  "randomization": {
+    "dice_min": 44,
+    "dice_max": 53
+  },
+  "demographics": {
+    "primary_species": [ "Humain", "Nain bâtisseur", "Gnome des roches" ],
+    "secondary_species": [ "Tous (Grandes villes)" ],
+    "is_cosmopolitan": false
+  },
+  "linguistics": {
+    "official_languages": [ "Cyrillan" ],
+    "writing_systems": [ "Cyfand" ]
+  },
+  "lore": {
+    "summary": "Ancien empire rival de la Cité Franche, effondré et déchiré par la guerre civile, la corruption et les factions sectaires.",
+    "keywords": [ "Empire déchu", "Guerre civile", "Corruption", "Liche", "Dragons noirs" ]
+  }
+}

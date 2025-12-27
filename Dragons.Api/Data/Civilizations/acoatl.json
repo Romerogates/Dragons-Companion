@@ -1,0 +1,21 @@
+﻿{
+  "id": "550e8400-e29b-41d4-a716-446655440001",
+  "name": "Acoatl",
+  "randomization": {
+    "dice_min": 1,
+    "dice_max": 2
+  },
+  "demographics": {
+    "primary_species": [ "Humain", "Aldaron", "Halfelin pied-sûr" ],
+    "secondary_species": [ "Divers (Comptoirs)" ],
+    "is_cosmopolitan": false
+  },
+  "linguistics": {
+    "official_languages": [ "Runasimi" ],
+    "writing_systems": [ "Culture orale" ]
+  },
+  "lore": {
+    "summary": "Contrée méconnue et inexplorée derrière des montagnes volcaniques. Connue pour ses ruines, son or et ses dangers (moustiques, caïmans).",
+    "keywords": [ "Jungle", "Volcan", "Ruines", "Exploration", "Dragons" ]
+  }
+}

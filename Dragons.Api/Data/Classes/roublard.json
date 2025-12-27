@@ -1,0 +1,53 @@
+﻿{
+  "id": "c1a55000-000c-4000-8000-000000000012",
+  "name": "Roublard",
+  "hit_die": 8,
+  "primary_ability": [ "Dextérité" ],
+  "proficiencies": {
+    "armor": [ "Légère" ],
+    "weapons": [ "Courantes", "Arbalète de poing", "Épée longue", "Rapière", "Épée courte" ],
+    "tools": [ "Outils de voleur" ],
+    "saving_throws": [ "Dextérité", "Intelligence" ],
+    "skills": {
+      "choose_count": 4,
+      "options": [ "Acrobaties", "Athlétisme", "Discrétion", "Escamotage", "Intimidation", "Intuition", "Investigation", "Perception", "Persuasion", "Représentation", "Tromperie" ]
+    }
+  },
+  "starting_equipment": [
+    {
+      "choice_a": [ "Rapière" ],
+      "choice_b": [ "Épée courte" ]
+    },
+    {
+      "choice_a": [ "Arc court", "Carquois (20 flèches)" ],
+      "choice_b": [ "Épée courte" ]
+    },
+    {
+      "choice_a": [ "Sac de cambrioleur" ],
+      "choice_b": [ "Sac d'explorateur" ],
+      "choice_c": [ "Sac d'aventurier" ]
+    },
+    { "fixed": [ "Armure de cuir", "Deux dagues", "Outils de voleur" ] }
+  ],
+  "progression_table": [
+    {
+      "level": 1,
+      "prof_bonus": 2,
+      "features": [ "Expertise", "Attaque sournoise", "Jargon des voleurs" ],
+      "class_resources": { "sneak_attack_die": "1d6" }
+    },
+    {
+      "level": 2,
+      "prof_bonus": 2,
+      "features": [ "Ruse" ],
+      "class_resources": { "sneak_attack_die": "1d6" }
+    },
+    {
+      "level": 3,
+      "prof_bonus": 2,
+      "features": [ "Archétype de roublard" ],
+      "class_resources": { "sneak_attack_die": "2d6" }
+    }
+  ],
+  "subclasses_available_at_level": 3
+}

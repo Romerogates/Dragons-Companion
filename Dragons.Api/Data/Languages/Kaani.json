@@ -1,0 +1,8 @@
+{
+  "id": "01a55e00-b00a-4b10-8000-000000000010",
+  "name": "Kaani",
+  "category": "Base",
+  "scripts": ["Santak"],
+  "typical_speakers": ["Empire Kaan", "Orcs"],
+  "lore": "Langue des steppes et des conquérants."
+}

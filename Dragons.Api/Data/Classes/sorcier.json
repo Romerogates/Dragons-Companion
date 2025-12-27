@@ -1,0 +1,73 @@
+﻿{
+  "id": "c1a55000-000d-4000-8000-000000000013",
+  "name": "Sorcier",
+  "hit_die": 8,
+  "primary_ability": [ "Charisme" ],
+  "spellcasting": {
+    "ability": "Charisme",
+    "type": "Pact Magic"
+  },
+  "proficiencies": {
+    "armor": [ "Légère" ],
+    "weapons": [ "Courantes" ],
+    "tools": [],
+    "saving_throws": [ "Sagesse", "Charisme" ],
+    "skills": {
+      "choose_count": 2,
+      "options": [ "Arcanes", "Histoire", "Intimidation", "Investigation", "Nature", "Religion", "Tromperie" ]
+    }
+  },
+  "starting_equipment": [
+    {
+      "choice_a": [ "Arbalète légère", "20 carreaux" ],
+      "choice_b": [ "Arme courante" ]
+    },
+    {
+      "choice_a": [ "Sacoche à composantes" ],
+      "choice_b": [ "Focaliseur arcanique" ]
+    },
+    {
+      "choice_a": [ "Sac d'érudit" ],
+      "choice_b": [ "Sac d'aventurier" ]
+    },
+    { "fixed": [ "Armure de cuir", "Arme courante", "Deux dagues" ] }
+  ],
+  "progression_table": [
+    {
+      "level": 1,
+      "prof_bonus": 2,
+      "features": [ "Patron d'outre-monde", "Magie de pacte" ],
+      "class_resources": {
+        "cantrips_known": 2,
+        "spells_known": 2,
+        "spell_slots": 1,
+        "slot_level": 1
+      }
+    },
+    {
+      "level": 2,
+      "prof_bonus": 2,
+      "features": [ "Manifestations occultes" ],
+      "class_resources": {
+        "cantrips_known": 2,
+        "spells_known": 3,
+        "spell_slots": 2,
+        "slot_level": 1,
+        "invocations_known": 2
+      }
+    },
+    {
+      "level": 3,
+      "prof_bonus": 2,
+      "features": [ "Pacte" ],
+      "class_resources": {
+        "cantrips_known": 2,
+        "spells_known": 4,
+        "spell_slots": 2,
+        "slot_level": 2,
+        "invocations_known": 2
+      }
+    }
+  ],
+  "subclasses_available_at_level": 1
+}

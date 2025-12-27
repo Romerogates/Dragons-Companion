@@ -1,0 +1,57 @@
+﻿{
+  "id": "c1a55000-000a-4000-8000-000000000010",
+  "name": "Prêtre",
+  "hit_die": 8,
+  "primary_ability": [ "Sagesse" ],
+  "spellcasting": {
+    "ability": "Sagesse",
+    "type": "Prepared"
+  },
+  "proficiencies": {
+    "armor": [ "Légère", "Intermédiaire", "Bouclier" ],
+    "weapons": [ "Courantes" ],
+    "tools": [],
+    "saving_throws": [ "Sagesse", "Charisme" ],
+    "skills": {
+      "choose_count": 2,
+      "options": [ "Histoire", "Intuition", "Médecine", "Persuasion", "Religion" ]
+    }
+  },
+  "starting_equipment": [
+    {
+      "choice_a": [ "Masse d'armes" ],
+      "choice_b": [ "Marteau de guerre (si maîtrise)" ]
+    },
+    {
+      "choice_a": [ "Armure d'écailles" ],
+      "choice_b": [ "Armure de cuir" ],
+      "choice_c": [ "Cotte de mailles (si maîtrise)" ]
+    },
+    {
+      "choice_a": [ "Arbalète légère", "20 carreaux" ],
+      "choice_b": [ "Arme courante" ]
+    },
+    {
+      "choice_a": [ "Sac de religieux" ],
+      "choice_b": [ "Sac d'aventurier" ]
+    },
+    { "fixed": [ "Bouclier", "Symbole sacré" ] }
+  ],
+  "progression_table": [
+    {
+      "level": 1,
+      "prof_bonus": 2,
+      "features": [ "Incantation", "Domaine divin" ],
+      "spell_slots": [ 2, 0, 0, 0, 0, 0, 0, 0, 0 ],
+      "class_resources": { "cantrips_known": 3 }
+    },
+    {
+      "level": 2,
+      "prof_bonus": 2,
+      "features": [ "Conduit divin (1/repos)", "Aptitude de domaine" ],
+      "spell_slots": [ 3, 0, 0, 0, 0, 0, 0, 0, 0 ],
+      "class_resources": { "cantrips_known": 3 }
+    }
+  ],
+  "subclasses_available_at_level": 1
+}

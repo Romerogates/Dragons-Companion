@@ -1,0 +1,26 @@
+﻿{
+  "id": "a1b2c3d4-e5f6-4a7b-8c9d-000000000009",
+  "name": "Tieffelin",
+  "base_stats": {
+    "ability_bonuses": {
+      "charisme": 2,
+      "intelligence": 1
+    },
+    "speed_meters": 9.0,
+    "size_category": "M",
+    "has_darkvision": true,
+    "darkvision_radius_meters": 18
+  },
+  "traits": [
+    {
+      "name": "Résistance fiélonne",
+      "description": "Résistance aux dégâts de feu."
+    },
+    {
+      "name": "Héritier des ténèbres",
+      "description": "Connaît Thaumaturgie (niv 1), Réprimande maléfique (niv 3), Ténèbres (niv 5). Carac: Cha."
+    }
+  ],
+  "languages": [ "Commun", "Infernal (ou Abyssal)" ],
+  "subspecies": []
+}

@@ -1,0 +1,21 @@
+﻿{
+  "id": "550e8400-e29b-41d4-a716-446655440012",
+  "name": "Lothrienne",
+  "randomization": {
+    "dice_min": 77,
+    "dice_max": 82
+  },
+  "demographics": {
+    "primary_species": [ "Humain", "Nain bâtisseur" ],
+    "secondary_species": [ "Aldaron", "Sidhe" ],
+    "is_cosmopolitan": false
+  },
+  "linguistics": {
+    "official_languages": [ "Lothrien" ],
+    "writing_systems": [ "Cyfand" ]
+  },
+  "lore": {
+    "summary": "Royaume féodal rude où la magie est faible et crainte. Les seigneurs luttent pour leur survie face aux intrigues et à la maladie du sommeil.",
+    "keywords": [ "Féodalité", "Moyen-âge", "Superstition", "Maladie", "Fées" ]
+  }
+}

@@ -1,0 +1,19 @@
+<!-- components/civilization-list/civilization-list.component.html -->
+<div class="civilization-container">
+  <h1>Civilisations</h1>
+
+  @if (loading) {
+  <div class="loading">Chargement des civilisations...</div>
+  } @else {
+  <div class="civilization-grid">
+    @for (civ of civilizations; track civ.id) {
+    <a [routerLink]="['/civilizations', civ.id]" class="civilization-card">
+      <div class="civilization-icon">{{ getIcon(civ.name) }}</div>
+      <div class="civilization-info">
+        <h2>{{ civ.name }}</h2>
+      </div>
+    </a>
+    }
+  </div>
+  }
+</div>

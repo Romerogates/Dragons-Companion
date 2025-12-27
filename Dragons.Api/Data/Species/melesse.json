@@ -1,0 +1,27 @@
+﻿{
+  "id": "a1b2c3d4-e5f6-4a7b-8c9d-000000000007",
+  "name": "Melessë (Demi-elfe)",
+  "base_stats": {
+    "ability_bonuses": {
+      "charisme": 2,
+      "choix_1": 1,
+      "choix_2": 1
+    },
+    "speed_meters": 9.0,
+    "size_category": "M",
+    "has_darkvision": true,
+    "darkvision_radius_meters": 18
+  },
+  "traits": [
+    {
+      "name": "Héritage féerique",
+      "description": "Avantage aux JS contre les charmes, immunité au sommeil magique."
+    },
+    {
+      "name": "Polyvalence",
+      "description": "Maîtrise de 2 compétences au choix et 1 outil/véhicule au choix."
+    }
+  ],
+  "languages": [ "Commun", "Elfique", "Choix 1", "Choix 2" ],
+  "subspecies": []
+}

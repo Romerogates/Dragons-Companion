@@ -1,0 +1,58 @@
+﻿{
+  "id": "c1a55000-0006-4000-8000-000000000006",
+  "name": "Lettré",
+  "hit_die": 8,
+  "primary_ability": [ "Intelligence" ],
+  "proficiencies": {
+    "armor": [ "Légère" ],
+    "weapons": [ "Dague", "Bâton", "Deux armes au choix" ],
+    "tools": [ "Trois outils au choix" ],
+    "saving_throws": [ "Intelligence", "Sagesse" ],
+    "skills": {
+      "choose_count": 3,
+      "options": [ "Au choix" ]
+    }
+  },
+  "starting_equipment": [
+    { "fixed": [ "Une arme maîtrisée", "Un outil maîtrisé", "Armure de cuir" ] },
+    {
+      "choice_a": [ "Un outil maîtrisé" ],
+      "choice_b": [ "Une arme maîtrisée" ]
+    },
+    {
+      "choice_a": [ "Sac d'érudit" ],
+      "choice_b": [ "Sac d'aventurier" ],
+      "choice_c": [ "Sac de diplomate" ]
+    }
+  ],
+  "progression_table": [
+    {
+      "level": 1,
+      "prof_bonus": 2,
+      "features": [ "Besace à astuces" ],
+      "class_resources": {
+        "trick_points": 4,
+        "tricks_known": 3
+      }
+    },
+    {
+      "level": 2,
+      "prof_bonus": 2,
+      "features": [ "Don" ],
+      "class_resources": {
+        "trick_points": 5,
+        "tricks_known": 3
+      }
+    },
+    {
+      "level": 3,
+      "prof_bonus": 2,
+      "features": [ "Marotte", "Conquête méthodique", "Spécialiste" ],
+      "class_resources": {
+        "trick_points": 5,
+        "tricks_known": 3
+      }
+    }
+  ],
+  "subclasses_available_at_level": 3
+}

@@ -1,0 +1,57 @@
+﻿{
+  "id": "c1a55000-000b-4000-8000-000000000011",
+  "name": "Rôdeur",
+  "hit_die": 10,
+  "primary_ability": [ "Dextérité", "Sagesse" ],
+  "spellcasting": {
+    "ability": "Sagesse",
+    "type": "Spontaneous"
+  },
+  "proficiencies": {
+    "armor": [ "Légère", "Intermédiaire", "Bouclier" ],
+    "weapons": [ "Courantes", "Guerre" ],
+    "tools": [],
+    "saving_throws": [ "Force", "Dextérité" ],
+    "skills": {
+      "choose_count": 3,
+      "options": [ "Athlétisme", "Discrétion", "Dressage", "Intuition", "Investigation", "Nature", "Perception", "Survie" ]
+    }
+  },
+  "starting_equipment": [
+    {
+      "choice_a": [ "Armure d'écailles" ],
+      "choice_b": [ "Armure de cuir" ]
+    },
+    {
+      "choice_a": [ "Deux épées courtes" ],
+      "choice_b": [ "Deux armes courantes de corps à corps" ]
+    },
+    {
+      "choice_a": [ "Sac d'explorateur" ],
+      "choice_b": [ "Sac d'aventurier" ]
+    },
+    { "fixed": [ "Arc long", "Carquois (20 flèches)" ] }
+  ],
+  "progression_table": [
+    {
+      "level": 1,
+      "prof_bonus": 2,
+      "features": [ "Ennemi juré", "Explorateur-né" ]
+    },
+    {
+      "level": 2,
+      "prof_bonus": 2,
+      "features": [ "Style de combat", "Incantation" ],
+      "spell_slots": [ 2, 0, 0, 0, 0 ],
+      "class_resources": { "spells_known": 2 }
+    },
+    {
+      "level": 3,
+      "prof_bonus": 2,
+      "features": [ "Archétype de rôdeur", "Vigilance primitive" ],
+      "spell_slots": [ 3, 0, 0, 0, 0 ],
+      "class_resources": { "spells_known": 3 }
+    }
+  ],
+  "subclasses_available_at_level": 3
+}

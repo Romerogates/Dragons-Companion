@@ -1,0 +1,52 @@
+﻿{
+  "id": "c1a55000-0007-4000-8000-000000000007",
+  "name": "Magicien",
+  "hit_die": 6,
+  "primary_ability": [ "Intelligence" ],
+  "spellcasting": {
+    "ability": "Intelligence",
+    "type": "Prepared/Book"
+  },
+  "proficiencies": {
+    "armor": [],
+    "weapons": [ "Arbalète légère", "Bâton", "Dague", "Fléchette", "Fronde" ],
+    "tools": [ "Un outil au choix (Calligraphe, Alchimiste, Cartographe)" ],
+    "saving_throws": [ "Intelligence", "Sagesse" ],
+    "skills": {
+      "choose_count": 2,
+      "options": [ "Arcanes", "Histoire", "Intuition", "Investigation", "Médecine", "Nature", "Religion" ]
+    }
+  },
+  "starting_equipment": [
+    {
+      "choice_a": [ "Bâton" ],
+      "choice_b": [ "Dague" ]
+    },
+    {
+      "choice_a": [ "Sacoche à composantes" ],
+      "choice_b": [ "Focaliseur arcanique" ]
+    },
+    {
+      "choice_a": [ "Sac d'érudit" ],
+      "choice_b": [ "Sac d'aventurier" ]
+    },
+    { "fixed": [ "Grimoire" ] }
+  ],
+  "progression_table": [
+    {
+      "level": 1,
+      "prof_bonus": 2,
+      "features": [ "Incantation", "Récupération arcanique" ],
+      "spell_slots": [ 2, 0, 0, 0, 0, 0, 0, 0, 0 ],
+      "class_resources": { "cantrips_known": 3 }
+    },
+    {
+      "level": 2,
+      "prof_bonus": 2,
+      "features": [ "Tradition arcanique" ],
+      "spell_slots": [ 3, 0, 0, 0, 0, 0, 0, 0, 0 ],
+      "class_resources": { "cantrips_known": 3 }
+    }
+  ],
+  "subclasses_available_at_level": 2
+}

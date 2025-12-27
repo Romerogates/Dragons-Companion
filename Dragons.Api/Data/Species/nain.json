@@ -1,0 +1,68 @@
+﻿{
+  "id": "a1b2c3d4-e5f6-4a7b-8c9d-000000000002",
+  "name": "Nain",
+  "base_stats": {
+    "ability_bonuses": {
+      "constitution": 2
+    },
+    "speed_meters": 7.5,
+    "size_category": "M",
+    "has_darkvision": true,
+    "darkvision_radius_meters": 18
+  },
+  "traits": [
+    {
+      "name": "Résistance naine",
+      "description": "Avantage aux JS contre le poison et résistance aux dégâts de poison."
+    },
+    {
+      "name": "Formation martiale naine",
+      "description": "Maîtrise des hachettes, haches d'armes, marteaux légers et marteaux de guerre."
+    },
+    {
+      "name": "Sens de la pierre",
+      "description": "Expertise en Histoire sur l'origine des travaux de maçonnerie."
+    }
+  ],
+  "languages": [ "Commun", "Nain" ],
+  "subspecies": [
+    {
+      "id": "a1b2c3d4-e5f6-4a7b-8c9d-000000000021",
+      "name": "Nain gardien",
+      "additional_stats": {
+        "ability_bonuses": {
+          "sagesse": 1
+        }
+      },
+      "additional_traits": [
+        {
+          "name": "Gardien",
+          "description": "Maîtrise des boucliers."
+        },
+        {
+          "name": "Résistance à la corruption",
+          "description": "Avantage aux JS contre la folie et les sorts corrompus."
+        }
+      ]
+    },
+    {
+      "id": "a1b2c3d4-e5f6-4a7b-8c9d-000000000022",
+      "name": "Nain bâtisseur",
+      "additional_stats": {
+        "ability_bonuses": {
+          "intelligence": 1
+        }
+      },
+      "additional_traits": [
+        {
+          "name": "Maître artisan",
+          "description": "Avantage aux tests d'outils maîtrisés."
+        },
+        {
+          "name": "Robustesse naine",
+          "description": "+1 PV max par niveau."
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,21 @@
+﻿{
+  "id": "550e8400-e29b-41d4-a716-446655440013",
+  "name": "Mibu",
+  "randomization": {
+    "dice_min": 83,
+    "dice_max": 88
+  },
+  "demographics": {
+    "primary_species": [ "Humain" ],
+    "secondary_species": [ "Divers (Comptoirs)" ],
+    "is_cosmopolitan": false
+  },
+  "linguistics": {
+    "official_languages": [ "Inkulomo" ],
+    "writing_systems": [ "Tumiit", "Cyfand", "Abjad kalam" ]
+  },
+  "lore": {
+    "summary": "Continent tropical aux richesses immenses (or, diamant). Partagé entre grands royaumes, tribus et cités exploitant l'esclavage.",
+    "keywords": [ "Savane", "Richesse", "Esclavage", "Reines immortelles", "Géants" ]
+  }
+}

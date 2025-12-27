@@ -1,0 +1,41 @@
+﻿{
+  "id": "a1b2c3d4-e5f6-4a7b-8c9d-000000000004",
+  "name": "Gnome",
+  "base_stats": {
+    "ability_bonuses": {
+      "intelligence": 2
+    },
+    "speed_meters": 7.5,
+    "size_category": "P",
+    "has_darkvision": true,
+    "darkvision_radius_meters": 18
+  },
+  "traits": [
+    {
+      "name": "Ruse gnome",
+      "description": "Avantage aux JS Int, Sag et Cha contre la magie."
+    }
+  ],
+  "languages": [ "Commun", "Gnome" ],
+  "subspecies": [
+    {
+      "id": "a1b2c3d4-e5f6-4a7b-8c9d-000000000041",
+      "name": "Gnome des roches",
+      "additional_stats": {
+        "ability_bonuses": {
+          "dexterite": 1
+        }
+      },
+      "additional_traits": [
+        {
+          "name": "Artificier",
+          "description": "Expertise en Histoire pour les objets technologiques/magiques."
+        },
+        {
+          "name": "Bricoleur",
+          "description": "Peut fabriquer des petits dispositifs mécaniques (jouet, allumeur, boîte à musique)."
+        }
+      ]
+    }
+  ]
+}

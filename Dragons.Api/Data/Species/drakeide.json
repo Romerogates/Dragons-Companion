@@ -1,0 +1,34 @@
+﻿{
+  "id": "a1b2c3d4-e5f6-4a7b-8c9d-000000000001",
+  "name": "Drakéide",
+  "base_stats": {
+    "ability_bonuses": {
+      "force": 2,
+      "charisme": 1
+    },
+    "speed_meters": 9.0,
+    "size_category": "M",
+    "has_darkvision": false,
+    "darkvision_radius_meters": 0
+  },
+  "traits": [
+    {
+      "name": "Héritage draconique",
+      "description": "Définit le type de souffle et la résistance (voir table des dragons)."
+    },
+    {
+      "name": "Souffle",
+      "description": "Action pour exhaler une énergie destructrice (2d6 dégâts, JS pour moitié). Recharge après repos court/long."
+    },
+    {
+      "name": "Résistance aux dégâts",
+      "description": "Résistance au type de dégâts associé à l'héritage."
+    },
+    {
+      "name": "Souvenir des Anciens",
+      "description": "Maîtrise intuitive des artefacts des Anciens."
+    }
+  ],
+  "languages": [ "Commun", "Draconique" ],
+  "subspecies": []
+}

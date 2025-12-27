@@ -1,0 +1,64 @@
+﻿{
+  "id": "a1b2c3d4-e5f6-4a7b-8c9d-000000000005",
+  "name": "Halfelin",
+  "base_stats": {
+    "ability_bonuses": {
+      "dexterite": 2
+    },
+    "speed_meters": 7.5,
+    "size_category": "P",
+    "has_darkvision": false,
+    "darkvision_radius_meters": 0
+  },
+  "traits": [
+    {
+      "name": "Chanceux",
+      "description": "Peut relancer un 1 naturel aux d20 (attaque, caractéristique, JS)."
+    },
+    {
+      "name": "Vaillant",
+      "description": "Avantage aux JS contre la peur."
+    },
+    {
+      "name": "Agilité halfeline",
+      "description": "Peut traverser l'espace d'une créature de taille supérieure."
+    }
+  ],
+  "languages": [ "Commun", "Halfelin" ],
+  "subspecies": [
+    {
+      "id": "a1b2c3d4-e5f6-4a7b-8c9d-000000000051",
+      "name": "Pied-léger",
+      "additional_stats": {
+        "ability_bonuses": {
+          "charisme": 1
+        }
+      },
+      "additional_traits": [
+        {
+          "name": "Discrétion naturelle",
+          "description": "Peut se cacher derrière une créature plus grande."
+        }
+      ]
+    },
+    {
+      "id": "a1b2c3d4-e5f6-4a7b-8c9d-000000000052",
+      "name": "Pied-sûr",
+      "additional_stats": {
+        "ability_bonuses": {
+          "constitution": 1
+        }
+      },
+      "additional_traits": [
+        {
+          "name": "Harmonie sauvage",
+          "description": "Maîtrise de la compétence Survie."
+        },
+        {
+          "name": "Guerre tribale",
+          "description": "Maîtrise arc court, filet, lance, sarbacane."
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,21 @@
+﻿{
+  "id": "550e8400-e29b-41d4-a716-446655440004",
+  "name": "Barbaresques (Îles)",
+  "randomization": {
+    "dice_min": 13,
+    "dice_max": 22
+  },
+  "demographics": {
+    "primary_species": [ "Tous" ],
+    "secondary_species": [],
+    "is_cosmopolitan": true
+  },
+  "linguistics": {
+    "official_languages": [ "Kalam" ],
+    "writing_systems": [ "Abjad kalam" ]
+  },
+  "lore": {
+    "summary": "Archipel de pirates, corsaires et flibustiers. Économie prédatrice basée sur la piraterie et l'esclavage, cachant des rites étranges.",
+    "keywords": [ "Pirates", "Îles", "Esclavage", "Cités-États", "Mystère" ]
+  }
+}

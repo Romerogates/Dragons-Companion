@@ -1,0 +1,21 @@
+﻿{
+  "id": "550e8400-e29b-41d4-a716-446655440007",
+  "name": "Drakenbergen",
+  "randomization": {
+    "dice_min": 54,
+    "dice_max": 62
+  },
+  "demographics": {
+    "primary_species": [ "Humain", "Nain bâtisseur", "Gnome des roches", "Halfelin pied-léger" ],
+    "secondary_species": [ "Nain gardien (Mines)", "Kobold", "Gobelin" ],
+    "is_cosmopolitan": false
+  },
+  "linguistics": {
+    "official_languages": [ "Cyfand", "Nain" ],
+    "writing_systems": [ "Cyfand", "Runique" ]
+  },
+  "lore": {
+    "summary": "Vaste massif montagneux abritant des forteresses naines et des vallées sauvages. Menacé par le Chancre et les créatures souterraines.",
+    "keywords": [ "Montagnes", "Nains", "Mines", "Chancre", "Monstres aériens" ]
+  }
+}

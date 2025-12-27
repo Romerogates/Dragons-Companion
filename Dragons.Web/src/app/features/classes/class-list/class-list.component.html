@@ -1,0 +1,30 @@
+<!-- components/class-list/class-list.component.html -->
+<div class="class-container">
+  <h1>Classes de personnage</h1>
+
+  @if (loading) {
+  <div class="loading">Chargement des classes...</div>
+  } @else {
+  <div class="class-grid">
+    @for (c of classes; track c.id) {
+    <a [routerLink]="['/classes', c.id]" class="class-card">
+      <div class="class-icon">{{ getIcon(c.name) }}</div>
+      <div class="class-info">
+        <h2>{{ c.name }}</h2>
+        <div class="class-stats">
+          <span class="stat hit-die" [class]="getHitDieColor(c.hitDie)">
+            <span class="die-icon">🎲</span>
+            d{{ c.hitDie }}
+          </span>
+          @if (c.hasSpellcasting) {
+          <span class="stat spellcaster"> ✨ Lanceur de sorts </span>
+          } @else {
+          <span class="stat martial"> ⚔️ Martial </span>
+          }
+        </div>
+      </div>
+    </a>
+    }
+  </div>
+  }
+</div>

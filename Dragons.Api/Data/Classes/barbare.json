@@ -1,0 +1,80 @@
+﻿{
+  "id": "c1a55000-0001-4000-8000-000000000001",
+  "name": "Barbare",
+  "hit_die": 12,
+  "primary_ability": [ "Force" ],
+  "proficiencies": {
+    "armor": [ "Légère", "Intermédiaire", "Bouclier" ],
+    "weapons": [ "Courantes", "Guerre" ],
+    "tools": [],
+    "saving_throws": [ "Force", "Constitution" ],
+    "skills": {
+      "choose_count": 2,
+      "options": [ "Athlétisme", "Dressage", "Intimidation", "Intuition", "Perception", "Survie" ]
+    }
+  },
+  "starting_equipment": [
+    {
+      "choice_a": [ "Une grande hache" ],
+      "choice_b": [ "Une arme de guerre de corps à corps" ]
+    },
+    {
+      "choice_a": [ "Deux hachettes" ],
+      "choice_b": [ "Une arme courante" ]
+    },
+    {
+      "choice_a": [ "Quatre javelines" ],
+      "choice_b": [ "Une sarbacane", "10 fléchettes" ],
+      "choice_c": [ "Arc court", "Carquois (20 flèches)" ]
+    },
+    { "fixed": [ "Sac d'explorateur" ] }
+  ],
+  "progression_table": [
+    {
+      "level": 1,
+      "prof_bonus": 2,
+      "features": [ "Rage", "Défense sans armure" ],
+      "class_resources": {
+        "rages_count": 2,
+        "rage_damage": 2
+      }
+    },
+    {
+      "level": 2,
+      "prof_bonus": 2,
+      "features": [ "Attaque débridée", "Sens du danger" ],
+      "class_resources": {
+        "rages_count": 2,
+        "rage_damage": 2
+      }
+    },
+    {
+      "level": 3,
+      "prof_bonus": 2,
+      "features": [ "Voie primale" ],
+      "class_resources": {
+        "rages_count": 3,
+        "rage_damage": 2
+      }
+    },
+    {
+      "level": 5,
+      "prof_bonus": 3,
+      "features": [ "Attaque supplémentaire", "Déplacement accéléré" ],
+      "class_resources": {
+        "rages_count": 3,
+        "rage_damage": 2
+      }
+    },
+    {
+      "level": 20,
+      "prof_bonus": 6,
+      "features": [ "Champion primal" ],
+      "class_resources": {
+        "rages_count": 99,
+        "rage_damage": 4
+      }
+    }
+  ],
+  "subclasses_available_at_level": 3
+}

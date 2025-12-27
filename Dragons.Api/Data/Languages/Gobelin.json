@@ -1,0 +1,8 @@
+{
+  "id": "01a55e00-b008-4b10-8000-000000000008",
+  "name": "Gobelin",
+  "category": "Base",
+  "scripts": ["Santak"],
+  "typical_speakers": ["Hobgobelins", "Gobelins", "Gobelours"],
+  "lore": "Les tribus ont des dialectes variés mais se comprennent. Seuls les Hobgobelins l'écrivent couramment."
+}

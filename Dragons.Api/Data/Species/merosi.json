@@ -1,0 +1,30 @@
+﻿{
+  "id": "a1b2c3d4-e5f6-4a7b-8c9d-000000000008",
+  "name": "Merosi (Demi-orc)",
+  "base_stats": {
+    "ability_bonuses": {
+      "force": 2,
+      "constitution": 1
+    },
+    "speed_meters": 9.0,
+    "size_category": "M",
+    "has_darkvision": true,
+    "darkvision_radius_meters": 18
+  },
+  "traits": [
+    {
+      "name": "Patibulaire",
+      "description": "Maîtrise de la compétence Intimidation."
+    },
+    {
+      "name": "Résistance acharnée",
+      "description": "Si réduit à 0 PV, tombe à 1 PV à la place (1 fois par repos long)."
+    },
+    {
+      "name": "Sauvagerie",
+      "description": "Ajoute un dé de dégâts supplémentaire aux critiques au corps à corps."
+    }
+  ],
+  "languages": [ "Commun", "Kaani" ],
+  "subspecies": []
+}

@@ -1,0 +1,21 @@
+﻿{
+  "id": "550e8400-e29b-41d4-a716-446655440008",
+  "name": "Ellerina",
+  "randomization": {
+    "dice_min": 63,
+    "dice_max": 65
+  },
+  "demographics": {
+    "primary_species": [ "Elenion" ],
+    "secondary_species": [ "Demi-elfe", "Aldaron" ],
+    "is_cosmopolitan": false
+  },
+  "linguistics": {
+    "official_languages": [ "Elfique" ],
+    "writing_systems": [ "Elfique" ]
+  },
+  "lore": {
+    "summary": "Royaume elfique fermé et méconnu, réputé pour sa magie et sa capitale immaculée, Varnaïrello. Cache des secrets anciens.",
+    "keywords": [ "Elfes", "Magie", "Isolationnisme", "Perfection", "Géants des tempêtes" ]
+  }
+}

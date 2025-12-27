@@ -1,0 +1,8 @@
+{
+  "id": "01a55e00-5001-4b10-8000-000000000028",
+  "name": "Argot des voleurs",
+  "category": "Secret",
+  "scripts": ["Jargon oral"],
+  "typical_speakers": ["Voleurs", "Criminels"],
+  "lore": "Code crypté greffé sur la langue locale. Permet de parler de crimes discrètement mais pas de philosophie."
+}

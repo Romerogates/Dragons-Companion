@@ -1,0 +1,21 @@
+﻿{
+  "id": "550e8400-e29b-41d4-a716-446655440005",
+  "name": "Cité Franche",
+  "randomization": {
+    "dice_min": 23,
+    "dice_max": 43
+  },
+  "demographics": {
+    "primary_species": [ "Humain", "Nain bâtisseur", "Halfelin pied-léger", "Gnome des roches" ],
+    "secondary_species": [ "Tous" ],
+    "is_cosmopolitan": true
+  },
+  "linguistics": {
+    "official_languages": [ "Cyfand" ],
+    "writing_systems": [ "Cyfand" ]
+  },
+  "lore": {
+    "summary": "La plus grande ville d'Eana, puissance marchande multiculturelle et point de départ par défaut des aventures. Dirigée par un conseil.",
+    "keywords": [ "Métropole", "Commerce", "Multiculturel", "Port", "Guildes" ]
+  }
+}

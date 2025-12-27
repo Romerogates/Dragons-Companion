@@ -1,0 +1,171 @@
+<!-- components/class-detail/class-detail.component.html -->
+<div class="class-detail-container">
+  <a routerLink="/classes" class="back-link">← Retour aux classes</a>
+
+  @if (loading) {
+  <div class="loading">Chargement...</div>
+  } @else if (characterClass) {
+  <header class="class-header">
+    <span class="class-icon">{{ getIcon(characterClass.name) }}</span>
+    <div class="class-title">
+      <h1>{{ characterClass.name }}</h1>
+      <div class="class-tags">
+        <span class="tag hit-die">🎲 d{{ characterClass.hitDie }}</span>
+        @if (characterClass.spellcasting) {
+        <span class="tag spellcaster">
+          ✨ {{ characterClass.spellcasting.ability }} ({{ characterClass.spellcasting.type }})
+        </span>
+        }
+        <span class="tag"
+          >📖 Sous-classe niveau {{ characterClass.subclassesAvailableAtLevel }}</span
+        >
+      </div>
+    </div>
+  </header>
+
+  <div class="content-grid">
+    <!-- Caractéristiques principales -->
+    <section class="card primary-card">
+      <h2>⚡ Caractéristiques principales</h2>
+      <div class="primary-abilities">
+        @for (ability of characterClass.primaryAbility; track ability) {
+        <span class="ability-tag">{{ ability }}</span>
+        }
+      </div>
+    </section>
+
+    <!-- Maîtrises -->
+    <section class="card proficiencies-card">
+      <h2>🎯 Maîtrises</h2>
+
+      <div class="proficiency-group">
+        <h3>Jets de sauvegarde</h3>
+        <div class="tags">
+          @for (st of characterClass.proficiencies.savingThrows; track st) {
+          <span class="tag saving-throw">{{ st }}</span>
+          }
+        </div>
+      </div>
+
+      @if (characterClass.proficiencies.armor.length > 0) {
+      <div class="proficiency-group">
+        <h3>Armures</h3>
+        <div class="tags">
+          @for (armor of characterClass.proficiencies.armor; track armor) {
+          <span class="tag">{{ armor }}</span>
+          }
+        </div>
+      </div>
+      }
+
+      <div class="proficiency-group">
+        <h3>Armes</h3>
+        <div class="tags">
+          @for (weapon of characterClass.proficiencies.weapons; track weapon) {
+          <span class="tag">{{ weapon }}</span>
+          }
+        </div>
+      </div>
+
+      @if (characterClass.proficiencies.tools.length > 0) {
+      <div class="proficiency-group">
+        <h3>Outils</h3>
+        <div class="tags">
+          @for (tool of characterClass.proficiencies.tools; track tool) {
+          <span class="tag">{{ tool }}</span>
+          }
+        </div>
+      </div>
+      }
+
+      <div class="proficiency-group">
+        <h3>Compétences (choisir {{ characterClass.proficiencies.skills.chooseCount }})</h3>
+        <div class="tags">
+          @for (skill of characterClass.proficiencies.skills.options; track skill) {
+          <span class="tag skill">{{ skill }}</span>
+          }
+        </div>
+      </div>
+    </section>
+
+    <!-- Équipement de départ -->
+    <section class="card equipment-card">
+      <h2>🎒 Équipement de départ</h2>
+      <div class="equipment-list">
+        @for (choice of characterClass.startingEquipment; track $index) {
+        <div class="equipment-choice">
+          @if (choice.fixed) {
+          <div class="fixed-item">📦 {{ choice.fixed.join(', ') }}</div>
+          } @else {
+          <div class="choice-options">
+            @if (choice.choiceA) {
+            <span class="option">A: {{ choice.choiceA.join(', ') }}</span>
+            } @if (choice.choiceB) {
+            <span class="separator">ou</span>
+            <span class="option">B: {{ choice.choiceB.join(', ') }}</span>
+            } @if (choice.choiceC) {
+            <span class="separator">ou</span>
+            <span class="option">C: {{ choice.choiceC.join(', ') }}</span>
+            }
+          </div>
+          }
+        </div>
+        }
+      </div>
+    </section>
+
+    <!-- Progression -->
+    <section class="card progression-card">
+      <h2>📈 Progression</h2>
+
+      <div class="level-selector">
+        <label for="level-select">Niveau :</label>
+        <select id="level-select" [(ngModel)]="selectedLevel">
+          @for (level of getAvailableLevels(); track level) {
+          <option [value]="level">{{ level }}</option>
+          }
+        </select>
+      </div>
+
+      @if (getCurrentProgression(); as prog) {
+      <div class="progression-details">
+        <div class="prog-stat">
+          <span class="label">Bonus de maîtrise</span>
+          <span class="value">+{{ prog.profBonus }}</span>
+        </div>
+
+        @if (prog.features.length > 0) {
+        <div class="prog-features">
+          <span class="label">Capacités</span>
+          <div class="features-list">
+            @for (feature of prog.features; track feature) {
+            <span class="feature-tag">{{ feature }}</span>
+            }
+          </div>
+        </div>
+        } @if (hasSpellSlots(prog.spellSlots)) {
+        <div class="prog-stat">
+          <span class="label">Emplacements de sorts</span>
+          <span class="value spell-slots">{{ formatSpellSlots(prog.spellSlots!) }}</span>
+        </div>
+        } @if (prog.classResources) {
+        <div class="class-resources">
+          <span class="label">Ressources de classe</span>
+          <div class="resources-grid">
+            @for (entry of prog.classResources | keyvalue; track entry.key) {
+            <div class="resource-item">
+              <span class="resource-label">{{ formatResourceKey(entry.key) }}</span>
+              <span class="resource-value">{{ entry.value }}</span>
+            </div>
+            }
+          </div>
+        </div>
+        }
+      </div>
+      }
+    </section>
+  </div>
+  } @else {
+  <div class="error">Classe non trouvée</div>
+  }
+</div>

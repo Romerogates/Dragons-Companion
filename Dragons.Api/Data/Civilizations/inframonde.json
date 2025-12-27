@@ -1,0 +1,21 @@
+﻿{
+  "id": "550e8400-e29b-41d4-a716-446655440010",
+  "name": "Inframonde",
+  "randomization": {
+    "dice_min": 72,
+    "dice_max": 72
+  },
+  "demographics": {
+    "primary_species": [ "Nain gardien", "Nain bâtisseur", "Drow", "Duergar", "Svirfnebelin" ],
+    "secondary_species": [ "Torve", "Sidhe" ],
+    "is_cosmopolitan": false
+  },
+  "linguistics": {
+    "official_languages": [ "Commun des profondeurs" ],
+    "writing_systems": [ "Elfique modifié" ]
+  },
+  "lore": {
+    "summary": "Monde souterrain dangereux abritant des civilisations luttant pour la survie et des nids chancreux dans les abysses.",
+    "keywords": [ "Souterrain", "Obscurité", "Drows", "Chancre", "Survie" ]
+  }
+}

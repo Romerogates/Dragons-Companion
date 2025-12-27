@@ -1,0 +1,21 @@
+﻿{
+  "id": "550e8400-e29b-41d4-a716-446655440018",
+  "name": "Torea",
+  "randomization": {
+    "dice_min": 99,
+    "dice_max": 100
+  },
+  "demographics": {
+    "primary_species": [ "Humain", "Merrien" ],
+    "secondary_species": [ "Divers (Comptoirs)" ],
+    "is_cosmopolitan": false
+  },
+  "linguistics": {
+    "official_languages": [ "Aupuniwi" ],
+    "writing_systems": [ "Tumiit" ]
+  },
+  "lore": {
+    "summary": "Contrée paradisiaque d'atolls et de lagons. Derrière la beauté se cachent les pirates, le Chancre sous-marin et des cultes monstrueux.",
+    "keywords": [ "Océan", "Îles", "Merriens", "Chancre", "Paradis trompeur" ]
+  }
+}

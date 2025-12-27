@@ -1,0 +1,21 @@
+﻿{
+  "id": "550e8400-e29b-41d4-a716-446655440017",
+  "name": "Shi-huang",
+  "randomization": {
+    "dice_min": 98,
+    "dice_max": 98
+  },
+  "demographics": {
+    "primary_species": [ "Humain" ],
+    "secondary_species": [ "Divers (Cités)" ],
+    "is_cosmopolitan": false
+  },
+  "linguistics": {
+    "official_languages": [ "Shi-huang" ],
+    "writing_systems": [ "Draconique syllabaire" ]
+  },
+  "lore": {
+    "summary": "Culture millénaire raffinée, anciennement dirigée par des drakéides. Berceau des moines-guerriers et du Ki, proche du Plan Éthéré.",
+    "keywords": [ "Asie", "Moines", "Ki", "Fantômes", "Raffinement" ]
+  }
+}

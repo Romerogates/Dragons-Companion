@@ -1,0 +1,21 @@
+﻿{
+  "id": "550e8400-e29b-41d4-a716-446655440015",
+  "name": "Royaumes des Sables",
+  "randomization": {
+    "dice_min": 90,
+    "dice_max": 95
+  },
+  "demographics": {
+    "primary_species": [ "Humain" ],
+    "secondary_species": [ "Tous" ],
+    "is_cosmopolitan": true
+  },
+  "linguistics": {
+    "official_languages": [ "Kalam" ],
+    "writing_systems": [ "Abjad kalam" ]
+  },
+  "lore": {
+    "summary": "Mosaïque de cités-États et d'oasis unifiée par la culture et la langue. Terre de déserts implacables, de djinns et de commerce caravanier.",
+    "keywords": [ "Désert", "Caravanes", "Djinns", "Dragons bleus", "Oasis" ]
+  }
+}

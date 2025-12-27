@@ -1,0 +1,70 @@
+﻿{
+  "id": "c1a55000-0002-4000-8000-000000000002",
+  "name": "Barde",
+  "hit_die": 8,
+  "primary_ability": [ "Charisme" ],
+  "spellcasting": {
+    "ability": "Charisme",
+    "type": "Spontaneous"
+  },
+  "proficiencies": {
+    "armor": [ "Légère" ],
+    "weapons": [ "Arbalète de poing", "Courantes", "Cimeterre", "Épée courte", "Épée longue", "Rapière" ],
+    "tools": [ "Trois instruments de musique au choix" ],
+    "saving_throws": [ "Dextérité", "Charisme" ],
+    "skills": {
+      "choose_count": 3,
+      "options": [ "Toutes" ]
+    }
+  },
+  "starting_equipment": [
+    {
+      "choice_a": [ "Rapière" ],
+      "choice_b": [ "Épée longue" ],
+      "choice_c": [ "Cimeterre" ],
+      "choice_d": [ "Arme courante" ]
+    },
+    {
+      "choice_a": [ "Sac de diplomate" ],
+      "choice_b": [ "Sac de bateleur" ]
+    },
+    {
+      "choice_a": [ "Luth" ],
+      "choice_b": [ "Instrument de musique au choix" ]
+    },
+    { "fixed": [ "Armure de cuir", "Dague" ] }
+  ],
+  "progression_table": [
+    {
+      "level": 1,
+      "prof_bonus": 2,
+      "features": [ "Incantation", "Inspiration bardique (d6)" ],
+      "spell_slots": [ 2, 0, 0, 0, 0, 0, 0, 0, 0 ],
+      "class_resources": {
+        "cantrips_known": 2,
+        "spells_known": 4
+      }
+    },
+    {
+      "level": 2,
+      "prof_bonus": 2,
+      "features": [ "Touche-à-tout", "Chant réparateur (d6)" ],
+      "spell_slots": [ 3, 0, 0, 0, 0, 0, 0, 0, 0 ],
+      "class_resources": {
+        "cantrips_known": 2,
+        "spells_known": 5
+      }
+    },
+    {
+      "level": 3,
+      "prof_bonus": 2,
+      "features": [ "Collège bardique", "Expertise" ],
+      "spell_slots": [ 4, 2, 0, 0, 0, 0, 0, 0, 0 ],
+      "class_resources": {
+        "cantrips_known": 2,
+        "spells_known": 6
+      }
+    }
+  ],
+  "subclasses_available_at_level": 3
+}

@@ -1,0 +1,76 @@
+﻿{
+  "id": "a1b2c3d4-e5f6-4a7b-8c9d-000000000003",
+  "name": "Elfe",
+  "base_stats": {
+    "ability_bonuses": {
+      "dexterite": 2
+    },
+    "speed_meters": 9.0,
+    "size_category": "M",
+    "has_darkvision": true,
+    "darkvision_radius_meters": 18
+  },
+  "traits": [
+    {
+      "name": "Sens aiguisés",
+      "description": "Maîtrise de la compétence Perception."
+    },
+    {
+      "name": "Héritage féerique",
+      "description": "Avantage aux JS contre les charmes, immunité au sommeil magique."
+    },
+    {
+      "name": "Transe",
+      "description": "Méditation de 4h remplace 8h de sommeil."
+    }
+  ],
+  "languages": [ "Commun", "Elfique" ],
+  "subspecies": [
+    {
+      "id": "a1b2c3d4-e5f6-4a7b-8c9d-000000000031",
+      "name": "Elenion (Elfe de lumière)",
+      "additional_stats": {
+        "ability_bonuses": {
+          "intelligence": 1
+        }
+      },
+      "additional_traits": [
+        {
+          "name": "Formation martiale elfique",
+          "description": "Maîtrise épée longue/courte, arc long/court."
+        },
+        {
+          "name": "Sort mineur",
+          "description": "Connaît un sort mineur de magicien (Int)."
+        },
+        {
+          "name": "Raffinement",
+          "description": "Maîtrise d'un outil artistique ou instrument."
+        }
+      ]
+    },
+    {
+      "id": "a1b2c3d4-e5f6-4a7b-8c9d-000000000032",
+      "name": "Aldaron (Elfe de sève)",
+      "additional_stats": {
+        "ability_bonuses": {
+          "constitution": 1
+        }
+      },
+      "additional_traits": [
+        {
+          "name": "Formation martiale elfique",
+          "description": "Maîtrise épée longue/courte, arc long/court."
+        },
+        {
+          "name": "Murmures de la forêt",
+          "description": "Capacité d'intimidation surnaturelle (vent froid, ombres)."
+        },
+        {
+          "name": "Vie sauvage",
+          "description": "Maîtrise d'outils d'artisanat nature (tanneur, sculpteur, etc.)."
+        }
+      ]
+    }
+  ]
+}
