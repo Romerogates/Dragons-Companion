@@ -2,6 +2,7 @@
 import { Injectable, inject } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
+import { environment } from '../../../environments/environment';
 import {
   SpeciesSummary,
   Species,
@@ -18,8 +19,7 @@ import {
 @Injectable({ providedIn: 'root' })
 export class DataService {
   private http = inject(HttpClient);
-  private apiUrl = 'http://localhost:5068/api';
-
+  private apiUrl = environment.apiUrl;
   // Species
   getSpecies(): Observable<SpeciesSummary[]> {
     return this.http.get<SpeciesSummary[]>(`${this.apiUrl}/species`);
