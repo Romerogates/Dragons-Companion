@@ -1,0 +1,492 @@
+// features/home/home.component.scss
+
+// Variables
+$primary: #8b0000;
+$primary-light: #a52a2a;
+$gold: #f1c40f;
+$dark: #2c3e50;
+$parchment: #fdfaf6;
+$parchment-dark: #f5e6d3;
+
+.home-container {
+  width: 100%;
+  overflow-x: hidden;
+  background: $parchment;
+}
+
+// ========================================
+// HERO SECTION
+// ========================================
+.hero {
+  position: relative;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem;
+  text-align: center;
+  overflow: hidden;
+}
+
+.hero-background {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background:
+    radial-gradient(ellipse at top, rgba(139, 0, 0, 0.1) 0%, transparent 50%),
+    radial-gradient(ellipse at bottom, rgba(241, 196, 15, 0.1) 0%, transparent 50%),
+    linear-gradient(180deg, $parchment 0%, $parchment-dark 100%);
+  z-index: 0;
+}
+
+.hero-content {
+  position: relative;
+  z-index: 1;
+  max-width: 700px;
+}
+
+.hero-logo {
+  width: 150px;
+  height: auto;
+  margin-bottom: 1.5rem;
+  filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.2));
+  animation: float 3s ease-in-out infinite;
+}
+
+@keyframes float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-10px); }
+}
+
+.hero-title {
+  font-family: 'Cinzel', serif;
+  font-size: clamp(2.5rem, 6vw, 4rem);
+  color: $primary;
+  margin: 0 0 1rem 0;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+  letter-spacing: 2px;
+}
+
+.hero-subtitle {
+  font-size: clamp(1rem, 2.5vw, 1.3rem);
+  color: $dark;
+  margin: 0 0 2.5rem 0;
+  line-height: 1.6;
+
+  strong {
+    color: $primary;
+  }
+}
+
+.hero-actions {
+  display: flex;
+  gap: 1rem;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+// Buttons
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 1rem 2rem;
+  border-radius: 8px;
+  font-size: 1.1rem;
+  font-weight: 600;
+  text-decoration: none;
+  transition: all 0.3s ease;
+  border: 2px solid transparent;
+  cursor: pointer;
+
+  .btn-icon {
+    font-size: 1.3rem;
+  }
+}
+
+.btn-primary {
+  background: linear-gradient(135deg, $primary 0%, $primary-light 100%);
+  color: white;
+  box-shadow: 0 4px 15px rgba(139, 0, 0, 0.3);
+
+  &:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(139, 0, 0, 0.4);
+  }
+}
+
+.btn-secondary {
+  background: white;
+  color: $dark;
+  border-color: $dark;
+  position: relative;
+
+  &:hover {
+    background: $dark;
+    color: white;
+    transform: translateY(-2px);
+  }
+
+  .badge {
+    position: absolute;
+    top: -8px;
+    right: -8px;
+    background: $gold;
+    color: $dark;
+    font-size: 0.75rem;
+    font-weight: 700;
+    padding: 0.2rem 0.5rem;
+    border-radius: 10px;
+    min-width: 20px;
+  }
+}
+
+.btn-large {
+  padding: 1.2rem 2.5rem;
+  font-size: 1.2rem;
+}
+
+.scroll-indicator {
+  position: absolute;
+  bottom: 2rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+  color: $dark;
+  opacity: 0.6;
+  animation: bounce 2s ease-in-out infinite;
+
+  span {
+    font-size: 0.85rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+  }
+
+  .scroll-arrow {
+    font-size: 1.5rem;
+  }
+}
+
+@keyframes bounce {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(5px); }
+}
+
+// ========================================
+// STATS SECTION
+// ========================================
+.stats-section {
+  background: linear-gradient(135deg, $dark 0%, #34495e 100%);
+  padding: 2rem;
+}
+
+.stats-grid {
+  display: flex;
+  justify-content: center;
+  gap: 3rem;
+  flex-wrap: wrap;
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.stat-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.3rem;
+}
+
+.stat-value {
+  font-family: 'Cinzel', serif;
+  font-size: 2.5rem;
+  font-weight: 700;
+  color: $gold;
+}
+
+.stat-label {
+  font-size: 0.9rem;
+  color: rgba(255, 255, 255, 0.8);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+// ========================================
+// FEATURES SECTION
+// ========================================
+.features-section {
+  padding: 4rem 2rem;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.section-title {
+  font-family: 'Cinzel', serif;
+  font-size: clamp(1.5rem, 4vw, 2rem);
+  color: $dark;
+  text-align: center;
+  margin-bottom: 2.5rem;
+}
+
+.features-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1.5rem;
+  justify-items: center;
+}
+
+.feature-card {
+  background: white;
+  padding: 1.5rem;
+  border-radius: 12px;
+  text-align: center;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+  transition: transform 0.3s, box-shadow 0.3s;
+  max-width: 260px;
+  width: 100%;
+
+  &:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.12);
+  }
+}
+
+.feature-icon {
+  font-size: 3rem;
+  margin-bottom: 1rem;
+}
+
+.feature-title {
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: $dark;
+  margin: 0 0 0.5rem 0;
+}
+
+.feature-description {
+  font-size: 0.9rem;
+  color: #666;
+  margin: 0;
+  line-height: 1.5;
+}
+
+// ========================================
+// QUICK ACCESS SECTION
+// ========================================
+.quick-access-section {
+  padding: 3rem 2rem;
+  background: $parchment-dark;
+}
+
+.quick-links {
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+  flex-wrap: wrap;
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.quick-link {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 1.2rem 1.5rem;
+  background: white;
+  border-radius: 10px;
+  text-decoration: none;
+  color: $dark;
+  transition: all 0.3s;
+  min-width: 120px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
+
+  &:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    background: $gold;
+  }
+}
+
+.quick-icon {
+  font-size: 2rem;
+}
+
+.quick-label {
+  font-size: 0.9rem;
+  font-weight: 600;
+}
+
+// ========================================
+// CTA SECTION
+// ========================================
+.cta-section {
+  padding: 4rem 2rem;
+  background: linear-gradient(135deg, $primary 0%, $primary-light 100%);
+  text-align: center;
+}
+
+.cta-content {
+  max-width: 600px;
+  margin: 0 auto;
+
+  h2 {
+    font-family: 'Cinzel', serif;
+    font-size: clamp(1.5rem, 4vw, 2rem);
+    color: white;
+    margin: 0 0 0.5rem 0;
+  }
+
+  p {
+    font-size: 1.1rem;
+    color: rgba(255, 255, 255, 0.9);
+    margin: 0 0 2rem 0;
+  }
+
+  .btn-primary {
+    background: $gold;
+    color: $dark;
+
+    &:hover {
+      background: white;
+    }
+  }
+}
+
+// ========================================
+// FOOTER
+// ========================================
+.home-footer {
+  padding: 2rem;
+  text-align: center;
+  background: $dark;
+  color: rgba(255, 255, 255, 0.7);
+
+  p {
+    margin: 0.3rem 0;
+    font-size: 0.9rem;
+  }
+
+  a {
+    color: $gold;
+    text-decoration: none;
+
+    &:hover {
+      text-decoration: underline;
+    }
+  }
+
+  .footer-note {
+    font-size: 0.8rem;
+    opacity: 0.6;
+  }
+}
+
+// ========================================
+// RESPONSIVE - TABLETTE
+// ========================================
+@media screen and (max-width: 1024px) {
+  .features-grid {
+    grid-template-columns: repeat(2, 1fr);
+    max-width: 600px;
+    margin: 0 auto;
+  }
+}
+
+// ========================================
+// RESPONSIVE - MOBILE
+// ========================================
+@media screen and (max-width: 768px) {
+  .hero {
+    min-height: 90vh;
+    padding: 1.5rem;
+  }
+
+  .hero-logo {
+    width: 120px;
+  }
+
+  .hero-actions {
+    flex-direction: column;
+    width: 100%;
+    max-width: 300px;
+  }
+
+  .btn {
+    width: 100%;
+    justify-content: center;
+  }
+
+  .stats-grid {
+    gap: 2rem;
+  }
+
+  .stat-value {
+    font-size: 2rem;
+  }
+
+  .features-section {
+    padding: 3rem 1rem;
+  }
+
+  .features-grid {
+    grid-template-columns: 1fr;
+    max-width: 350px;
+  }
+
+  .quick-links {
+    gap: 0.8rem;
+  }
+
+  .quick-link {
+    min-width: 100px;
+    padding: 1rem;
+  }
+
+  .quick-icon {
+    font-size: 1.5rem;
+  }
+
+  .quick-label {
+    font-size: 0.8rem;
+  }
+}
+
+// ========================================
+// RESPONSIVE - PETIT MOBILE
+// ========================================
+@media screen and (max-width: 480px) {
+  .hero-logo {
+    width: 100px;
+  }
+
+  .scroll-indicator {
+    display: none;
+  }
+
+  .stats-grid {
+    gap: 1.5rem;
+  }
+
+  .stat-value {
+    font-size: 1.8rem;
+  }
+
+  .stat-label {
+    font-size: 0.8rem;
+  }
+
+  .quick-links {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    max-width: 320px;
+  }
+
+  .quick-link {
+    min-width: auto;
+    padding: 0.8rem;
+  }
+}

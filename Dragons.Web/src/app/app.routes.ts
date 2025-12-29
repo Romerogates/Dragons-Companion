@@ -2,72 +2,113 @@
 import { Routes } from '@angular/router';
 
 export const routes: Routes = [
-  { path: '', redirectTo: '/species', pathMatch: 'full' },
+  // === HOME ===
+  {
+    path: '',
+    loadComponent: () => import('./features/home/home.component').then((m) => m.HomeComponent),
+  },
 
-  // Species
+  // === CHARACTER CREATION ===
+  {
+    path: 'create',
+    loadComponent: () =>
+      import('./features/character-creation/character-creation.component').then(
+        (m) => m.CharacterCreationComponent
+      ),
+  },
+  {
+    path: 'character-sheet',
+    loadComponent: () =>
+      import('./features/character-sheet/character-sheet.component').then(
+        (m) => m.CharacterSheetComponent
+      ),
+  },
+  {
+    path: 'characters',
+    loadComponent: () =>
+      import('./features/characters/characters.component').then((m) => m.CharactersComponent),
+  },
+
+  // === SPECIES ===
   {
     path: 'species',
     loadComponent: () =>
-      import('../app/features/species/species-list/species-list.component').then(
+      import('./features/species/species-list/species-list.component').then(
         (m) => m.SpeciesListComponent
       ),
   },
   {
     path: 'species/:id',
     loadComponent: () =>
-      import('../app/features/species//species-detail/species-detail.component').then(
+      import('./features/species/species-detail/species-detail.component').then(
         (m) => m.SpeciesDetailComponent
       ),
   },
 
-  // Classes
+  // === CLASSES ===
   {
     path: 'classes',
     loadComponent: () =>
-      import('../app/features/classes/class-list/class-list.component').then(
+      import('./features/classes/class-list/class-list.component').then(
         (m) => m.ClassListComponent
       ),
   },
   {
     path: 'classes/:id',
     loadComponent: () =>
-      import('../app/features/classes/class-detail/class-detail.component').then(
+      import('./features/classes/class-detail/class-detail.component').then(
         (m) => m.ClassDetailComponent
       ),
   },
 
-  // Civilizations
+  // === CIVILIZATIONS ===
   {
     path: 'civilizations',
     loadComponent: () =>
-      import('../app/features/civilizations/civilization-list/civilization-list.component').then(
+      import('./features/civilizations/civilization-list/civilization-list.component').then(
         (m) => m.CivilizationListComponent
       ),
   },
   {
     path: 'civilizations/:id',
     loadComponent: () =>
-      import(
-        '../app/features/civilizations/civilization-detail/civilization-detail.component'
-      ).then((m) => m.CivilizationDetailComponent),
+      import('./features/civilizations/civilization-detail/civilization-detail.component').then(
+        (m) => m.CivilizationDetailComponent
+      ),
   },
 
-  // Languages
+  // === LANGUAGES ===
   {
     path: 'languages',
     loadComponent: () =>
-      import('../app/features/languages/language-list/language-list.component').then(
+      import('./features/languages/language-list/language-list.component').then(
         (m) => m.LanguageListComponent
       ),
   },
   {
     path: 'languages/:id',
     loadComponent: () =>
-      import('../app/features/languages/language-detail/language-detail.component').then(
+      import('./features/languages/language-detail/language-detail.component').then(
         (m) => m.LanguageDetailComponent
       ),
   },
 
-  // Fallback
-  { path: '**', redirectTo: '/species' },
+  // === EQUIPMENT ===
+  {
+    path: 'equipment',
+    loadComponent: () =>
+      import('./features/equipments/equipments-list/equipments-list.component').then(
+        (m) => m.EquipmentListComponent
+      ),
+  },
+  {
+    path: 'equipment/:id',
+    loadComponent: () =>
+      import('./features/equipments/equipment-detail/equipment-detail.component').then(
+        (m) => m.EquipmentDetailComponent
+      ),
+  },
+
+  // === FALLBACK ===
+  { path: '**', redirectTo: '' },
 ];

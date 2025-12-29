@@ -1,0 +1,18 @@
+{
+  "id": "e1a55e00-a009-4b10-8000-000000000009",
+  "name": "Broigne",
+  "type": "Armor",
+  "subtype": "Heavy",
+  "cost": {
+    "value": 30,
+    "unit": "po"
+  },
+  "weight_kg": 20.0,
+  "data": {
+    "ac_base": 14,
+    "add_dex_mod": false,
+    "max_dex_bonus": 0,
+    "str_requirement": 0,
+    "stealth_disadvantage": true
+  }
+}

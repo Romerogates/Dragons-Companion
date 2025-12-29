@@ -1,4 +1,4 @@
-// models/game-data.models.ts
+// core/models/game-data.models.ts
 
 // ============================================================
 // LANGUAGES
@@ -7,7 +7,7 @@
 export interface LanguageSummary {
   id: string;
   name: string;
-  category: string; // "Base" | "Exotique" | "Secret"
+  category: string;
 }
 
 export interface Language extends LanguageSummary {
@@ -70,9 +70,9 @@ export interface Species extends SpeciesSummary {
 }
 
 export interface BaseStatsInfo {
-  abilityBonuses: Record<string, number>; // Ex: { "dexterite": 2, "sagesse": 1 }
+  abilityBonuses: Record<string, number>;
   speedMeters: number;
-  sizeCategory: string; // "P" | "M" | "G"
+  sizeCategory: string;
   hasDarkvision: boolean;
   darkvisionRadiusMeters: number;
 }
@@ -106,16 +106,16 @@ export interface CharacterClassSummary {
 
 export interface CharacterClass extends CharacterClassSummary {
   primaryAbility: string[];
-  spellcasting?: SpellcastingInfo;
+  spellcasting?: ClassSpellcastingInfo;
   proficiencies: ProficienciesInfo;
   startingEquipment: EquipmentChoice[];
   progressionTable: LevelProgression[];
   subclassesAvailableAtLevel: number;
 }
 
-export interface SpellcastingInfo {
+export interface ClassSpellcastingInfo {
   ability: string;
-  type: string; // "Spontaneous" | "Prepared"
+  type: string;
 }
 
 export interface ProficienciesInfo {
@@ -132,10 +132,10 @@ export interface SkillChoiceInfo {
 }
 
 export interface EquipmentChoice {
-  choiceA?: string[];
-  choiceB?: string[];
-  choiceC?: string[];
-  fixed?: string[];
+  choiceA: string[] | null;
+  choiceB: string[] | null;
+  choiceC: string[] | null;
+  fixed: string[] | null;
 }
 
 export interface LevelProgression {
@@ -143,5 +143,56 @@ export interface LevelProgression {
   profBonus: number;
   features: string[];
   spellSlots?: number[];
-  classResources?: Record<string, number | string>; // Flexible pour rage_count, wild_shape_cr, etc.
+  classResources?: Record<string, number | string>;
+}
+
+// ============================================================
+// EQUIPMENT
+// ============================================================
+
+export interface EquipmentSummary {
+  id: string;
+  name: string;
+  type: string;
+  subtype: string;
+  cost: CostInfo;
+}
+
+export interface Equipment extends EquipmentSummary {
+  weightKg: number;
+  data?: WeaponData | ArmorData | GearData | ToolData | MountData;
+}
+
+export interface CostInfo {
+  value: number;
+  unit: string;
+}
+
+export interface WeaponData {
+  damage_dice: string;
+  damage_type: string;
+  properties: string[];
+}
+
+export interface ArmorData {
+  ac_base?: number;
+  ac_bonus?: number;
+  add_dex_mod?: boolean;
+  max_dex_bonus?: number;
+  str_requirement?: number;
+  stealth_disadvantage?: boolean;
+}
+
+export interface GearData {
+  description: string;
+}
+
+export interface ToolData {
+  description?: string;
+}
+
+export interface MountData {
+  speed: string;
+  carry_capacity_kg: number;
+  description?: string;
 }

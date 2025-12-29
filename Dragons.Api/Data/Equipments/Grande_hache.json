@@ -1,0 +1,19 @@
+{
+  "id": "c1113553-6521-4c39-90ed-369e8c37d6cc",
+  "name": "Grande hache",
+  "type": "Weapon",
+  "subtype": "Martial Melee",
+  "cost": {
+    "value": 30,
+    "unit": "po"
+  },
+  "weight_kg": 3.5,
+  "data": {
+    "damage_dice": "1d12",
+    "damage_type": "tranchant",
+    "properties": [
+      "Deux mains",
+      "Lourde"
+    ]
+  }
+}

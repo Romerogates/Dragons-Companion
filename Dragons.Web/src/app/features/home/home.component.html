@@ -1,0 +1,107 @@
+<!-- features/home/home.component.html -->
+<div class="home-container">
+  <!-- HERO SECTION -->
+  <section class="hero">
+    <div class="hero-background"></div>
+    <div class="hero-content">
+      <img src="/images/dragons_logo.svg" alt="Dragons" class="hero-logo" />
+      <h1 class="hero-title">Dragons Companion</h1>
+      <p class="hero-subtitle">
+        Créez et gérez vos personnages pour le jeu de rôle <strong>Dragons</strong> <br />L'aventure
+        commence ici !
+      </p>
+
+      <div class="hero-actions">
+        <a routerLink="/create" class="btn btn-primary">
+          <span class="btn-icon">✨</span>
+          Créer un personnage
+        </a>
+        <a routerLink="/characters" class="btn btn-secondary">
+          <span class="btn-icon">📜</span>
+          Mes personnages @if (savedCharactersCount > 0) {
+          <span class="badge">{{ savedCharactersCount }}</span>
+          }
+        </a>
+      </div>
+    </div>
+
+    <div class="scroll-indicator">
+      <span>Découvrir</span>
+      <div class="scroll-arrow">↓</div>
+    </div>
+  </section>
+
+  <!-- STATS SECTION -->
+  <section class="stats-section">
+    <div class="stats-grid">
+      @for (stat of stats; track stat.label) {
+      <div class="stat-item">
+        <span class="stat-value">{{ stat.value }}</span>
+        <span class="stat-label">{{ stat.label }}</span>
+      </div>
+      }
+    </div>
+  </section>
+
+  <!-- FEATURES SECTION -->
+  <section class="features-section">
+    <h2 class="section-title">🐉 Fonctionnalités</h2>
+    <div class="features-grid">
+      @for (feature of features; track feature.title) {
+      <div class="feature-card">
+        <div class="feature-icon">{{ feature.icon }}</div>
+        <h3 class="feature-title">{{ feature.title }}</h3>
+        <p class="feature-description">{{ feature.description }}</p>
+      </div>
+      }
+    </div>
+  </section>
+
+  <!-- QUICK ACCESS SECTION -->
+  <section class="quick-access-section">
+    <h2 class="section-title">📚 Explorer les données</h2>
+    <div class="quick-links">
+      <a routerLink="/species" class="quick-link">
+        <span class="quick-icon">🧬</span>
+        <span class="quick-label">Espèces</span>
+      </a>
+      <a routerLink="/classes" class="quick-link">
+        <span class="quick-icon">⚔️</span>
+        <span class="quick-label">Classes</span>
+      </a>
+      <a routerLink="/civilizations" class="quick-link">
+        <span class="quick-icon">🏰</span>
+        <span class="quick-label">Civilisations</span>
+      </a>
+      <a routerLink="/languages" class="quick-link">
+        <span class="quick-icon">📜</span>
+        <span class="quick-label">Langues</span>
+      </a>
+      <a routerLink="/equipment" class="quick-link">
+        <span class="quick-icon">🎒</span>
+        <span class="quick-label">Équipement</span>
+      </a>
+    </div>
+  </section>
+
+  <!-- CTA SECTION -->
+  <section class="cta-section">
+    <div class="cta-content">
+      <h2>Prêt à commencer l'aventure ?</h2>
+      <p>Crée ton premier personnage en quelques minutes</p>
+      <a routerLink="/create" class="btn btn-primary btn-large">
+        <span class="btn-icon">🎲</span>
+        Lancer la création
+      </a>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer class="home-footer">
+    <p>
+      Dragons Companion — Fan-made pour le JDR
+      <a href="https://www.dragons-rpg.com/fr" target="_blank" rel="noopener">Dragons</a>
+    </p>
+    <p class="footer-note">Non affilié à Agate RPG</p>
+  </footer>
+</div>

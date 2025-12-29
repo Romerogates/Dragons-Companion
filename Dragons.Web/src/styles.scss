@@ -1,6 +1,6 @@
 // styles.scss (global)
 
-/* Reset global pour éviter tout débordement */
+/* Reset global */
 * {
   margin: 0;
   padding: 0;
@@ -13,18 +13,115 @@ html, body {
   overflow-x: hidden;
   background-color: #fdfaf6;
   font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
 html {
-  scrollbar-width: none; // Firefox
-  -ms-overflow-style: none; // IE/Edge
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+  font-size: 16px;
 
   &::-webkit-scrollbar {
-    display: none; // Chrome, Safari, Opera
+    display: none;
   }
 }
 
-/* Optionnel : Police pour le style Eana si tu as accès à Google Fonts */
+/* Police pour le style Dragons/Eana */
 h1, h2, h3, h4, .brand {
   font-family: 'Cinzel', serif;
+}
+
+/* Utilitaires responsive */
+.container {
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 15px;
+}
+
+/* ========================================
+   RESPONSIVE BREAKPOINTS
+   ======================================== */
+
+// Mobile first - petits écrans
+@media screen and (max-width: 480px) {
+  html {
+    font-size: 14px;
+  }
+
+  h1 { font-size: 1.5rem; }
+  h2 { font-size: 1.25rem; }
+  h3 { font-size: 1.1rem; }
+
+  .container {
+    padding: 0 10px;
+  }
+}
+
+// Tablettes
+@media screen and (min-width: 481px) and (max-width: 768px) {
+  html {
+    font-size: 15px;
+  }
+
+  .container {
+    padding: 0 20px;
+  }
+}
+
+// Desktop
+@media screen and (min-width: 769px) {
+  html {
+    font-size: 16px;
+  }
+}
+
+/* ========================================
+   STYLES D'IMPRESSION
+   ======================================== */
+@media print {
+  *, *::before, *::after {
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
+  }
+
+  html, body {
+    width: 210mm !important;
+    height: auto !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    overflow: visible !important;
+    background: white !important;
+  }
+
+  app-navbar,
+  .navbar,
+  nav,
+  .sheet-actions,
+  .no-print {
+    display: none !important;
+    visibility: hidden !important;
+    height: 0 !important;
+    overflow: hidden !important;
+  }
+
+  app-root {
+    display: block !important;
+    width: 210mm !important;
+    height: auto !important;
+    overflow: visible !important;
+    margin: 0 !important;
+    padding: 0 !important;
+  }
+
+  * {
+    overflow: visible !important;
+    box-shadow: none !important;
+  }
+
+  @page {
+    size: A4 portrait;
+    margin: 0;
+  }
 }

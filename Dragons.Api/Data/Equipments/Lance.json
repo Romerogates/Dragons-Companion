@@ -1,0 +1,19 @@
+{
+  "id": "fc541b32-d845-400b-81f4-03f91f5f3558",
+  "name": "Lance",
+  "type": "Weapon",
+  "subtype": "Simple Melee",
+  "cost": {
+    "value": 1,
+    "unit": "po"
+  },
+  "weight_kg": 1.5,
+  "data": {
+    "damage_dice": "1d6",
+    "damage_type": "perforant",
+    "properties": [
+      "Lancer (6/18)",
+      "Polyvalente (1d8)"
+    ]
+  }
+}

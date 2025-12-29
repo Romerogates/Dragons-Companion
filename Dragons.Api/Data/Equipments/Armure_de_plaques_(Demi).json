@@ -1,0 +1,18 @@
+{
+  "id": "e1a55e00-a008-4b10-8000-000000000008",
+  "name": "Armure de plaques (Demi)",
+  "type": "Armor",
+  "subtype": "Medium",
+  "cost": {
+    "value": 750,
+    "unit": "po"
+  },
+  "weight_kg": 20.0,
+  "data": {
+    "ac_base": 15,
+    "add_dex_mod": true,
+    "max_dex_bonus": 2,
+    "str_requirement": 0,
+    "stealth_disadvantage": true
+  }
+}

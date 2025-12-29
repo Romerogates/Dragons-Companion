@@ -1,0 +1,128 @@
+<div class="species-step">
+  <h2>Choisissez votre espèce</h2>
+  <p class="step-description">
+    Votre espèce détermine vos bonus aux caractéristiques, vos traits raciaux et vos langues de
+    départ.
+  </p>
+
+  @if (loading) {
+  <div class="loading">Chargement des espèces...</div>
+  } @else {
+
+  <div class="species-grid">
+    @for (s of speciesList; track s.id) {
+    <div
+      class="species-cardable"
+      [class.selected]="isSpeciesSelected(s.id)"
+      (click)="selectSpecies(s)"
+    >
+      <div class="species-icon">{{ getIcon(s.name) }}</div>
+
+      <div class="species-info">
+        <div class="header-row">
+          <h2>{{ s.name }}</h2>
+          @if(isSpeciesSelected(s.id)) {
+          <span class="check-mark">✓</span>
+          }
+        </div>
+
+        <div class="species-stats">
+          <span class="stat">
+            <span class="label">Bonus:</span>
+            {{ formatAbilityBonuses(s.baseStats.abilityBonuses) }}
+          </span>
+          <span class="stat">
+            <span class="label">Taille:</span>
+            {{ getSizeLabel(s.baseStats.sizeCategory) }}
+          </span>
+          <span class="stat">
+            <span class="label">Vitesse:</span>
+            {{ s.baseStats.speedMeters }}m
+          </span>
+          @if (s.baseStats.hasDarkvision) {
+          <span class="stat darkvision">
+            👁️ Vision nocturne ({{ s.baseStats.darkvisionRadiusMeters }}m)
+          </span>
+          }
+        </div>
+      </div>
+    </div>
+    }
+  </div>
+
+  @if (selectedSpeciesDetail && selectedSpeciesDetail.subspecies.length > 0) {
+  <div class="subspecies-section">
+    <h3>Choisissez votre sous-espèce</h3>
+    <p class="section-description">
+      Les {{ selectedSpeciesDetail.name }}s ont plusieurs variantes avec des bonus supplémentaires.
+    </p>
+
+    <div class="species-grid">
+      @for (sub of selectedSpeciesDetail.subspecies; track sub.id) {
+      <div
+        class="species-cardable subspecies-card"
+        [class.selected]="isSubspeciesSelected(sub.id)"
+        (click)="selectSubspecies(sub)"
+      >
+        <div class="species-icon sub-icon">{{ getIcon(selectedSpeciesDetail.name) }}</div>
+
+        <div class="species-info">
+          <div class="header-row">
+            <h2>{{ sub.name }}</h2>
+            @if(isSubspeciesSelected(sub.id)) {
+            <span class="check-mark">✓</span>
+            }
+          </div>
+
+          <div class="species-stats">
+            <span class="stat">
+              <span class="label">Bonus Extra:</span>
+              {{ formatAbilityBonuses(sub.additionalStats.abilityBonuses) }}
+            </span>
+            <span class="stat traits">
+              {{ getSubspeciesTraitNames(sub) }}
+            </span>
+          </div>
+        </div>
+      </div>
+      }
+    </div>
+  </div>
+  } @if (creationService.character().speciesId) {
+  <div class="selection-summary">
+    <h3>✅ Sélection Actuelle</h3>
+    <div class="summary-content">
+      <div class="summary-main">
+        <span class="summary-icon">{{ getIcon(creationService.character().speciesName!) }}</span>
+        <div class="summary-info">
+          <strong>{{ creationService.character().speciesName }}</strong>
+          @if (creationService.character().subspeciesName) {
+          <span class="subspecies-label">({{ creationService.character().subspeciesName }})</span>
+          }
+        </div>
+      </div>
+
+      <div class="summary-details">
+        <div class="detail-group">
+          <span class="detail-label">Total Bonus</span>
+          <span class="detail-value bonus">{{
+            formatAbilityBonuses(creationService.character().racialBonuses)
+          }}</span>
+        </div>
+        <div class="detail-group">
+          <span class="detail-label">Vitesse</span>
+          <span class="detail-value">{{ creationService.character().speciesSpeed }}m</span>
+        </div>
+        <div class="detail-group">
+          <span class="detail-label">Langues</span>
+          <span class="detail-value">{{
+            creationService.character().speciesLanguages.join(', ')
+          }}</span>
+        </div>
+      </div>
+
+      <button class="clear-btn" (click)="clearSelection()">✕ Réinitialiser</button>
+    </div>
+  </div>
+  } }
+</div>

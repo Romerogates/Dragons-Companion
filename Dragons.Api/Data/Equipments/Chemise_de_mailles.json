@@ -1,0 +1,18 @@
+{
+  "id": "e1a55e00-a005-4b10-8000-000000000005",
+  "name": "Chemise de mailles",
+  "type": "Armor",
+  "subtype": "Medium",
+  "cost": {
+    "value": 50,
+    "unit": "po"
+  },
+  "weight_kg": 10.0,
+  "data": {
+    "ac_base": 13,
+    "add_dex_mod": true,
+    "max_dex_bonus": 2,
+    "str_requirement": 0,
+    "stealth_disadvantage": false
+  }
+}

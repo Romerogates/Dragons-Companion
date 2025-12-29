@@ -3,7 +3,7 @@ import { Component, OnInit, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ActivatedRoute, RouterLink } from '@angular/router';
 import { DataService } from '../../../core/services/data.service';
-import { Species, Subspecies } from '../../../core/models/data.model';
+import { Species, Subspecies } from '../../../core/models/game-data.models';
 
 @Component({
   selector: 'app-species-detail',

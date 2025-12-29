@@ -1,6 +1,6 @@
 <!-- components/species-list/species-list.component.html -->
 <div class="species-container">
-  <h1>Espèces jouables</h1>
+  <h1>🐉 Espèces jouables</h1>
 
   @if (loading) {
   <div class="loading">Chargement des espèces...</div>
@@ -26,7 +26,7 @@
           </span>
           @if (s.baseStats.hasDarkvision) {
           <span class="stat darkvision">
-            👁️ Vision dans le noir ({{ s.baseStats.darkvisionRadiusMeters }}m)
+            👁️ Vision nocturne ({{ s.baseStats.darkvisionRadiusMeters }}m)
           </span>
           }
         </div>

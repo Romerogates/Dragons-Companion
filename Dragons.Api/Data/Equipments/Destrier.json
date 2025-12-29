@@ -1,0 +1,15 @@
+{
+  "id": "09da9d4d-1cbe-45ab-a9a6-f9afce3f9aa4",
+  "name": "Destrier",
+  "type": "Mount",
+  "subtype": "Animal",
+  "cost": {
+    "value": 400,
+    "unit": "po"
+  },
+  "weight_kg": 0.0,
+  "data": {
+    "speed": "18 m",
+    "carry_capacity_kg": 270
+  }
+}

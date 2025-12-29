@@ -1,10 +1,30 @@
 <!-- navbar.component.html -->
 <nav class="navbar">
-  <div class="brand">🐉 EANA / DRAGONS</div>
-  <div class="nav-links">
-    <a routerLink="/species" routerLinkActive="active">🧬 Espèces</a>
-    <a routerLink="/classes" routerLinkActive="active">⚔️ Classes</a>
-    <a routerLink="/civilizations" routerLinkActive="active">🏰 Civilisations</a>
-    <a routerLink="/languages" routerLinkActive="active">📜 Langues</a>
+  <!-- Logo cliquable -->
+  <a class="brand" routerLink="/">
+    <img src="/images/dragons_logo.svg" alt="Dragons Companion" class="logo" />
+    <span class="brand-text">EANA / DRAGONS</span>
+  </a>
+
+  <!-- Bouton hamburger mobile -->
+  <button class="menu-toggle" [class.open]="menuOpen" (click)="toggleMenu()" aria-label="Menu">
+    <span></span>
+    <span></span>
+    <span></span>
+  </button>
+
+  <!-- Liens de navigation -->
+  <div class="nav-links" [class.open]="menuOpen">
+    <a routerLink="/create" routerLinkActive="active" (click)="closeMenu()"> ✨ Créer </a>
+    <a routerLink="/characters" routerLinkActive="active" (click)="closeMenu()">
+      🧙‍♂️ Mes Personnages</a
+    >
+    <a routerLink="/species" routerLinkActive="active" (click)="closeMenu()"> 🧬 Espèces </a>
+    <a routerLink="/classes" routerLinkActive="active" (click)="closeMenu()"> ⚔️ Classes </a>
+    <a routerLink="/civilizations" routerLinkActive="active" (click)="closeMenu()">
+      🏰 Civilisations
+    </a>
+    <a routerLink="/languages" routerLinkActive="active" (click)="closeMenu()"> 📜 Langues </a>
+    <a routerLink="/equipment" routerLinkActive="active" (click)="closeMenu()"> 🎒 Équipement </a>
   </div>
 </nav>

@@ -1,0 +1,18 @@
+{
+  "id": "e1a55e00-a011-4b10-8000-000000000011",
+  "name": "Clibanion",
+  "type": "Armor",
+  "subtype": "Heavy",
+  "cost": {
+    "value": 200,
+    "unit": "po"
+  },
+  "weight_kg": 30.0,
+  "data": {
+    "ac_base": 17,
+    "add_dex_mod": false,
+    "max_dex_bonus": 0,
+    "str_requirement": 15,
+    "stealth_disadvantage": true
+  }
+}

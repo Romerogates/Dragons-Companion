@@ -1,0 +1,15 @@
+{
+  "id": "493ca682-6dbc-424e-996b-e81d2c748e7e",
+  "name": "Âne ou mule",
+  "type": "Mount",
+  "subtype": "Animal",
+  "cost": {
+    "value": 8,
+    "unit": "po"
+  },
+  "weight_kg": 0.0,
+  "data": {
+    "speed": "12 m",
+    "carry_capacity_kg": 210
+  }
+}

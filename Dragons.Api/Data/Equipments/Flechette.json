@@ -1,0 +1,19 @@
+{
+  "id": "937f2cb2-453b-4f00-b41a-c123a93565c3",
+  "name": "Fléchette",
+  "type": "Weapon",
+  "subtype": "Simple Ranged",
+  "cost": {
+    "value": 5,
+    "unit": "pc"
+  },
+  "weight_kg": 0.125,
+  "data": {
+    "damage_dice": "1d4",
+    "damage_type": "perforant",
+    "properties": [
+      "Finesse",
+      "Lancer (6/18)"
+    ]
+  }
+}

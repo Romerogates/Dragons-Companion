@@ -1,6 +1,9 @@
+// app.component.scss
+
 :host {
   display: block;
   width: 100%;
+  min-height: 100vh;
 }
 
 main {
@@ -8,4 +11,43 @@ main {
   min-height: calc(100vh - 70px);
   display: flex;
   flex-direction: column;
+}
+
+// Mobile - navbar plus petite
+@media screen and (max-width: 480px) {
+  main {
+    min-height: calc(100vh - 56px);
+  }
+}
+
+// Tablette
+@media screen and (min-width: 481px) and (max-width: 768px) {
+  main {
+    min-height: calc(100vh - 60px);
+  }
+}
+
+/* ========================================
+   STYLES D'IMPRESSION
+   ======================================== */
+@media print {
+  :host {
+    display: block !important;
+    width: 210mm !important;
+    height: auto !important;
+    min-height: 0 !important;
+    overflow: visible !important;
+    margin: 0 !important;
+    padding: 0 !important;
+  }
+
+  main {
+    display: block !important;
+    width: 210mm !important;
+    height: auto !important;
+    min-height: 0 !important;
+    overflow: visible !important;
+    margin: 0 !important;
+    padding: 0 !important;
+  }
 }

@@ -3,7 +3,7 @@ import { Component, OnInit, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterLink } from '@angular/router';
 import { DataService } from '../../../core/services/data.service';
-import { CivilizationSummary } from '../../../core/models/data.model';
+import { CivilizationSummary } from '../../../core/models/game-data.models';
 
 @Component({
   selector: 'app-civilization-list',

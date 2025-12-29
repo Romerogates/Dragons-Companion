@@ -1,0 +1,12 @@
+{
+  "id": "1cccc328-a9a3-408c-8465-e59f80fa4cf6",
+  "name": "Jeu de cartes",
+  "type": "Tool",
+  "subtype": "Gaming",
+  "cost": {
+    "value": 5,
+    "unit": "pa"
+  },
+  "weight_kg": 0.0,
+  "data": {}
+}

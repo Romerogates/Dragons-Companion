@@ -1,0 +1,16 @@
+{
+  "id": "43468d65-9799-49f0-84fb-298d1ad9f031",
+  "name": "Masse d'armes",
+  "type": "Weapon",
+  "subtype": "Simple Melee",
+  "cost": {
+    "value": 5,
+    "unit": "po"
+  },
+  "weight_kg": 2.0,
+  "data": {
+    "damage_dice": "1d6",
+    "damage_type": "contondant",
+    "properties": []
+  }
+}

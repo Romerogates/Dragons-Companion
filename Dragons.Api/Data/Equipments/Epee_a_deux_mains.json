@@ -1,0 +1,19 @@
+{
+  "id": "ada4a38a-6059-4b12-90e0-c964c8a151a1",
+  "name": "Épée à deux mains",
+  "type": "Weapon",
+  "subtype": "Martial Melee",
+  "cost": {
+    "value": 50,
+    "unit": "po"
+  },
+  "weight_kg": 3.0,
+  "data": {
+    "damage_dice": "2d6",
+    "damage_type": "tranchant",
+    "properties": [
+      "Deux mains",
+      "Lourde"
+    ]
+  }
+}

@@ -1,0 +1,14 @@
+{
+  "id": "ab3c4805-98cd-4891-87ca-6fd9690ab6ae",
+  "name": "Trousse de guérisseur",
+  "type": "Gear",
+  "subtype": "Tool",
+  "cost": {
+    "value": 5,
+    "unit": "po"
+  },
+  "weight_kg": 1.5,
+  "data": {
+    "description": "10 utilisations. Stabilise une créature à 0 PV sans test."
+  }
+}

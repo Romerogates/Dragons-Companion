@@ -1,0 +1,18 @@
+{
+  "id": "44f191d9-0710-46d4-a610-75f012858ac8",
+  "name": "Marteau de guerre",
+  "type": "Weapon",
+  "subtype": "Martial Melee",
+  "cost": {
+    "value": 15,
+    "unit": "po"
+  },
+  "weight_kg": 1.0,
+  "data": {
+    "damage_dice": "1d8",
+    "damage_type": "contondant",
+    "properties": [
+      "Polyvalente (1d10)"
+    ]
+  }
+}

@@ -1,39 +1,256 @@
 // navbar.component.scss
+
 .navbar {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 1rem 2rem;
+  padding: 0.8rem 2rem;
   background: linear-gradient(135deg, #2c3e50, #34495e);
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+  position: relative;
+  z-index: 1000;
 }
 
+// ========================================
+// BRAND AVEC LOGO
+// ========================================
 .brand {
-  font-size: 1.5rem;
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  text-decoration: none;
+  transition: transform 0.2s, opacity 0.2s;
+
+  &:hover {
+    transform: scale(1.02);
+    opacity: 0.9;
+  }
+}
+
+.logo {
+  height: 45px;
+  width: auto;
+  filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.3));
+  transition: transform 0.3s ease;
+
+  .brand:hover & {
+    transform: rotate(-5deg) scale(1.05);
+  }
+}
+
+.brand-text {
+  font-family: 'Cinzel', serif;
+  font-size: 1.4rem;
   font-weight: bold;
   color: #f1c40f;
   letter-spacing: 1px;
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3);
 }
 
+// ========================================
+// MENU HAMBURGER (caché par défaut sur desktop)
+// ========================================
+.menu-toggle {
+  display: none;
+  flex-direction: column;
+  justify-content: space-between;
+  width: 28px;
+  height: 20px;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  z-index: 1001;
+
+  span {
+    display: block;
+    width: 100%;
+    height: 3px;
+    background-color: #ecf0f1;
+    border-radius: 2px;
+    transition: all 0.3s ease;
+  }
+
+  &.open {
+    span:nth-child(1) {
+      transform: rotate(45deg) translate(5px, 5px);
+    }
+    span:nth-child(2) {
+      opacity: 0;
+    }
+    span:nth-child(3) {
+      transform: rotate(-45deg) translate(6px, -6px);
+    }
+  }
+}
+
+// ========================================
+// NAV LINKS - DESKTOP
+// ========================================
 .nav-links {
   display: flex;
-  gap: 1.5rem;
+  gap: 1rem;
+  align-items: center;
 
   a {
     color: #ecf0f1;
     text-decoration: none;
-    padding: 0.5rem 1rem;
+    padding: 0.5rem 0.8rem;
     border-radius: 6px;
-    font-weight: 600; // Même poids partout
-    transition: background 0.2s, color 0.2s;
+    font-weight: 600;
+    font-size: 0.95rem;
+    transition: background 0.2s, color 0.2s, transform 0.2s;
+    white-space: nowrap;
 
     &:hover {
       background: rgba(255, 255, 255, 0.1);
+      transform: translateY(-1px);
     }
 
     &.active {
       background: #f1c40f;
       color: #2c3e50;
     }
+  }
+}
+
+// ========================================
+// RESPONSIVE - DESKTOP PETIT
+// ========================================
+@media screen and (max-width: 1024px) {
+  .nav-links {
+    gap: 0.5rem;
+
+    a {
+      padding: 0.4rem 0.6rem;
+      font-size: 0.85rem;
+    }
+  }
+
+  .brand-text {
+    font-size: 1.2rem;
+  }
+}
+
+// ========================================
+// RESPONSIVE - TABLETTE
+// ========================================
+@media screen and (max-width: 768px) {
+  .navbar {
+    padding: 0.6rem 1rem;
+  }
+
+  .logo {
+    height: 38px;
+  }
+
+  .brand-text {
+    font-size: 1.1rem;
+  }
+
+  .menu-toggle {
+    display: flex;
+  }
+
+  .nav-links {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    flex-direction: column;
+    background: linear-gradient(135deg, #34495e, #2c3e50);
+    padding: 0;
+    gap: 0;
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.3s ease, padding 0.3s ease;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+
+    &.open {
+      max-height: 400px;
+      padding: 0.5rem 0;
+    }
+
+    a {
+      width: 100%;
+      padding: 1rem 1.5rem;
+      border-radius: 0;
+      text-align: left;
+      font-size: 1rem;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+
+      &:last-child {
+        border-bottom: none;
+      }
+
+      &:hover {
+        background: rgba(255, 255, 255, 0.15);
+        transform: none;
+      }
+
+      &.active {
+        background: rgba(241, 196, 15, 0.2);
+        color: #f1c40f;
+        border-left: 4px solid #f1c40f;
+      }
+    }
+  }
+}
+
+// ========================================
+// RESPONSIVE - MOBILE
+// ========================================
+@media screen and (max-width: 480px) {
+  .navbar {
+    padding: 0.5rem 0.8rem;
+  }
+
+  .logo {
+    height: 32px;
+  }
+
+  .brand-text {
+    font-size: 0.95rem;
+    letter-spacing: 0;
+  }
+
+  .nav-links a {
+    padding: 0.9rem 1.2rem;
+    font-size: 0.95rem;
+  }
+}
+
+// ========================================
+// TRÈS PETITS ÉCRANS
+// ========================================
+@media screen and (max-width: 360px) {
+  .logo {
+    height: 28px;
+  }
+
+  .brand-text {
+    display: none;
+  }
+
+  .nav-links a {
+    padding: 0.8rem 1rem;
+    font-size: 0.9rem;
+  }
+}
+
+// ========================================
+// PRINT
+// ========================================
+@media print {
+  :host {
+    display: none !important;
+    visibility: hidden !important;
+    height: 0 !important;
+    width: 0 !important;
+    overflow: hidden !important;
+  }
+
+  .navbar {
+    display: none !important;
   }
 }

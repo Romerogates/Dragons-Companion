@@ -1,0 +1,71 @@
+<!-- features/character-creation/steps/abilities-step/abilities-step.component.html -->
+<div class="abilities-step">
+  <h2>Répartissez vos caractéristiques</h2>
+  <p class="step-description">
+    Vous avez <strong>{{ creationService.character().pointsRemaining }} points</strong> à répartir.
+    Les bonus raciaux s'ajoutent automatiquement.
+  </p>
+
+  <div class="points-remaining" [class.warning]="creationService.character().pointsRemaining < 0">
+    <span class="points-label">Points restants</span>
+    <span class="points-value">{{ creationService.character().pointsRemaining }}</span>
+  </div>
+
+  <div class="abilities-grid">
+    @for (ability of abilities; track ability) {
+    <div class="ability-card">
+      <div class="ability-header">
+        <span class="ability-name">{{ abilityNames[ability] }}</span>
+        <span class="ability-modifier">{{ getModifier(ability) }}</span>
+      </div>
+
+      <div class="ability-controls">
+        <button
+          class="control-btn decrement"
+          [disabled]="!canDecrement(ability)"
+          (click)="decrement(ability)"
+        >
+          −
+        </button>
+
+        <div class="ability-values">
+          <span class="base-value">{{ getBaseValue(ability) }}</span>
+          @if (getRacialBonus(ability) !== 0) {
+          <span class="racial-bonus">+{{ getRacialBonus(ability) }}</span>
+          }
+          <span class="final-value">= {{ getFinalValue(ability) }}</span>
+        </div>
+
+        <button
+          class="control-btn increment"
+          [disabled]="!canIncrement(ability)"
+          (click)="increment(ability)"
+        >
+          +
+        </button>
+      </div>
+
+      <div class="ability-cost">Coût: {{ getPointCost(getBaseValue(ability)) }} pts</div>
+    </div>
+    }
+  </div>
+
+  <div class="actions">
+    <button class="reset-btn" (click)="reset()">🔄 Réinitialiser</button>
+  </div>
+
+  <!-- Tableau des coûts -->
+  <div class="cost-table">
+    <h4>📊 Table des coûts</h4>
+    <div class="cost-grid">
+      @for (entry of [6, 7, 8, 9, 10, 11, 12, 13, 14, 15]; track entry) {
+      <div class="cost-entry" [class.negative]="getPointCost(entry) < 0">
+        <span class="cost-value">{{ entry }}</span>
+        <span class="cost-points"
+          >{{ getPointCost(entry) > 0 ? '+' : '' }}{{ getPointCost(entry) }}</span
+        >
+      </div>
+      }
+    </div>
+  </div>
+</div>

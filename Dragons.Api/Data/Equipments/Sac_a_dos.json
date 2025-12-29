@@ -1,0 +1,14 @@
+{
+  "id": "fb9670de-e984-4814-a577-06862c993eb4",
+  "name": "Sac à dos",
+  "type": "Gear",
+  "subtype": "Container",
+  "cost": {
+    "value": 2,
+    "unit": "po"
+  },
+  "weight_kg": 2.5,
+  "data": {
+    "capacity": "30 L / 30 kg"
+  }
+}

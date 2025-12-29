@@ -1,0 +1,21 @@
+{
+  "id": "45e05239-8d63-404d-800e-a9b6ea23e87a",
+  "name": "Arbalète lourde",
+  "type": "Weapon",
+  "subtype": "Martial Ranged",
+  "cost": {
+    "value": 50,
+    "unit": "po"
+  },
+  "weight_kg": 9.0,
+  "data": {
+    "damage_dice": "1d10",
+    "damage_type": "perforant",
+    "properties": [
+      "Deux mains",
+      "Lourde",
+      "Projectiles (30/120)",
+      "Rechargement"
+    ]
+  }
+}

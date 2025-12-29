@@ -1,30 +1,41 @@
-// services/data.service.ts
+// core/services/data.service.ts (ajouter les méthodes)
 import { Injectable, inject } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import {
-  Language,
-  LanguageSummary,
-  Civilization,
-  CivilizationSummary,
-  Species,
   SpeciesSummary,
-  CharacterClass,
+  Species,
   CharacterClassSummary,
-} from '../models/data.model';
+  CharacterClass,
+  CivilizationSummary,
+  Civilization,
+  LanguageSummary,
+  Language,
+  EquipmentSummary,
+  Equipment,
+} from '../models/game-data.models';
 
 @Injectable({ providedIn: 'root' })
 export class DataService {
   private http = inject(HttpClient);
   private apiUrl = 'http://localhost:5068/api';
 
-  // Languages
-  getLanguages(): Observable<LanguageSummary[]> {
-    return this.http.get<LanguageSummary[]>(`${this.apiUrl}/languages`);
+  // Species
+  getSpecies(): Observable<SpeciesSummary[]> {
+    return this.http.get<SpeciesSummary[]>(`${this.apiUrl}/species`);
   }
 
-  getLanguageById(id: string): Observable<Language> {
-    return this.http.get<Language>(`${this.apiUrl}/languages/${id}`);
+  getSpeciesById(id: string): Observable<Species> {
+    return this.http.get<Species>(`${this.apiUrl}/species/${id}`);
+  }
+
+  // Classes
+  getClasses(): Observable<CharacterClassSummary[]> {
+    return this.http.get<CharacterClassSummary[]>(`${this.apiUrl}/classes`);
+  }
+
+  getClassById(id: string): Observable<CharacterClass> {
+    return this.http.get<CharacterClass>(`${this.apiUrl}/classes/${id}`);
   }
 
   // Civilizations
@@ -36,21 +47,21 @@ export class DataService {
     return this.http.get<Civilization>(`${this.apiUrl}/civilizations/${id}`);
   }
 
-  // Species
-  getSpecies(): Observable<SpeciesSummary[]> {
-    return this.http.get<SpeciesSummary[]>(`${this.apiUrl}/species`);
+  // Languages
+  getLanguages(): Observable<LanguageSummary[]> {
+    return this.http.get<LanguageSummary[]>(`${this.apiUrl}/languages`);
   }
 
-  getSpeciesById(id: string): Observable<Species> {
-    return this.http.get<Species>(`${this.apiUrl}/species/${id}`);
+  getLanguageById(id: string): Observable<Language> {
+    return this.http.get<Language>(`${this.apiUrl}/languages/${id}`);
   }
 
-  // Character Classes
-  getClasses(): Observable<CharacterClassSummary[]> {
-    return this.http.get<CharacterClassSummary[]>(`${this.apiUrl}/classes`);
+  // Equipment
+  getEquipment(): Observable<EquipmentSummary[]> {
+    return this.http.get<EquipmentSummary[]>(`${this.apiUrl}/equipment`);
   }
 
-  getClassById(id: string): Observable<CharacterClass> {
-    return this.http.get<CharacterClass>(`${this.apiUrl}/classes/${id}`);
+  getEquipmentById(id: string): Observable<Equipment> {
+    return this.http.get<Equipment>(`${this.apiUrl}/equipment/${id}`);
   }
 }

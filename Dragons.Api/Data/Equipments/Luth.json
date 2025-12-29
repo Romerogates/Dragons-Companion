@@ -1,0 +1,12 @@
+{
+  "id": "9ffe2c22-e0c9-43d1-985e-899325ed9f02",
+  "name": "Luth",
+  "type": "Tool",
+  "subtype": "Instrument",
+  "cost": {
+    "value": 35,
+    "unit": "po"
+  },
+  "weight_kg": 1.0,
+  "data": {}
+}

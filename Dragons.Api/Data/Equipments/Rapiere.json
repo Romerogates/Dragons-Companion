@@ -1,0 +1,18 @@
+{
+  "id": "19ef5701-630f-4461-9600-541d96bb2966",
+  "name": "Rapière",
+  "type": "Weapon",
+  "subtype": "Martial Melee",
+  "cost": {
+    "value": 25,
+    "unit": "po"
+  },
+  "weight_kg": 1.0,
+  "data": {
+    "damage_dice": "1d8",
+    "damage_type": "perforant",
+    "properties": [
+      "Finesse"
+    ]
+  }
+}

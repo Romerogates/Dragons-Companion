@@ -1,0 +1,14 @@
+{
+  "id": "b22b4958-6100-47c9-8137-433ee3994b3e",
+  "name": "Pied-de-biche",
+  "type": "Gear",
+  "subtype": "Adventuring",
+  "cost": {
+    "value": 2,
+    "unit": "po"
+  },
+  "weight_kg": 2.5,
+  "data": {
+    "description": "Avantage aux tests de Force pour faire levier."
+  }
+}

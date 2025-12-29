@@ -1,0 +1,18 @@
+{
+  "id": "9466a10d-d725-46ec-8c23-d148509e51d2",
+  "name": "Épée longue",
+  "type": "Weapon",
+  "subtype": "Martial Melee",
+  "cost": {
+    "value": 15,
+    "unit": "po"
+  },
+  "weight_kg": 1.5,
+  "data": {
+    "damage_dice": "1d8",
+    "damage_type": "tranchant",
+    "properties": [
+      "Polyvalente (1d10)"
+    ]
+  }
+}

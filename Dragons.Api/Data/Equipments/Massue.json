@@ -1,0 +1,18 @@
+{
+  "id": "7b15a37f-36d0-4c4e-b3ca-60026303237f",
+  "name": "Massue",
+  "type": "Weapon",
+  "subtype": "Simple Melee",
+  "cost": {
+    "value": 2,
+    "unit": "pa"
+  },
+  "weight_kg": 5.0,
+  "data": {
+    "damage_dice": "1d8",
+    "damage_type": "contondant",
+    "properties": [
+      "Deux mains"
+    ]
+  }
+}

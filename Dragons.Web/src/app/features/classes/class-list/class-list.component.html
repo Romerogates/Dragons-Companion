@@ -1,6 +1,6 @@
 <!-- components/class-list/class-list.component.html -->
 <div class="class-container">
-  <h1>Classes de personnage</h1>
+  <h1>⚔️ Classes de personnage</h1>
 
   @if (loading) {
   <div class="loading">Chargement des classes...</div>
@@ -17,9 +17,9 @@
             d{{ c.hitDie }}
           </span>
           @if (c.hasSpellcasting) {
-          <span class="stat spellcaster"> ✨ Lanceur de sorts </span>
+          <span class="stat spellcaster">✨ Sorts</span>
           } @else {
-          <span class="stat martial"> ⚔️ Martial </span>
+          <span class="stat martial">⚔️ Martial</span>
           }
         </div>
       </div>

@@ -1,0 +1,15 @@
+{
+  "id": "8c98477c-693e-4beb-96b7-f63499d6f2b2",
+  "name": "Cheval de selle",
+  "type": "Mount",
+  "subtype": "Animal",
+  "cost": {
+    "value": 75,
+    "unit": "po"
+  },
+  "weight_kg": 0.0,
+  "data": {
+    "speed": "18 m",
+    "carry_capacity_kg": 240
+  }
+}

@@ -1,0 +1,20 @@
+{
+  "id": "2bf9b16b-1717-44a1-9266-f6ad36b70a27",
+  "name": "Hallebarde",
+  "type": "Weapon",
+  "subtype": "Martial Melee",
+  "cost": {
+    "value": 20,
+    "unit": "po"
+  },
+  "weight_kg": 3.0,
+  "data": {
+    "damage_dice": "1d10",
+    "damage_type": "tranchant",
+    "properties": [
+      "Allonge",
+      "Deux mains",
+      "Lourde"
+    ]
+  }
+}

@@ -1,0 +1,14 @@
+{
+  "id": "eb5ca2fc-41c3-42b5-9453-670b356a1133",
+  "name": "Torche",
+  "type": "Gear",
+  "subtype": "Light Source",
+  "cost": {
+    "value": 1,
+    "unit": "pc"
+  },
+  "weight_kg": 0.5,
+  "data": {
+    "description": "Brûle 1h. Lumière vive 6m + faible 6m. Dégâts de feu: 1."
+  }
+}

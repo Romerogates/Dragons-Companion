@@ -1,0 +1,119 @@
+<div class="class-step">
+  <h2>Choisissez votre classe</h2>
+  <p class="step-description">
+    Votre classe définit votre rôle au combat, vos compétences martiales ou magiques, et votre
+    résistance.
+  </p>
+
+  @if (loading) {
+  <div class="loading">Chargement des classes...</div>
+  } @else {
+
+  <div class="class-grid">
+    @for (c of classes; track c.id) {
+    <div class="class-cardable" [class.selected]="isClassSelected(c.id)" (click)="selectClass(c)">
+      <div class="class-icon">{{ getIcon(c.name) }}</div>
+
+      <div class="class-info">
+        <div class="header-row">
+          <h2>{{ c.name }}</h2>
+          @if(isClassSelected(c.id)) {
+          <span class="check-mark">✓</span>
+          }
+        </div>
+
+        <div class="badges-row">
+          <span class="badge hit-die" [class]="getHitDieColor(c.hitDie)"> 🎲 d{{ c.hitDie }} </span>
+          @if (c.hasSpellcasting) {
+          <span class="badge spellcaster">✨ Sorts</span>
+          } @else {
+          <span class="badge martial">⚔️ Martial</span>
+          }
+        </div>
+      </div>
+    </div>
+    }
+  </div>
+
+  @if (selectedClassDetail) {
+  <div class="selection-summary">
+    <h3>✅ Classe Sélectionnée</h3>
+    <div class="summary-content">
+      <div class="summary-main">
+        <span class="summary-icon">{{ getIcon(selectedClassDetail.name) }}</span>
+        <div class="summary-info">
+          <strong>{{ selectedClassDetail.name }}</strong>
+
+          <div class="primary-abilities">
+            <span class="label">Caractéristique principale :</span>
+            <div class="ability-tags">
+              @for (ability of selectedClassDetail.primaryAbility; track ability) {
+              <span class="ability-tag">{{ ability }}</span>
+              }
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="summary-details">
+        <div class="detail-group">
+          <span class="detail-label">Maîtrises Martiales</span>
+          <div class="info-row">
+            <span class="sub-label">Sauvegardes:</span>
+            <span class="value">{{
+              selectedClassDetail.proficiencies.savingThrows.join(', ')
+            }}</span>
+          </div>
+          <div class="info-row">
+            <span class="sub-label">Armures:</span>
+            <span class="value">
+              {{
+                selectedClassDetail.proficiencies.armor.length
+                  ? selectedClassDetail.proficiencies.armor.join(', ')
+                  : 'Aucune'
+              }}
+            </span>
+          </div>
+          <div class="info-row">
+            <span class="sub-label">Armes:</span>
+            <span class="value">
+              {{
+                selectedClassDetail.proficiencies.weapons.length
+                  ? selectedClassDetail.proficiencies.weapons.join(', ')
+                  : 'Aucune'
+              }}
+            </span>
+          </div>
+        </div>
+
+        <div class="detail-group">
+          <span class="detail-label">Capacités</span>
+
+          @if (selectedClassDetail.spellcasting) {
+          <div class="info-row">
+            <span class="sub-label">Magie:</span>
+            <span class="value magic">
+              {{ selectedClassDetail.spellcasting.type }} ({{
+                selectedClassDetail.spellcasting.ability
+              }})
+            </span>
+          </div>
+          }
+
+          <div class="info-row">
+            <span class="sub-label">Compétences:</span>
+            <span class="value">
+              Choisir {{ selectedClassDetail.proficiencies.skills.chooseCount }} parmi :
+              <span class="skill-list">{{
+                selectedClassDetail.proficiencies.skills.options.join(', ')
+              }}</span>
+            </span>
+          </div>
+        </div>
+      </div>
+
+      <button class="clear-btn" (click)="clearSelection()">✕ Réinitialiser</button>
+    </div>
+  </div>
+  } }
+</div>

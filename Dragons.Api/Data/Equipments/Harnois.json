@@ -1,0 +1,18 @@
+{
+  "id": "e1a55e00-a012-4b10-8000-000000000012",
+  "name": "Harnois",
+  "type": "Armor",
+  "subtype": "Heavy",
+  "cost": {
+    "value": 1500,
+    "unit": "po"
+  },
+  "weight_kg": 32.5,
+  "data": {
+    "ac_base": 18,
+    "add_dex_mod": false,
+    "max_dex_bonus": 0,
+    "str_requirement": 15,
+    "stealth_disadvantage": true
+  }
+}

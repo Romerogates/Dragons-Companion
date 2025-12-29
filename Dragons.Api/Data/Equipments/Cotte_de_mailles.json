@@ -1,0 +1,18 @@
+{
+  "id": "e1a55e00-a010-4b10-8000-000000000010",
+  "name": "Cotte de mailles",
+  "type": "Armor",
+  "subtype": "Heavy",
+  "cost": {
+    "value": 75,
+    "unit": "po"
+  },
+  "weight_kg": 27.5,
+  "data": {
+    "ac_base": 16,
+    "add_dex_mod": false,
+    "max_dex_bonus": 0,
+    "str_requirement": 13,
+    "stealth_disadvantage": true
+  }
+}

@@ -1,0 +1,18 @@
+{
+  "id": "e1a55e00-a004-4b10-8000-000000000004",
+  "name": "Armure de peau",
+  "type": "Armor",
+  "subtype": "Medium",
+  "cost": {
+    "value": 10,
+    "unit": "po"
+  },
+  "weight_kg": 6.0,
+  "data": {
+    "ac_base": 12,
+    "add_dex_mod": true,
+    "max_dex_bonus": 2,
+    "str_requirement": 0,
+    "stealth_disadvantage": false
+  }
+}

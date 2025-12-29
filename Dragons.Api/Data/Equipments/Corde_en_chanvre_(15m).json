@@ -1,0 +1,14 @@
+{
+  "id": "dbe35e2a-56f3-4afa-8c31-1f46e92e6aa6",
+  "name": "Corde en chanvre (15m)",
+  "type": "Gear",
+  "subtype": "Adventuring",
+  "cost": {
+    "value": 1,
+    "unit": "po"
+  },
+  "weight_kg": 5.0,
+  "data": {
+    "description": "Supporte 3 tonnes. PV: 5."
+  }
+}

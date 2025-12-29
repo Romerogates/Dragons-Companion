@@ -1,0 +1,18 @@
+{
+  "id": "e1a55e00-a007-4b10-8000-000000000007",
+  "name": "Cuirasse",
+  "type": "Armor",
+  "subtype": "Medium",
+  "cost": {
+    "value": 400,
+    "unit": "po"
+  },
+  "weight_kg": 10.0,
+  "data": {
+    "ac_base": 14,
+    "add_dex_mod": true,
+    "max_dex_bonus": 2,
+    "str_requirement": 0,
+    "stealth_disadvantage": false
+  }
+}

@@ -1,0 +1,133 @@
+<!-- features/character-creation/steps/summary-step/summary-step.component.html -->
+<div class="summary-step">
+  <h2>Récapitulatif de votre personnage</h2>
+  <p class="step-description">Vérifiez les informations avant de finaliser la création.</p>
+
+  <div class="summary-grid">
+    <!-- Identité -->
+    <section class="summary-card identity">
+      <h3>🪪 Identité</h3>
+      <div class="identity-header">
+        <span class="character-name">{{ character.name || 'Sans nom' }}</span>
+      </div>
+      <div class="identity-details">
+        <p>
+          <strong>Espèce:</strong> {{ character.speciesName }} @if (character.subspeciesName) { ({{
+            character.subspeciesName
+          }}) }
+        </p>
+        <p><strong>Civilisation:</strong> {{ character.civilizationName }}</p>
+        <p><strong>Classe:</strong> {{ character.className }}</p>
+        @if (character.alignment) {
+        <p><strong>Alignement:</strong> {{ character.alignment }}</p>
+        } @if (character.background) {
+        <p><strong>Historique:</strong> {{ character.background }}</p>
+        }
+      </div>
+    </section>
+
+    <!-- Caractéristiques -->
+    <section class="summary-card abilities">
+      <h3>📊 Caractéristiques</h3>
+      <div class="abilities-grid">
+        <div class="ability-item">
+          <span class="ability-label">FOR</span>
+          <span class="ability-value">{{ finalAbilities.force }}</span>
+          <span class="ability-mod">{{ formatModifier(modifiers.force) }}</span>
+        </div>
+        <div class="ability-item">
+          <span class="ability-label">DEX</span>
+          <span class="ability-value">{{ finalAbilities.dexterite }}</span>
+          <span class="ability-mod">{{ formatModifier(modifiers.dexterite) }}</span>
+        </div>
+        <div class="ability-item">
+          <span class="ability-label">CON</span>
+          <span class="ability-value">{{ finalAbilities.constitution }}</span>
+          <span class="ability-mod">{{ formatModifier(modifiers.constitution) }}</span>
+        </div>
+        <div class="ability-item">
+          <span class="ability-label">INT</span>
+          <span class="ability-value">{{ finalAbilities.intelligence }}</span>
+          <span class="ability-mod">{{ formatModifier(modifiers.intelligence) }}</span>
+        </div>
+        <div class="ability-item">
+          <span class="ability-label">SAG</span>
+          <span class="ability-value">{{ finalAbilities.sagesse }}</span>
+          <span class="ability-mod">{{ formatModifier(modifiers.sagesse) }}</span>
+        </div>
+        <div class="ability-item">
+          <span class="ability-label">CHA</span>
+          <span class="ability-value">{{ finalAbilities.charisme }}</span>
+          <span class="ability-mod">{{ formatModifier(modifiers.charisme) }}</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- Combat -->
+    <section class="summary-card combat">
+      <h3>⚔️ Combat</h3>
+      <div class="combat-stats">
+        <div class="stat-box">
+          <span class="stat-value">{{ creationService.hitPointsMax() }}</span>
+          <span class="stat-label">PV Max</span>
+        </div>
+        <div class="stat-box">
+          <span class="stat-value">{{ creationService.armorClass() }}</span>
+          <span class="stat-label">CA</span>
+        </div>
+        <div class="stat-box">
+          <span class="stat-value">{{ formatModifier(creationService.initiative()) }}</span>
+          <span class="stat-label">Initiative</span>
+        </div>
+        <div class="stat-box">
+          <span class="stat-value">{{ character.speciesSpeed }}m</span>
+          <span class="stat-label">Vitesse</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- Maîtrises -->
+    <section class="summary-card proficiencies">
+      <h3>🎯 Maîtrises</h3>
+      <div class="proficiency-group">
+        <span class="prof-label">Jets de sauvegarde:</span>
+        <div class="tags">
+          @for (st of character.savingThrows; track st) {
+          <span class="tag save">{{ st }}</span>
+          }
+        </div>
+      </div>
+      <div class="proficiency-group">
+        <span class="prof-label">Compétences:</span>
+        <div class="tags">
+          @for (skill of character.selectedSkills; track skill) {
+          <span class="tag skill">{{ skill }}</span>
+          }
+        </div>
+      </div>
+      <div class="proficiency-group">
+        <span class="prof-label">Langues:</span>
+        <div class="tags">
+          @for (lang of character.languages; track lang) {
+          <span class="tag lang">{{ lang }}</span>
+          }
+        </div>
+      </div>
+    </section>
+
+    <!-- Traits -->
+    @if (character.speciesTraits.length > 0) {
+    <section class="summary-card traits">
+      <h3>✨ Traits raciaux</h3>
+      <div class="traits-list">
+        @for (trait of character.speciesTraits; track trait.name) {
+        <div class="trait-item">
+          <strong>{{ trait.name }}</strong>
+          <p>{{ trait.description }}</p>
+        </div>
+        }
+      </div>
+    </section>
+    }
+  </div>
+</div>

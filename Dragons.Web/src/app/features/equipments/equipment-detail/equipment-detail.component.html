@@ -1,0 +1,116 @@
+<!-- features/equipment/equipment-detail/equipment-detail.component.html -->
+<div class="equipment-detail-page">
+  <a routerLink="/equipment" class="back-link">← Retour à l'équipement</a>
+
+  @if (loading) {
+  <div class="loading">Chargement...</div>
+  } @else if (equipment) {
+  <div class="equipment-header">
+    <span class="equipment-icon">{{ getTypeIcon() }}</span>
+    <div class="equipment-title">
+      <h1>{{ equipment.name }}</h1>
+      <div class="equipment-meta">
+        <span class="type-badge">{{ equipment.type }}</span>
+        <span class="subtype-badge">{{ equipment.subtype }}</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="stats-grid">
+    <!-- Infos communes -->
+    <div class="stat-card">
+      <span class="stat-label">💰 Prix</span>
+      <span class="stat-value gold">{{ formatCost() }}</span>
+    </div>
+
+    @if (equipment.weightKg > 0) {
+    <div class="stat-card">
+      <span class="stat-label">⚖️ Poids</span>
+      <span class="stat-value">{{ equipment.weightKg }} kg</span>
+    </div>
+    }
+
+    <!-- Stats Arme -->
+    @if (hasWeaponDamage()) {
+    <div class="stat-card">
+      <span class="stat-label">🎲 Dégâts</span>
+      <span class="stat-value damage">{{ getWeaponData()!.damage_dice }}</span>
+    </div>
+
+    <div class="stat-card">
+      <span class="stat-label">💥 Type</span>
+      <span class="stat-value">{{ getWeaponData()!.damage_type }}</span>
+    </div>
+    }
+
+    <!-- Stats Armure -->
+    @if (hasArmorData()) {
+    <div class="stat-card">
+      <span class="stat-label">🛡️ Classe d'armure</span>
+      <span class="stat-value ac">{{ getArmorClassDisplay() }}</span>
+    </div>
+
+    @if (getArmorData()!.str_requirement && getArmorData()!.str_requirement! > 0) {
+    <div class="stat-card">
+      <span class="stat-label">💪 Force requise</span>
+      <span class="stat-value">{{ getArmorData()!.str_requirement }}</span>
+    </div>
+    } @if (getArmorData()!.stealth_disadvantage) {
+    <div class="stat-card warning">
+      <span class="stat-label">🤫 Discrétion</span>
+      <span class="stat-value">Désavantage</span>
+    </div>
+    } }
+
+    <!-- Stats Monture -->
+    @if (hasMountData()) {
+    <div class="stat-card">
+      <span class="stat-label">🏃 Vitesse</span>
+      <span class="stat-value speed">{{ getMountData()!.speed }}</span>
+    </div>
+
+    <div class="stat-card">
+      <span class="stat-label">📦 Capacité de charge</span>
+      <span class="stat-value">{{ getMountData()!.carry_capacity_kg }} kg</span>
+    </div>
+    }
+  </div>
+
+  <!-- Propriétés Arme -->
+  @if (hasWeaponProperties()) {
+  <section class="properties-section">
+    <h2>📋 Propriétés</h2>
+    <div class="properties-list">
+      @for (prop of getWeaponData()!.properties; track prop) {
+      <span class="property-tag">{{ prop }}</span>
+      }
+    </div>
+  </section>
+  }
+
+  <!-- Description Gear -->
+  @if (hasGearDescription()) {
+  <section class="description-section">
+    <h2>📖 Description</h2>
+    <p>{{ getGearData()!.description }}</p>
+  </section>
+  }
+
+  <!-- Description Tool -->
+  @if (hasToolDescription()) {
+  <section class="description-section">
+    <h2>📖 Description</h2>
+    <p>{{ getToolData()!.description }}</p>
+  </section>
+  }
+
+  <!-- Description Mount -->
+  @if (isMount() && getMountData()?.description) {
+  <section class="description-section">
+    <h2>📖 Description</h2>
+    <p>{{ getMountData()!.description }}</p>
+  </section>
+  } } @else {
+  <div class="not-found">Équipement non trouvé</div>
+  }
+</div>

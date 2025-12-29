@@ -1,0 +1,14 @@
+{
+  "id": "e1a55e00-a013-4b10-8000-000000000013",
+  "name": "Bouclier",
+  "type": "Armor",
+  "subtype": "Shield",
+  "cost": {
+    "value": 10,
+    "unit": "po"
+  },
+  "weight_kg": 3.0,
+  "data": {
+    "ac_bonus": 2
+  }
+}

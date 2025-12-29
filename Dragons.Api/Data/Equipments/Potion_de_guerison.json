@@ -1,0 +1,14 @@
+{
+  "id": "d8067fbe-7834-4add-94cc-1806eb71db78",
+  "name": "Potion de guérison",
+  "type": "Gear",
+  "subtype": "Potion",
+  "cost": {
+    "value": 50,
+    "unit": "po"
+  },
+  "weight_kg": 0.25,
+  "data": {
+    "description": "Rend 2d4+2 PV. Action pour boire."
+  }
+}

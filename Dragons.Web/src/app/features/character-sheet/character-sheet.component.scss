@@ -1,0 +1,935 @@
+// features/character-sheet/character-sheet.component.scss
+// Version RESPONSIVE - Toutes les positions en pourcentages
+
+// Variables
+$red: #8b0000;
+$dark: #2c1810;
+
+// =============================================
+// === GUIDE D'AJUSTEMENT ===
+// =============================================
+// L'image de fond fait 842px de hauteur et 595px de largeur.
+// Pour convertir des pixels en pourcentage :
+//   - Vertical (top) : 10px ≈ 1.19% (10 / 842 * 100)
+//   - Horizontal (left) : 10px ≈ 1.68% (10 / 595 * 100)
+//
+// Pour MONTER un élément : DIMINUER le top (ex: 4.51% → 3.32%)
+// Pour DESCENDRE un élément : AUGMENTER le top (ex: 4.51% → 5.70%)
+// Pour aller à GAUCHE : DIMINUER le left
+// Pour aller à DROITE : AUGMENTER le left
+// =============================================
+
+// =============================================
+// === STYLES DE BASE ===
+// =============================================
+
+.field {
+  position: absolute;
+  line-height: 1.2;
+  color: $dark;
+  font-size: 1.7%;
+}
+
+.sheet-actions {
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+  padding: 1rem;
+  flex-wrap: wrap;
+}
+
+.action-btn {
+  padding: 0.6rem 1.2rem;
+  border: none;
+  border-radius: 6px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: transform 0.2s, box-shadow 0.2s, background 0.2s;
+  font-size: clamp(12px, 2.5vw, 16px);
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+
+  &:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  }
+
+  &.save {
+    background: #27ae60;
+    color: white;
+    &:hover { background: #219a52; }
+  }
+
+  &.print {
+    background: #3498db;
+    color: white;
+    &:hover { background: #2980b9; }
+  }
+
+  &.pdf {
+    background: #e74c3c;
+    color: white;
+    &:hover { background: #c0392b; }
+  }
+
+  &.new {
+    background: #9b59b6;
+    color: white;
+    &:hover { background: #8e44ad; }
+  }
+
+  &.back {
+    background: #7f8c8d;
+    color: white;
+    &:hover { background: #6c7a7d; }
+  }
+}
+
+.character-sheet-container {
+  width: 100%;
+  max-width: 595px;
+  margin: 0 auto;
+  padding: 10px;
+}
+
+.sheet-page {
+  width: 100%;
+  aspect-ratio: 595 / 842;
+  position: relative;
+  margin-bottom: 20px;
+  background-size: 100% 100%;
+  background-repeat: no-repeat;
+  font-family: 'Segoe UI', sans-serif;
+  color: $dark;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  border-radius: 4px;
+  overflow: hidden;
+
+  &.page-1 { background-image: url('/images/sheets/sheet-page1.jpg'); }
+  &.page-2 { background-image: url('/images/sheets/sheet-page2.jpg'); }
+  &.page-3 { background-image: url('/images/sheets/sheet-page3.jpg'); }
+  &.page-4 { background-image: url('/images/sheets/sheet-page4.jpg'); }
+}
+
+.no-character {
+  text-align: center;
+  padding: 50px 20px;
+  background: rgba(255, 255, 255, 0.9);
+  border-radius: 12px;
+  margin: 20px;
+
+  p {
+    font-size: clamp(14px, 3vw, 18px);
+    color: $dark;
+    margin-bottom: 20px;
+  }
+
+  .create-link {
+    display: inline-block;
+    padding: 12px 24px;
+    background: $red;
+    color: white;
+    text-decoration: none;
+    border-radius: 6px;
+    font-weight: 600;
+    &:hover { background: #a01010; }
+  }
+}
+
+// =============================================
+// === MIXINS POUR FONT-SIZE RESPONSIVE ===
+// =============================================
+
+@mixin font-xs { font-size: clamp(6px, 1.35%, 8px); }
+@mixin font-sm { font-size: clamp(7px, 1.68%, 10px); }
+@mixin font-md { font-size: clamp(10px, 2.52%, 15px); }
+@mixin font-lg { font-size: clamp(12px, 3.02%, 18px); }
+@mixin font-xl { font-size: clamp(14px, 3.36%, 20px); }
+
+// =============================================
+// === PAGE 1 - POSITIONS EN % ===
+// =============================================
+
+// --- HEADER ---
+// Ajustement : -1.19% = monter de ~10px
+.f-name {
+  top: 3.50%;           // Ajuster ici
+  left: 23.53%;
+  @include font-lg;
+}
+
+.f-species {
+  top: 6.30%;           // Ajuster ici
+  left: 23.53%;
+  @include font-lg;
+}
+
+.f-civilization {
+  top: 9.10%;           // Ajuster ici
+  left: 23.53%;
+  @include font-lg;
+}
+
+.f-class {
+  top: 3.40%;           // Ajuster ici
+  left: 67.23%;
+  @include font-lg;
+}
+
+.f-experience {
+  top: 9.20%;           // Ajuster ici
+  left: 67.23%;
+  @include font-lg;
+}
+
+// --- STATS VITALES ---
+.f-pv {
+  top: 13.20%;          // Ajuster ici
+  left: 38.66%;
+  @include font-lg;
+}
+
+.f-pv-temp {
+  top: 18.90%;          // Ajuster ici
+  left: 42.02%;
+  @include font-lg;
+}
+
+.f-hit-dice {
+  top: 13.20%;          // Ajuster ici
+  left: 75%;
+  @include font-lg;
+}
+
+.f-prof-bonus {
+  top: 18.70%;          // Ajuster ici
+  left: 9.24%;
+  @include font-xl;
+}
+
+.f-pv-max {
+  top: 18.70%;          // Ajuster ici
+  left: 62.18%;
+  @include font-xl;
+}
+
+.f-wound-threshold {
+  top: 18.70%;          // Ajuster ici
+  left: 89.08%;
+  @include font-xl;
+}
+
+// --- COMBAT ---
+.f-initiative {
+  top: 24.34%;          // Ajuster ici
+  left: 45.38%;
+  @include font-xl;
+}
+
+.f-ac {
+  top: 24.70%;          // Ajuster ici
+  left: 60.50%;
+  @include font-md;
+}
+
+.f-passive-perception {
+  top: 24.34%;          // Ajuster ici
+  left: 87.39%;
+  @include font-xl;
+}
+
+// --- SCORES DE CARACTÉRISTIQUES ---
+// Ajuster top pour monter/descendre, left pour gauche/droite
+.f-str-score {
+  top: 25.15%;          // Ajuster ici
+  left: 19.83%;
+  @include font-md;
+}
+
+.f-dex-score {
+  top: 33.20%;          // Ajuster ici
+  left: 19.83%;
+  @include font-md;
+}
+
+.f-con-score {
+  top: 44.70%;          // Ajuster ici
+  left: 19.83%;
+  @include font-md;
+}
+
+.f-int-score {
+  top: 50.90%;          // Ajuster ici
+  left: 19.83%;
+  @include font-md;
+}
+
+.f-wis-score {
+  top: 65.70%;          // Ajuster ici
+  left: 19.83%;
+  @include font-md;
+}
+
+.f-cha-score {
+  top: 81.80%;          // Ajuster ici
+  left: 19.83%;
+  @include font-md;
+}
+
+// --- MODIFICATEURS ---
+.f-str-mod {
+  top: 26%;             // Ajuster ici
+  left: 28%;
+  @include font-sm;
+}
+
+.f-dex-mod {
+  top: 34.25%;          // Ajuster ici
+  left: 28%;
+  @include font-sm;
+}
+
+.f-con-mod {
+  top: 45.80%;          // Ajuster ici
+  left: 28%;
+  @include font-sm;
+}
+
+.f-int-mod {
+  top: 52.10%;          // Ajuster ici
+  left: 28%;
+  @include font-sm;
+}
+
+.f-wis-mod {
+  top: 66.70%;          // Ajuster ici
+  left: 28%;
+  @include font-sm;
+}
+
+.f-cha-mod {
+  top: 82.70%;          // Ajuster ici
+  left: 28%;
+  @include font-sm;
+}
+
+// --- JETS DE SAUVEGARDE ---
+.f-str-save-prof {
+  top: 27.55%;          // Ajuster ici
+  left: 6.05%;
+  @include font-xs;
+}
+
+.f-dex-save-prof {
+  top: 35.87%;          // Ajuster ici
+  left: 6.05%;
+  @include font-xs;
+}
+
+.f-con-save-prof {
+  top: 47.39%;          // Ajuster ici
+  left: 6.05%;
+  @include font-xs;
+}
+
+.f-int-save-prof {
+  top: 53.44%;          // Ajuster ici
+  left: 6.05%;
+  @include font-xs;
+}
+
+.f-wis-save-prof {
+  top: 68.29%;          // Ajuster ici
+  left: 6.05%;
+  @include font-xs;
+}
+
+.f-cha-save-prof {
+  top: 84.44%;          // Ajuster ici
+  left: 6.05%;
+  @include font-xs;
+}
+
+// --- COMPÉTENCES FORCE ---
+.f-athletics-prof {
+  top: 29.69%;          // Ajuster ici
+  left: 6.05%;
+  @include font-xs;
+}
+
+.f-athletics-prof2 {
+  top: 29.69%;          // Ajuster ici
+  left: 3.87%;
+  @include font-xs;
+}
+
+// --- COMPÉTENCES DEXTÉRITÉ ---
+.f-acrobatics-prof {
+  top: 37.77%;          // Ajuster ici
+  left: 6.05%;
+  @include font-xs;
+}
+
+.f-acrobatics-prof2 {
+  top: 37.77%;          // Ajuster ici
+  left: 3.87%;
+  @include font-xs;
+}
+
+.f-sleight-prof {
+  top: 39.55%;          // Ajuster ici
+  left: 6.05%;
+  @include font-xs;
+}
+
+.f-sleight-prof2 {
+  top: 39.55%;          // Ajuster ici
+  left: 3.87%;
+  @include font-xs;
+}
+
+.f-stealth-prof {
+  top: 41.57%;          // Ajuster ici
+  left: 6.05%;
+  @include font-xs;
+}
+
+.f-stealth-prof2 {
+  top: 41.57%;          // Ajuster ici
+  left: 3.87%;
+  @include font-xs;
+}
+
+// --- COMPÉTENCES INTELLIGENCE ---
+.f-arcana-prof {
+  top: 55.46%;          // Ajuster ici
+  left: 6.05%;
+  @include font-xs;
+}
+
+.f-arcana-prof2 {
+  top: 55.46%;          // Ajuster ici
+  left: 3.87%;
+  @include font-xs;
+}
+
+.f-history-prof {
+  top: 57.24%;          // Ajuster ici
+  left: 6.05%;
+  @include font-xs;
+}
+
+.f-history-prof2 {
+  top: 57.24%;          // Ajuster ici
+  left: 3.87%;
+  @include font-xs;
+}
+
+.f-investigation-prof {
+  top: 59.14%;          // Ajuster ici
+  left: 6.05%;
+  @include font-xs;
+}
+
+.f-investigation-prof2 {
+  top: 59.14%;          // Ajuster ici
+  left: 3.87%;
+  @include font-xs;
+}
+
+.f-nature-prof {
+  top: 61.05%;          // Ajuster ici
+  left: 6.05%;
+  @include font-xs;
+}
+
+.f-nature-prof2 {
+  top: 61.05%;          // Ajuster ici
+  left: 3.87%;
+  @include font-xs;
+}
+
+.f-religion-prof {
+  top: 62.95%;          // Ajuster ici
+  left: 6.05%;
+  @include font-xs;
+}
+
+.f-religion-prof2 {
+  top: 62.95%;          // Ajuster ici
+  left: 3.87%;
+  @include font-xs;
+}
+
+// --- COMPÉTENCES SAGESSE ---
+.f-animal-prof {
+  top: 70.19%;          // Ajuster ici
+  left: 6.05%;
+  @include font-xs;
+}
+
+.f-animal-prof2 {
+  top: 70.19%;          // Ajuster ici
+  left: 3.87%;
+  @include font-xs;
+}
+
+.f-insight-prof {
+  top: 72.09%;          // Ajuster ici
+  left: 6.05%;
+  @include font-xs;
+}
+
+.f-insight-prof2 {
+  top: 72.09%;          // Ajuster ici
+  left: 3.87%;
+  @include font-xs;
+}
+
+.f-medicine-prof {
+  top: 73.99%;          // Ajuster ici
+  left: 6.05%;
+  @include font-xs;
+}
+
+.f-medicine-prof2 {
+  top: 73.99%;          // Ajuster ici
+  left: 3.87%;
+  @include font-xs;
+}
+
+.f-perception-prof {
+  top: 75.89%;          // Ajuster ici
+  left: 6.05%;
+  @include font-xs;
+}
+
+.f-perception-prof2 {
+  top: 75.89%;          // Ajuster ici
+  left: 3.87%;
+  @include font-xs;
+}
+
+.f-survival-prof {
+  top: 77.79%;          // Ajuster ici
+  left: 6.05%;
+  @include font-xs;
+}
+
+.f-survival-prof2 {
+  top: 77.79%;          // Ajuster ici
+  left: 3.87%;
+  @include font-xs;
+}
+
+// --- COMPÉTENCES CHARISME ---
+.f-intimidation-prof {
+  top: 86.22%;          // Ajuster ici
+  left: 6.05%;
+  @include font-xs;
+}
+
+.f-intimidation-prof2 {
+  top: 86.22%;          // Ajuster ici
+  left: 3.87%;
+  @include font-xs;
+}
+
+.f-persuasion-prof {
+  top: 88.12%;          // Ajuster ici
+  left: 6.05%;
+  @include font-xs;
+}
+
+.f-persuasion-prof2 {
+  top: 88.12%;          // Ajuster ici
+  left: 3.87%;
+  @include font-xs;
+}
+
+.f-performance-prof {
+  top: 90.02%;          // Ajuster ici
+  left: 6.05%;
+  @include font-xs;
+}
+
+.f-performance-prof2 {
+  top: 90.02%;          // Ajuster ici
+  left: 3.87%;
+  @include font-xs;
+}
+
+.f-deception-prof {
+  top: 91.92%;          // Ajuster ici
+  left: 6.05%;
+  @include font-xs;
+}
+
+.f-deception-prof2 {
+  top: 91.92%;          // Ajuster ici
+  left: 3.87%;
+  @include font-xs;
+}
+
+// --- VITESSE ---
+.f-speed {
+  top: 41.80%;          // Ajuster ici
+  left: 40.50%;
+  @include font-sm;
+}
+
+.f-speed-climb {
+  top: 41.85%;          // Ajuster ici
+  left: 52.44%;
+  @include font-sm;
+}
+
+.f-speed-swim {
+  top: 41.85%;          // Ajuster ici
+  left: 61.34%;
+  @include font-sm;
+}
+
+.f-jump-height {
+  top: 44.40%;          // Ajuster ici
+  left: 48.07%;
+  @include font-sm;
+}
+
+.f-jump-length {
+  top: 44.40%;          // Ajuster ici
+  left: 60.67%;
+  @include font-sm;
+}
+
+// --- ATTAQUES ---
+// 3 colonnes : Nom | Bonus | Dégâts
+// Pour ajuster les lignes d'attaque, modifier le top
+// Espacement entre lignes : ~2.80%
+
+// Colonne 1 : Nom de l'arme
+.f-attack-name-0 { top: 55.50%; left: 35%; @include font-sm; }   // Ajuster ici - Ligne 1
+.f-attack-name-1 { top: 58.00%; left: 35%; @include font-sm; }   // Ajuster ici - Ligne 2
+.f-attack-name-2 { top: 60.80%; left: 35%; @include font-sm; }   // Ajuster ici - Ligne 3
+.f-attack-name-3 { top: 63.50%; left: 35%; @include font-sm; }   // Ajuster ici - Ligne 4
+.f-attack-name-4 { top: 66.30%; left: 35%; @include font-sm; }   // Ajuster ici - Ligne 5
+
+// Colonne 2 : Bonus d'attaque
+.f-attack-bonus-0 { top: 55.80%; left: 75%; @include font-sm; }     // Ajuster ici - Ligne 1
+.f-attack-bonus-1 { top: 58.50%; left: 75%; @include font-sm; }     // Ajuster ici - Ligne 2
+.f-attack-bonus-2 { top: 61%; left: 75%; @include font-sm; }     // Ajuster ici - Ligne 3
+.f-attack-bonus-3 { top: 64%; left: 75%; @include font-sm; }     // Ajuster ici - Ligne 4
+.f-attack-bonus-4 { top: 67%; left: 75%; @include font-sm; }     // Ajuster ici - Ligne 5
+
+// Colonne 3 : Dégâts
+.f-attack-damage-0 { top: 55.20%; left: 87.30%; @include font-sm; }    // Ajuster ici - Ligne 1
+.f-attack-damage-1 { top: 58.00%; left: 87.30%; @include font-sm; }    // Ajuster ici - Ligne 2
+.f-attack-damage-2 { top: 60.80%; left: 87.30%; @include font-sm; }    // Ajuster ici - Ligne 3
+.f-attack-damage-3 { top: 63.50%; left: 87.30%; @include font-sm; }    // Ajuster ici - Ligne 4
+.f-attack-damage-4 { top: 66.30%; left: 87.30%; @include font-sm; }    // Ajuster ici - Ligne 5
+
+// =============================================
+// === PAGE 2 - APTITUDES ===
+// =============================================
+
+// --- ARMURES ---
+.f2-armor-0 {
+  top: 10.70%;          // Ajuster ici
+  left: 21.00%;
+  @include font-md;
+}
+
+.f2-armor-1 {
+  top: 13.50%;          // Ajuster ici
+  left: 21.00%;
+  @include font-md;
+}
+
+// --- ARMES ---
+.f2-weapons-0 {
+  top: 16.30%;          // Ajuster ici
+  left: 21.00%;
+  @include font-md;
+}
+
+.f2-weapons-1 {
+  top: 19.15%;          // Ajuster ici
+  left: 21.00%;
+  @include font-md;
+}
+
+// --- RÉSISTANCES ---
+.f2-resistance-0 {
+  top: 10.69%;          // Ajuster ici
+  left: 63.87%;
+  @include font-md;
+}
+
+.f2-resistance-1 {
+  top: 13.06%;          // Ajuster ici
+  left: 63.87%;
+  @include font-md;
+}
+
+.f2-resistance-2 {
+  top: 15.80%;          // Ajuster ici
+  left: 63.87%;
+  @include font-md;
+}
+
+.f2-resistance-3 {
+  top: 18.41%;          // Ajuster ici
+  left: 63.87%;
+  @include font-md;
+}
+
+.f2-resistance-4 {
+  top: 21.38%;          // Ajuster ici
+  left: 63.87%;
+  @include font-md;
+}
+
+// --- TRAITS ---
+// Espacement entre lignes : ~2.73%
+.f2-trait-0 { top: 29.10%; left: 2.52%; @include font-sm; }
+.f2-trait-1 { top: 31.83%; left: 2.52%; @include font-sm; }
+.f2-trait-2 { top: 34.32%; left: 2.52%; @include font-sm; }
+.f2-trait-3 { top: 36.82%; left: 2.52%; @include font-sm; }
+.f2-trait-4 { top: 39.55%; left: 2.52%; @include font-sm; }
+.f2-trait-5 { top: 42.40%; left: 2.52%; @include font-sm; }
+.f2-trait-6 { top: 44.89%; left: 2.52%; @include font-sm; }
+.f2-trait-7 { top: 47.62%; left: 2.52%; @include font-sm; }
+.f2-trait-8 { top: 50.36%; left: 2.52%; @include font-sm; }
+.f2-trait-9 { top: 52.85%; left: 2.52%; @include font-sm; }
+
+// --- OUTILS ---
+.f2-tools-0 { top: 29.10%; left: 34.29%; @include font-sm; }
+.f2-tools-1 { top: 31.83%; left: 34.29%; @include font-sm; }
+.f2-tools-2 { top: 34.32%; left: 34.29%; @include font-sm; }
+.f2-tools-3 { top: 36.82%; left: 34.29%; @include font-sm; }
+.f2-tools-4 { top: 39.55%; left: 34.29%; @include font-sm; }
+.f2-tools-5 { top: 42.40%; left: 34.29%; @include font-sm; }
+.f2-tools-6 { top: 44.89%; left: 34.29%; @include font-sm; }
+.f2-tools-7 { top: 47.62%; left: 34.29%; @include font-sm; }
+.f2-tools-8 { top: 50.36%; left: 34.29%; @include font-sm; }
+.f2-tools-9 { top: 52.85%; left: 34.29%; @include font-sm; }
+
+// --- LANGUES ---
+.f2-lang-0 { top: 29.10%; left: 66.55%; @include font-sm; }
+.f2-lang-1 { top: 31.83%; left: 66.55%; @include font-sm; }
+.f2-lang-2 { top: 34.32%; left: 66.55%; @include font-sm; }
+.f2-lang-3 { top: 36.82%; left: 66.55%; @include font-sm; }
+.f2-lang-4 { top: 39.55%; left: 66.55%; @include font-sm; }
+.f2-lang-5 { top: 42.40%; left: 66.55%; @include font-sm; }
+.f2-lang-6 { top: 44.89%; left: 66.55%; @include font-sm; }
+.f2-lang-7 { top: 47.62%; left: 66.55%; @include font-sm; }
+.f2-lang-8 { top: 50.36%; left: 66.55%; @include font-sm; }
+.f2-lang-9 { top: 52.85%; left: 66.55%; @include font-sm; }
+
+// =============================================
+// === PAGE 3 - PERSONNALITÉ ===
+// =============================================
+
+.f3-description {
+  top: 7.72%;           // Ajuster ici
+  left: 6.22%;
+  width: 50.42%;
+  @include font-sm;
+}
+
+.f3-background {
+  top: 15.44%;          // Ajuster ici
+  left: 6.22%;
+  width: 50.42%;
+  @include font-sm;
+}
+
+.f3-ideal {
+  top: 14.25%;          // Ajuster ici
+  left: 67.56%;
+  width: 28.57%;
+  @include font-sm;
+}
+
+.f3-traits {
+  top: 22.70%;          // Ajuster ici
+  left: 67.56%;
+  width: 28.57%;
+  @include font-sm;
+}
+
+.f3-alignment {
+  top: 31.12%;          // Ajuster ici
+  left: 67.56%;
+  width: 28.57%;
+  @include font-sm;
+}
+
+.f3-bonds {
+  top: 36.70%;          // Ajuster ici
+  left: 67.56%;
+  width: 28.57%;
+  @include font-sm;
+}
+
+.f3-flaws {
+  top: 45.20%;          // Ajuster ici
+  left: 67.56%;
+  width: 28.57%;
+  @include font-sm;
+}
+
+.f3-handicap {
+  top: 53.50%;          // Ajuster ici
+  left: 67.56%;
+  width: 28.57%;
+  @include font-sm;
+}
+
+// =============================================
+// === PAGE 4 - POSSESSIONS ===
+// =============================================
+
+// --- ÉQUIPEMENT ---
+// Espacement entre lignes : ~2.5%
+.f4-equip-0 { top: 19.70%; left: 11.09%; @include font-sm; }
+.f4-equip-1 { top: 22.45%; left: 11.09%; @include font-sm; }
+.f4-equip-2 { top: 25.06%; left: 11.09%; @include font-sm; }
+.f4-equip-3 { top: 27.79%; left: 11.09%; @include font-sm; }
+.f4-equip-4 { top: 30.52%; left: 11.09%; @include font-sm; }
+.f4-equip-5 { top: 33.25%; left: 11.09%; @include font-sm; }
+.f4-equip-6 { top: 35.87%; left: 11.09%; @include font-sm; }
+.f4-equip-7 { top: 38.72%; left: 11.09%; @include font-sm; }
+.f4-equip-8 { top: 41.45%; left: 11.09%; @include font-sm; }
+.f4-equip-9 { top: 43.71%; left: 11.09%; @include font-sm; }
+.f4-equip-10 { top: 46.56%; left: 11.09%; @include font-sm; }
+.f4-equip-11 { top: 49.17%; left: 11.09%; @include font-sm; }
+.f4-equip-12 { top: 19.36%; left: 37.31%; @include font-sm; }
+.f4-equip-13 { top: 21.73%; left: 37.48%; @include font-sm; }
+
+// --- BOURSE ---
+.f4-gold {
+  top: 57%;             // Ajuster ici
+  left: 12%;
+  @include font-sm;
+}
+
+.f4-silver {
+  top: 59.62%;          // Ajuster ici
+  left: 12%;
+  @include font-sm;
+}
+
+.f4-copper {
+  top: 62.47%;          // Ajuster ici
+  left: 12%;
+  @include font-sm;
+}
+
+// --- CHARGE MAX ---
+.f4-max-load {
+  top: 28.40%;          // Ajuster ici
+  left: 70%;
+  @include font-sm;
+}
+
+// =============================================
+// === PRINT ===
+// =============================================
+
+@media print {
+  .no-print,
+  .sheet-actions {
+    display: none !important;
+  }
+
+  .character-sheet-container {
+    max-width: 210mm;
+    padding: 0;
+  }
+
+  .sheet-page {
+    width: 210mm;
+    height: 297mm;
+    aspect-ratio: auto;
+    margin: 0;
+    box-shadow: none;
+    border-radius: 0;
+    page-break-after: always;
+    page-break-inside: avoid;
+  }
+
+  .sheet-page:last-child {
+    page-break-after: auto;
+  }
+}
+
+// =============================================
+// === RESPONSIVE TABLETTE ===
+// =============================================
+
+@media screen and (max-width: 768px) {
+  .sheet-actions {
+    gap: 0.8rem;
+    padding: 0.8rem;
+  }
+
+  .action-btn {
+    padding: 0.5rem 1rem;
+    font-size: 14px;
+  }
+}
+
+// =============================================
+// === RESPONSIVE MOBILE ===
+// =============================================
+
+@media screen and (max-width: 480px) {
+  .sheet-actions {
+    flex-direction: column;
+    gap: 0.5rem;
+    padding: 0.5rem;
+    align-items: stretch;
+  }
+
+  .action-btn {
+    padding: 0.6rem 1rem;
+    font-size: 13px;
+    justify-content: center;
+  }
+
+  .character-sheet-container {
+    padding: 5px;
+  }
+
+  .sheet-page {
+    margin-bottom: 10px;
+    border-radius: 2px;
+  }
+}
+
+// =============================================
+// === TRÈS PETIT ÉCRAN ===
+// =============================================
+
+@media screen and (max-width: 360px) {
+  .sheet-actions {
+    padding: 0.4rem;
+  }
+
+  .action-btn {
+    padding: 0.5rem 0.8rem;
+    font-size: 12px;
+  }
+
+  .no-character {
+    padding: 30px 15px;
+    margin: 10px;
+
+    .create-link {
+      padding: 10px 20px;
+    }
+  }
+}

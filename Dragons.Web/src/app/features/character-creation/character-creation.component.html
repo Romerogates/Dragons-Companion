@@ -1,0 +1,94 @@
+<!-- features/character-creation/character-creation.component.html -->
+<div class="creation-container">
+  <!-- Header -->
+  <header class="creation-header">
+    <a routerLink="/" class="back-link">← Retour</a>
+    <h1>🐉 Création de personnage</h1>
+    <button class="reset-btn" (click)="onReset()">🔄 Recommencer</button>
+  </header>
+
+  <!-- Stepper -->
+  <nav class="stepper">
+    @for (step of steps; track step.number) {
+    <div
+      class="step"
+      [class.active]="creationService.currentStep() === step.number"
+      [class.completed]="creationService.currentStep() > step.number"
+      [class.clickable]="step.number <= creationService.currentStep()"
+      (click)="
+        step.number <= creationService.currentStep() ? creationService.goToStep(step.number) : null
+      "
+    >
+      <div class="step-icon">
+        @if (creationService.currentStep() > step.number) {
+        <span>✓</span>
+        } @else {
+        <span>{{ step.icon }}</span>
+        }
+      </div>
+      <span class="step-title">{{ step.title }}</span>
+    </div>
+    @if (step.number < steps.length) {
+    <div
+      class="step-connector"
+      [class.completed]="creationService.currentStep() > step.number"
+    ></div>
+    } }
+  </nav>
+
+  <!-- Contenu de l'étape -->
+  <main class="step-content">
+    @switch (creationService.currentStep()) { @case (1) {
+    <app-species-step />
+    } @case (2) {
+    <app-civilization-step />
+    } @case (3) {
+    <app-class-step />
+    } @case (4) {
+    <app-abilities-step />
+    } @case (5) {
+    <app-skills-step />
+    } @case (6) {
+    <app-equipment-step />
+    } @case (7) {
+    <app-languages-step />
+    } @case (8) {
+    <app-identity-step />
+    } @case (9) {
+    <app-summary-step />
+    } }
+  </main>
+
+  <!-- Navigation -->
+  <footer class="creation-footer">
+    <button
+      class="nav-btn prev"
+      [disabled]="creationService.currentStep() === 1"
+      (click)="creationService.previousStep()"
+    >
+      ← Précédent
+    </button>
+
+    <span class="step-indicator">
+      Étape {{ creationService.currentStep() }} / {{ creationService.totalSteps }}
+    </span>
+
+    @if (creationService.currentStep() < creationService.totalSteps) {
+    <button
+      class="nav-btn next"
+      [disabled]="!creationService.isCurrentStepValid()"
+      (click)="creationService.nextStep()"
+    >
+      Suivant →
+    </button>
+    } @else {
+    <button
+      class="nav-btn finish"
+      [disabled]="!creationService.isCurrentStepValid()"
+      (click)="finishCreation()"
+    >
+      🎉 Terminer
+    </button>
+    }
+  </footer>
+</div>

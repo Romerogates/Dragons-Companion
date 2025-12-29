@@ -1,0 +1,98 @@
+<!-- features/characters/characters.component.html -->
+<div class="characters-container">
+  <header class="page-header">
+    <h1>📜 Mes Personnages</h1>
+    <p class="subtitle">
+      {{ characters.length }} personnage{{ characters.length > 1 ? 's' : '' }} sauvegardé{{
+        characters.length > 1 ? 's' : ''
+      }}
+    </p>
+  </header>
+
+  @if (characters.length === 0) {
+  <div class="empty-state">
+    <div class="empty-icon">🎭</div>
+    <h2>Aucun personnage</h2>
+    <p>Tu n'as pas encore créé de personnage. Lance-toi dans l'aventure !</p>
+    <a routerLink="/create" class="btn btn-primary">
+      <span>✨</span> Créer mon premier personnage
+    </a>
+  </div>
+  } @else {
+  <div class="page-actions">
+    <a routerLink="/create" class="btn btn-primary"> <span>✨</span> Nouveau personnage </a>
+  </div>
+
+  <div class="characters-grid">
+    @for (char of characters; track char.id) {
+    <div class="character-card" (click)="viewCharacter(char)">
+      <div class="card-header">
+        <div class="character-icons">
+          <span class="species-icon">{{ getSpeciesIcon(char.species) }}</span>
+          <span class="class-icon">{{ getClassIcon(char.class) }}</span>
+        </div>
+        <div class="character-level">Niv. {{ char.level }}</div>
+      </div>
+
+      <div class="card-body">
+        <h2 class="character-name">{{ char.name }}</h2>
+        <p class="character-info">{{ char.species }} • {{ char.class }}</p>
+        <p class="character-civilization">{{ char.civilization }}</p>
+
+        <div class="character-stats">
+          <div class="stat">
+            <span class="stat-icon">❤️</span>
+            <span class="stat-value">{{ char.hitPointsMax }}</span>
+            <span class="stat-label">PV</span>
+          </div>
+          <div class="stat">
+            <span class="stat-icon">🛡️</span>
+            <span class="stat-value">{{ char.armorClass }}</span>
+            <span class="stat-label">CA</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="card-footer">
+        <span class="created-date">{{ formatDate(char.createdAt) }}</span>
+        <div class="card-actions">
+          <button class="action-btn edit" title="Modifier" (click)="editCharacter(char, $event)">
+            ✏️
+          </button>
+          <button
+            class="action-btn duplicate"
+            title="Dupliquer"
+            (click)="duplicateCharacter(char, $event)"
+          >
+            📋
+          </button>
+          <button
+            class="action-btn pdf"
+            title="Télécharger PDF"
+            (click)="downloadPdf(char, $event)"
+          >
+            📄
+          </button>
+          <button class="action-btn delete" title="Supprimer" (click)="confirmDelete(char, $event)">
+            🗑️
+          </button>
+        </div>
+      </div>
+    </div>
+    }
+  </div>
+  } @if (showDeleteModal && characterToDelete) {
+  <div class="modal-overlay" (click)="cancelDelete()">
+    <div class="modal" (click)="$event.stopPropagation()">
+      <div class="modal-icon">⚠️</div>
+      <h3>Supprimer ce personnage ?</h3>
+      <p class="modal-character-name">{{ characterToDelete.name }}</p>
+      <p class="modal-warning">Cette action est irréversible.</p>
+      <div class="modal-actions">
+        <button class="btn btn-secondary" (click)="cancelDelete()">Annuler</button>
+        <button class="btn btn-danger" (click)="deleteCharacter()">Supprimer</button>
+      </div>
+    </div>
+  </div>
+  }
+</div>

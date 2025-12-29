@@ -1,0 +1,18 @@
+{
+  "id": "9c7b81e6-3c19-4b85-9d39-b4212157690b",
+  "name": "Bâton de combat",
+  "type": "Weapon",
+  "subtype": "Simple Melee",
+  "cost": {
+    "value": 2,
+    "unit": "pa"
+  },
+  "weight_kg": 2.0,
+  "data": {
+    "damage_dice": "1d6",
+    "damage_type": "contondant",
+    "properties": [
+      "Polyvalente (1d8)"
+    ]
+  }
+}

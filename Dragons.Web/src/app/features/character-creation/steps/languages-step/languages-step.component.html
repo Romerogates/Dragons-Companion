@@ -1,0 +1,126 @@
+<!-- features/character-creation/steps/languages-step/languages-step.component.html -->
+<div class="languages-step">
+  <h2>Langues connues</h2>
+  <p class="step-description">
+    Vos langues sont déterminées par votre espèce et votre civilisation. @if (languageChoicesCount >
+    0) { Vous pouvez également choisir <strong>{{ languageChoicesCount }}</strong> langue(s)
+    supplémentaire(s). }
+  </p>
+
+  @if (loading) {
+  <div class="loading">Chargement des langues...</div>
+  } @else {
+  <!-- Langues fixes -->
+  @if (fixedLanguages.length > 0) {
+  <div class="fixed-languages">
+    <h3>📜 Langues automatiques</h3>
+    <p class="section-description">
+      Ces langues sont acquises grâce à votre espèce et civilisation.
+    </p>
+    <div class="languages-tags">
+      @for (lang of fixedLanguages; track lang) {
+      <span class="language-tag fixed">
+        <span class="tag-icon">{{ getLanguageIcon(lang) }}</span>
+        {{ lang }}
+      </span>
+      }
+    </div>
+
+    <div class="sources">
+      <div class="source">
+        <span class="source-label">Espèce</span>
+        <span class="source-value">
+          {{
+            filterNonChoiceLanguages(creationService.character().speciesLanguages).join(', ') ||
+              'Aucune'
+          }}
+        </span>
+      </div>
+      <div class="source">
+        <span class="source-label">Civilisation</span>
+        <span class="source-value">
+          {{
+            filterNonChoiceLanguages(creationService.character().civilizationLanguages).join(
+              ', '
+            ) || 'Aucune'
+          }}
+        </span>
+      </div>
+    </div>
+  </div>
+  }
+
+  <!-- Choix de langues -->
+  @if (languageChoicesCount > 0) {
+  <div class="language-choices">
+    <h3>🎯 Choisissez vos langues</h3>
+    <p class="section-description">
+      Sélectionnez <strong>{{ languageChoicesCount }}</strong> langue(s) supplémentaire(s).
+    </p>
+
+    <div class="selection-counter" [class.complete]="isStepComplete()">
+      <span class="counter-label">Sélectionnées</span>
+      <span class="counter-value">
+        {{ selectedChoiceLanguages.length }} / {{ languageChoicesCount }}
+      </span>
+      @if (isStepComplete()) {
+      <span class="counter-check">✓</span>
+      }
+    </div>
+
+    <div class="cards-grid">
+      @for (lang of getAvailableLanguagesForChoice(); track lang) {
+      <app-selection-card
+        [icon]="getLanguageIcon(lang)"
+        [title]="lang"
+        [selected]="isLanguageSelected(lang)"
+        [disabled]="!isLanguageSelected(lang) && !canSelectMore()"
+        (cardClick)="toggleLanguage(lang)"
+      />
+      }
+    </div>
+
+    <!-- Langues choisies -->
+    @if (selectedChoiceLanguages.length > 0) {
+    <div class="chosen-languages">
+      <h4>Langues choisies</h4>
+      <div class="languages-tags">
+        @for (lang of selectedChoiceLanguages; track lang) {
+        <span class="language-tag chosen">
+          <span class="tag-icon">{{ getLanguageIcon(lang) }}</span>
+          {{ lang }}
+          <button class="remove-btn" (click)="toggleLanguage(lang)">✕</button>
+        </span>
+        }
+      </div>
+      <button class="clear-btn" (click)="clearChoices()">🔄 Réinitialiser</button>
+    </div>
+    }
+  </div>
+  }
+
+  <!-- Résumé final -->
+  <div class="final-summary">
+    <h3>📚 Toutes vos langues</h3>
+    <div class="languages-tags">
+      @for (lang of fixedLanguages; track lang) {
+      <span class="language-tag final">
+        <span class="tag-icon">{{ getLanguageIcon(lang) }}</span>
+        {{ lang }}
+        <span class="tag-source">(auto)</span>
+      </span>
+      } @for (lang of selectedChoiceLanguages; track lang) {
+      <span class="language-tag final chosen">
+        <span class="tag-icon">{{ getLanguageIcon(lang) }}</span>
+        {{ lang }}
+        <span class="tag-source">(choix)</span>
+      </span>
+      }
+    </div>
+    <p class="total-count">
+      Total :
+      <strong>{{ fixedLanguages.length + selectedChoiceLanguages.length }}</strong> langue(s)
+    </p>
+  </div>
+  }
+</div>

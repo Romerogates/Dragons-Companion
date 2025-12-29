@@ -1,0 +1,20 @@
+{
+  "id": "08215ea7-65ca-43f3-9bf2-1bd49c947739",
+  "name": "Arc long",
+  "type": "Weapon",
+  "subtype": "Martial Ranged",
+  "cost": {
+    "value": 50,
+    "unit": "po"
+  },
+  "weight_kg": 1.0,
+  "data": {
+    "damage_dice": "1d8",
+    "damage_type": "perforant",
+    "properties": [
+      "Deux mains",
+      "Lourde",
+      "Projectiles (45/180)"
+    ]
+  }
+}

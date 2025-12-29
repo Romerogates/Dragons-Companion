@@ -1,0 +1,12 @@
+{
+  "id": "22706e39-7897-488e-9f48-613050ff1a49",
+  "name": "Sac de couchage",
+  "type": "Gear",
+  "subtype": "Adventuring",
+  "cost": {
+    "value": 1,
+    "unit": "po"
+  },
+  "weight_kg": 3.5,
+  "data": {}
+}

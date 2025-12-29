@@ -1,0 +1,18 @@
+{
+  "id": "e1a55e00-a006-4b10-8000-000000000006",
+  "name": "Armure d'écailles",
+  "type": "Armor",
+  "subtype": "Medium",
+  "cost": {
+    "value": 50,
+    "unit": "po"
+  },
+  "weight_kg": 22.5,
+  "data": {
+    "ac_base": 14,
+    "add_dex_mod": true,
+    "max_dex_bonus": 2,
+    "str_requirement": 0,
+    "stealth_disadvantage": true
+  }
+}

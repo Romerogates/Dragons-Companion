@@ -1,0 +1,19 @@
+{
+  "id": "3c47d4ef-2fb5-4eb8-829f-b72097020f12",
+  "name": "Hachette",
+  "type": "Weapon",
+  "subtype": "Simple Melee",
+  "cost": {
+    "value": 5,
+    "unit": "po"
+  },
+  "weight_kg": 1.0,
+  "data": {
+    "damage_dice": "1d6",
+    "damage_type": "tranchant",
+    "properties": [
+      "Légère",
+      "Lancer (6/18)"
+    ]
+  }
+}

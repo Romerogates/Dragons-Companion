@@ -1,0 +1,19 @@
+{
+  "id": "0fcd8436-7ba7-4070-ac0e-a3cd4e05c620",
+  "name": "Marteau léger",
+  "type": "Weapon",
+  "subtype": "Simple Melee",
+  "cost": {
+    "value": 2,
+    "unit": "po"
+  },
+  "weight_kg": 1.0,
+  "data": {
+    "damage_dice": "1d4",
+    "damage_type": "contondant",
+    "properties": [
+      "Légère",
+      "Lancer (6/18)"
+    ]
+  }
+}

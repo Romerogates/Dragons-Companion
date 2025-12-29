@@ -1,0 +1,20 @@
+{
+  "id": "295e7eeb-bef5-4946-8d3c-74a2a71327f1",
+  "name": "Dague",
+  "type": "Weapon",
+  "subtype": "Simple Melee",
+  "cost": {
+    "value": 2,
+    "unit": "po"
+  },
+  "weight_kg": 0.5,
+  "data": {
+    "damage_dice": "1d4",
+    "damage_type": "perforant",
+    "properties": [
+      "Finesse",
+      "Légère",
+      "Lancer (6/18)"
+    ]
+  }
+}

@@ -1,0 +1,19 @@
+{
+  "id": "785adf6f-bfe7-4e4a-a577-8915dadd1409",
+  "name": "Cimeterre",
+  "type": "Weapon",
+  "subtype": "Martial Melee",
+  "cost": {
+    "value": 25,
+    "unit": "po"
+  },
+  "weight_kg": 1.5,
+  "data": {
+    "damage_dice": "1d6",
+    "damage_type": "tranchant",
+    "properties": [
+      "Finesse",
+      "Légère"
+    ]
+  }
+}

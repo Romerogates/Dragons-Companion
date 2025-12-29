@@ -1,0 +1,18 @@
+{
+  "id": "e1a55e00-a001-4b10-8000-000000000001",
+  "name": "Armure matelassée",
+  "type": "Armor",
+  "subtype": "Light",
+  "cost": {
+    "value": 5,
+    "unit": "po"
+  },
+  "weight_kg": 4.0,
+  "data": {
+    "ac_base": 11,
+    "add_dex_mod": true,
+    "max_dex_bonus": null,
+    "str_requirement": 0,
+    "stealth_disadvantage": true
+  }
+}

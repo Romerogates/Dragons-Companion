@@ -1,0 +1,119 @@
+<!-- features/character-creation/steps/equipment-step/equipment-step.component.html -->
+<div class="equipment-step">
+  <h2>🎒 Équipement de départ</h2>
+
+  <p class="step-description">
+    En tant que <strong>{{ creationService.character().className }}</strong
+    >, vous commencez avec l'équipement suivant. Faites vos choix.
+  </p>
+
+  @if (isLoading) {
+  <div class="loading"><span class="spinner">⏳</span> Chargement des équipements...</div>
+  } @else {
+  <div class="equipment-choices">
+    @for (choice of getStartingEquipment(); track $index; let i = $index) {
+    <div class="equipment-choice">
+      @if (isFixedChoice(choice)) {
+      <!-- Équipement fixe -->
+      <div class="fixed-equipment">
+        <span class="fixed-label">📦 Équipement inclus :</span>
+        <ul class="items-list">
+          @for (item of choice.fixed; track item) {
+          <li>
+            {{ item }}
+            @if (getItemInfo(item)) {
+            <span class="item-stats">({{ getItemInfo(item) }})</span>
+            }
+          </li>
+          }
+        </ul>
+      </div>
+      } @else {
+      <!-- Choix d'équipement -->
+      <div class="choice-options">
+        @if (hasChoice(choice, 'A')) {
+        <button
+          class="choice-btn"
+          [class.selected]="isChoiceSelected(i, 'A')"
+          (click)="selectChoice(i, 'A')"
+        >
+          <span class="choice-icon">{{ getChoiceIcon('A') }}</span>
+          <ul class="choice-items">
+            @for (item of getChoiceItems(choice, 'A'); track item) {
+            <li>
+              {{ item }}
+              @if (getItemInfo(item)) {
+              <span class="item-stats">({{ getItemInfo(item) }})</span>
+              }
+            </li>
+            }
+          </ul>
+        </button>
+        } @if (hasChoice(choice, 'B')) {
+        <span class="choice-separator">ou</span>
+        <button
+          class="choice-btn"
+          [class.selected]="isChoiceSelected(i, 'B')"
+          (click)="selectChoice(i, 'B')"
+        >
+          <span class="choice-icon">{{ getChoiceIcon('B') }}</span>
+          <ul class="choice-items">
+            @for (item of getChoiceItems(choice, 'B'); track item) {
+            <li>
+              {{ item }}
+              @if (getItemInfo(item)) {
+              <span class="item-stats">({{ getItemInfo(item) }})</span>
+              }
+            </li>
+            }
+          </ul>
+        </button>
+        } @if (hasChoice(choice, 'C')) {
+        <span class="choice-separator">ou</span>
+        <button
+          class="choice-btn"
+          [class.selected]="isChoiceSelected(i, 'C')"
+          (click)="selectChoice(i, 'C')"
+        >
+          <span class="choice-icon">{{ getChoiceIcon('C') }}</span>
+          <ul class="choice-items">
+            @for (item of getChoiceItems(choice, 'C'); track item) {
+            <li>
+              {{ item }}
+              @if (getItemInfo(item)) {
+              <span class="item-stats">({{ getItemInfo(item) }})</span>
+              }
+            </li>
+            }
+          </ul>
+        </button>
+        }
+      </div>
+      }
+    </div>
+    }
+  </div>
+
+  <!-- Résumé de l'équipement sélectionné -->
+  @if (getSelectedEquipmentList().length > 0) {
+  <div class="selected-equipment">
+    <h3>🎒 Votre équipement</h3>
+    <ul class="equipment-summary">
+      @for (item of creationService.character().selectedEquipment; track item.name) {
+      <li>
+        <span class="item-name">{{ item.name }}</span>
+        @if (item.quantity > 1) {
+        <span class="item-quantity">x{{ item.quantity }}</span>
+        } @if (item.damage) {
+        <span class="item-damage">⚔️ {{ item.damage }} {{ item.damageType }}</span>
+        } @if (item.baseAC) {
+        <span class="item-ac">🛡️ CA {{ item.baseAC }}</span>
+        }
+      </li>
+      }
+    </ul>
+  </div>
+  } @if (!isAllChoicesMade()) {
+  <p class="warning">⚠️ Veuillez faire tous vos choix d'équipement.</p>
+  } }
+</div>

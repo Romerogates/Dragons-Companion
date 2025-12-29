@@ -1,0 +1,18 @@
+{
+  "id": "8e7b8c35-5025-4132-ac32-8bee6e135ca8",
+  "name": "Gourdin",
+  "type": "Weapon",
+  "subtype": "Simple Melee",
+  "cost": {
+    "value": 1,
+    "unit": "pa"
+  },
+  "weight_kg": 1.0,
+  "data": {
+    "damage_dice": "1d4",
+    "damage_type": "contondant",
+    "properties": [
+      "Légère"
+    ]
+  }
+}

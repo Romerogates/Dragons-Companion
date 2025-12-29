@@ -1,0 +1,69 @@
+<div class="civilization-step">
+  <h2>Choisissez votre civilisation</h2>
+  <p class="step-description">
+    Votre civilisation détermine votre origine géographique, vos valeurs culturelles et vos langues
+    parlées.
+  </p>
+
+  @if (loading) {
+  <div class="loading">Chargement des civilisations...</div>
+  } @else {
+
+  <div class="civilization-grid">
+    @for (civ of civilizations; track civ.id) {
+    <div
+      class="civ-cardable"
+      [class.selected]="isCivilizationSelected(civ.id)"
+      (click)="selectCivilization(civ)"
+    >
+      <div class="civ-icon">{{ getIcon(civ.name) }}</div>
+
+      <div class="civ-info">
+        <div class="header-row">
+          <h2>{{ civ.name }}</h2>
+          @if(isCivilizationSelected(civ.id)) {
+          <span class="check-mark">✓</span>
+          }
+        </div>
+      </div>
+    </div>
+    }
+  </div>
+
+  @if (selectedCivilizationDetail) {
+  <div class="selection-summary">
+    <h3>✅ Civilisation Sélectionnée</h3>
+    <div class="summary-content">
+      <div class="summary-main">
+        <span class="summary-icon">{{ getIcon(selectedCivilizationDetail.name) }}</span>
+        <div class="summary-info">
+          <strong>{{ selectedCivilizationDetail.name }}</strong>
+          <p class="lore-text">{{ selectedCivilizationDetail.lore.summary }}</p>
+        </div>
+      </div>
+
+      <div class="summary-details">
+        <div class="detail-group">
+          <span class="detail-label">Langues officielles</span>
+          <div class="tags">
+            @for (lang of selectedCivilizationDetail.linguistics.officialLanguages; track lang) {
+            <span class="tag">{{ lang }}</span>
+            }
+          </div>
+        </div>
+
+        <div class="detail-group">
+          <span class="detail-label">Mots-clés culturels</span>
+          <div class="tags">
+            @for (keyword of selectedCivilizationDetail.lore.keywords; track keyword) {
+            <span class="tag keyword">{{ keyword }}</span>
+            }
+          </div>
+        </div>
+      </div>
+
+      <button class="clear-btn" (click)="clearSelection()">✕ Réinitialiser</button>
+    </div>
+  </div>
+  } }
+</div>

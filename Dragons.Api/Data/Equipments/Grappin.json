@@ -1,0 +1,12 @@
+{
+  "id": "e7987041-2ce1-4a26-8417-ad2f362ed1dd",
+  "name": "Grappin",
+  "type": "Gear",
+  "subtype": "Adventuring",
+  "cost": {
+    "value": 2,
+    "unit": "po"
+  },
+  "weight_kg": 2.0,
+  "data": {}
+}

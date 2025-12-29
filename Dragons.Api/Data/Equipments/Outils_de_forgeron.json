@@ -1,0 +1,12 @@
+{
+  "id": "19149ad4-f5a5-462a-9ba5-f2ee954d5de0",
+  "name": "Outils de forgeron",
+  "type": "Tool",
+  "subtype": "Artisan",
+  "cost": {
+    "value": 20,
+    "unit": "po"
+  },
+  "weight_kg": 4.0,
+  "data": {}
+}

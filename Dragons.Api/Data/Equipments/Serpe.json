@@ -1,0 +1,18 @@
+{
+  "id": "93e0a2db-6068-4529-8b88-413479f7c6a4",
+  "name": "Serpe",
+  "type": "Weapon",
+  "subtype": "Simple Melee",
+  "cost": {
+    "value": 1,
+    "unit": "po"
+  },
+  "weight_kg": 1.0,
+  "data": {
+    "damage_dice": "1d4",
+    "damage_type": "tranchant",
+    "properties": [
+      "Légère"
+    ]
+  }
+}

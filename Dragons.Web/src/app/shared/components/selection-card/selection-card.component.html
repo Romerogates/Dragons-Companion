@@ -1,0 +1,28 @@
+<!-- shared/components/selection-card/selection-card.component.html -->
+<div
+  class="selection-card"
+  [class.selected]="selected"
+  [class.disabled]="disabled"
+  (click)="onClick()"
+>
+  <div class="card-icon">{{ icon }}</div>
+
+  <div class="card-content">
+    <h3 class="card-title">{{ title }}</h3>
+    @if (subtitle) {
+    <p class="card-subtitle">{{ subtitle }}</p>
+    } @if (details.length > 0) {
+    <div class="card-details">
+      @for (detail of details; track detail) {
+      <span class="detail-tag">{{ detail }}</span>
+      }
+    </div>
+    }
+  </div>
+
+  <div class="card-check">
+    @if (selected) {
+    <span class="check-icon">✓</span>
+    }
+  </div>
+</div>

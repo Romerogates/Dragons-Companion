@@ -4,7 +4,7 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { ActivatedRoute, RouterLink } from '@angular/router';
 import { DataService } from '../../../core/services/data.service';
-import { CharacterClass, LevelProgression } from '../../../core/models/data.model';
+import { CharacterClass, LevelProgression } from '../../../core/models/game-data.models';
 
 @Component({
   selector: 'app-class-detail',

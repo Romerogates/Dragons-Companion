@@ -1,0 +1,14 @@
+{
+  "id": "be3f44f9-828c-444a-ba66-54e045a93c5b",
+  "name": "Corde en soie (15m)",
+  "type": "Gear",
+  "subtype": "Adventuring",
+  "cost": {
+    "value": 10,
+    "unit": "po"
+  },
+  "weight_kg": 1.0,
+  "data": {
+    "description": "Soie d'araignée géante. Supporte 5 tonnes."
+  }
+}

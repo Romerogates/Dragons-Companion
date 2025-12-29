@@ -1,0 +1,208 @@
+// features/character-creation/steps/abilities-step/abilities-step.component.scss
+.abilities-step {
+  h2 {
+    margin: 0 0 0.5rem 0;
+    color: #2c3e50;
+  }
+
+  .step-description {
+    margin: 0 0 1.5rem 0;
+    color: #7f8c8d;
+
+    strong {
+      color: #3498db;
+    }
+  }
+}
+
+.points-remaining {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.75rem 1.5rem;
+  background: #e8f5e9;
+  border-radius: 8px;
+  margin-bottom: 1.5rem;
+
+  &.warning {
+    background: #ffebee;
+
+    .points-value {
+      color: #c62828;
+    }
+  }
+
+  .points-label {
+    font-size: 0.9rem;
+    color: #7f8c8d;
+  }
+
+  .points-value {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: #27ae60;
+  }
+}
+
+.abilities-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+}
+
+.ability-card {
+  background: white;
+  border-radius: 12px;
+  padding: 1.25rem;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.ability-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1rem;
+
+  .ability-name {
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: #2c3e50;
+  }
+
+  .ability-modifier {
+    font-size: 1.3rem;
+    font-weight: 700;
+    color: #3498db;
+  }
+}
+
+.ability-controls {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.5rem;
+}
+
+.control-btn {
+  width: 40px;
+  height: 40px;
+  border: none;
+  border-radius: 8px;
+  font-size: 1.5rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.2s;
+
+  &:disabled {
+    opacity: 0.3;
+    cursor: not-allowed;
+  }
+
+  &.increment {
+    background: #27ae60;
+    color: white;
+
+    &:hover:not(:disabled) {
+      background: #1e8449;
+    }
+  }
+
+  &.decrement {
+    background: #e74c3c;
+    color: white;
+
+    &:hover:not(:disabled) {
+      background: #c0392b;
+    }
+  }
+}
+
+.ability-values {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 1.2rem;
+
+  .base-value {
+    font-weight: 600;
+    color: #2c3e50;
+  }
+
+  .racial-bonus {
+    color: #27ae60;
+    font-weight: 600;
+  }
+
+  .final-value {
+    font-weight: 700;
+    color: #8e44ad;
+  }
+}
+
+.ability-cost {
+  margin-top: 0.75rem;
+  text-align: center;
+  font-size: 0.85rem;
+  color: #7f8c8d;
+}
+
+.actions {
+  margin-bottom: 2rem;
+
+  .reset-btn {
+    padding: 0.5rem 1rem;
+    background: #ecf0f1;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-weight: 500;
+    color: #2c3e50;
+
+    &:hover {
+      background: #bdc3c7;
+    }
+  }
+}
+
+.cost-table {
+  background: white;
+  border-radius: 12px;
+  padding: 1rem;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+
+  h4 {
+    margin: 0 0 1rem 0;
+    color: #2c3e50;
+  }
+}
+
+.cost-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.cost-entry {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 0.5rem 0.75rem;
+  background: #f8f9fa;
+  border-radius: 6px;
+  min-width: 50px;
+
+  .cost-value {
+    font-weight: 600;
+    color: #2c3e50;
+  }
+
+  .cost-points {
+    font-size: 0.85rem;
+    color: #e74c3c;
+  }
+
+  &.negative .cost-points {
+    color: #27ae60;
+  }
+}

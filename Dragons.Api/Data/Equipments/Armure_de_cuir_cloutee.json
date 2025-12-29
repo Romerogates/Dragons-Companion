@@ -1,0 +1,18 @@
+{
+  "id": "e1a55e00-a003-4b10-8000-000000000003",
+  "name": "Armure de cuir cloutée",
+  "type": "Armor",
+  "subtype": "Light",
+  "cost": {
+    "value": 45,
+    "unit": "po"
+  },
+  "weight_kg": 6.5,
+  "data": {
+    "ac_base": 12,
+    "add_dex_mod": true,
+    "max_dex_bonus": null,
+    "str_requirement": 0,
+    "stealth_disadvantage": false
+  }
+}

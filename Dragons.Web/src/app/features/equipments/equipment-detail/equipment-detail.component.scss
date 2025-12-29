@@ -1,0 +1,185 @@
+// features/equipment/equipment-detail/equipment-detail.component.scss
+.equipment-detail-page {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 2rem;
+}
+
+.back-link {
+  display: inline-block;
+  margin-bottom: 1.5rem;
+  color: #3498db;
+  text-decoration: none;
+  font-weight: 500;
+
+  &:hover {
+    text-decoration: underline;
+  }
+}
+
+.loading,
+.not-found {
+  text-align: center;
+  padding: 3rem;
+  color: #7f8c8d;
+  font-size: 1.2rem;
+}
+
+.equipment-header {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+  margin-bottom: 2rem;
+  padding: 1.5rem;
+  background: linear-gradient(135deg, #667eea, #764ba2);
+  border-radius: 16px;
+  color: white;
+
+  .equipment-icon {
+    font-size: 4rem;
+    width: 100px;
+    height: 100px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(255, 255, 255, 0.2);
+    border-radius: 16px;
+  }
+
+  .equipment-title {
+    flex: 1;
+
+    h1 {
+      margin: 0 0 0.5rem 0;
+      font-size: 2rem;
+    }
+  }
+
+  .equipment-meta {
+    display: flex;
+    gap: 0.5rem;
+  }
+
+  .type-badge,
+  .subtype-badge {
+    padding: 0.4rem 0.8rem;
+    background: rgba(255, 255, 255, 0.2);
+    border-radius: 20px;
+    font-size: 0.85rem;
+  }
+}
+
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 1rem;
+  margin-bottom: 2rem;
+}
+
+.stat-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 1.25rem;
+  background: white;
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+
+  .stat-label {
+    font-size: 0.85rem;
+    color: #7f8c8d;
+    margin-bottom: 0.5rem;
+  }
+
+  .stat-value {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: #2c3e50;
+
+    &.gold {
+      color: #f39c12;
+    }
+
+    &.damage {
+      color: #e74c3c;
+    }
+
+    &.ac {
+      color: #3498db;
+    }
+  }
+
+  &.warning {
+    background: #fff5f5;
+    border: 1px solid #feb2b2;
+
+    .stat-value {
+      color: #c53030;
+    }
+  }
+}
+
+.properties-section,
+.description-section {
+  background: white;
+  border-radius: 12px;
+  padding: 1.5rem;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  margin-bottom: 1.5rem;
+
+  h2 {
+    margin: 0 0 1rem 0;
+    color: #2c3e50;
+    font-size: 1.2rem;
+  }
+}
+
+.properties-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.property-tag {
+  padding: 0.5rem 1rem;
+  background: #e3f2fd;
+  color: #1565c0;
+  border-radius: 8px;
+  font-weight: 500;
+}
+
+.description-section p {
+  margin: 0;
+  color: #555;
+  line-height: 1.6;
+}
+
+// features/equipment/equipment-detail/equipment-detail.component.scss (ajouter dans .stat-value)
+.stat-value {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: #2c3e50;
+
+  &.gold {
+    color: #f39c12;
+  }
+
+  &.damage {
+    color: #e74c3c;
+  }
+
+  &.ac {
+    color: #3498db;
+  }
+
+  &.speed {
+    color: #27ae60;
+  }
+}
+
+@media (max-width: 768px) {
+  .equipment-header {
+    flex-direction: column;
+    text-align: center;
+  }
+}

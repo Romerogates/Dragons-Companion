@@ -1,0 +1,18 @@
+{
+  "id": "ac6ada7d-fbbc-490d-807f-890575a1d74d",
+  "name": "Fronde",
+  "type": "Weapon",
+  "subtype": "Simple Ranged",
+  "cost": {
+    "value": 1,
+    "unit": "pa"
+  },
+  "weight_kg": 0.0,
+  "data": {
+    "damage_dice": "1d4",
+    "damage_type": "contondant",
+    "properties": [
+      "Projectiles (9/36)"
+    ]
+  }
+}

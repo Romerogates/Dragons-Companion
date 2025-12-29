@@ -1,0 +1,233 @@
+<!-- features/character-sheet/character-sheet.component.html -->
+<div class="character-sheet-container">
+  @if (character) {
+  <!-- Actions (non imprimées) -->
+  <div class="sheet-actions no-print">
+    @if (isFromSavedCharacters) {
+    <!-- Venant de /characters -->
+    <button class="action-btn back" (click)="goBack()">← Retour à mes personnages</button>
+    <button class="action-btn pdf" (click)="downloadPdf()">📄 Télécharger PDF</button>
+    } @else {
+    <!-- Venant de /create -->
+    <button class="action-btn save" (click)="saveCharacter()">
+      💾 {{ isEditMode ? 'Mettre à jour' : 'Sauvegarder' }}
+    </button>
+    <button class="action-btn pdf" (click)="downloadPdf()">📄 Télécharger PDF</button>
+    <button class="action-btn new" (click)="createAnother()">✨ Nouveau personnage</button>
+    }
+  </div>
+
+  <!-- ============================================= -->
+  <!-- PAGE 1 : STATS PRINCIPALES -->
+  <!-- ============================================= -->
+  <div class="sheet-page page-1">
+    <!-- Header -->
+    <span class="field f-name">{{ character.name }}</span>
+    <span class="field f-species">{{ character.species }}</span>
+    <span class="field f-civilization">{{ character.civilization }}</span>
+    <span class="field f-class">{{ character.class }} {{ character.level }}</span>
+    <span class="field f-experience">{{ character.experience }}</span>
+
+    <!-- Stats vitales -->
+    <span class="field f-pv">{{ character.hitPointsCurrent }}</span>
+    <span class="field f-pv-temp">{{ character.hitPointsTemporary }}</span>
+    <span class="field f-hit-dice">1d{{ getHitDie() }}</span>
+    <span class="field f-prof-bonus">+{{ character.proficiencyBonus }}</span>
+    <span class="field f-pv-max">{{ character.hitPointsMax }}</span>
+    <span class="field f-wound-threshold">{{ character.woundThreshold }}</span>
+
+    <!-- Combat -->
+    <span class="field f-initiative">{{ formatModifier(character.initiative) }}</span>
+    <span class="field f-ac">{{ character.armorClass }}</span>
+    <span class="field f-passive-perception">{{ character.passivePerception }}</span>
+
+    <!-- Scores de caractéristiques -->
+    <span class="field f-str-score">{{ character.abilities.force }}</span>
+    <span class="field f-dex-score">{{ character.abilities.dexterite }}</span>
+    <span class="field f-con-score">{{ character.abilities.constitution }}</span>
+    <span class="field f-int-score">{{ character.abilities.intelligence }}</span>
+    <span class="field f-wis-score">{{ character.abilities.sagesse }}</span>
+    <span class="field f-cha-score">{{ character.abilities.charisme }}</span>
+
+    <!-- Modificateurs de caractéristiques -->
+    <span class="field f-str-mod">{{ formatModifier(character.abilityModifiers.force) }}</span>
+    <span class="field f-dex-mod">{{ formatModifier(character.abilityModifiers.dexterite) }}</span>
+    <span class="field f-con-mod">{{
+      formatModifier(character.abilityModifiers.constitution)
+    }}</span>
+    <span class="field f-int-mod">{{
+      formatModifier(character.abilityModifiers.intelligence)
+    }}</span>
+    <span class="field f-wis-mod">{{ formatModifier(character.abilityModifiers.sagesse) }}</span>
+    <span class="field f-cha-mod">{{ formatModifier(character.abilityModifiers.charisme) }}</span>
+
+    <!-- Jets de sauvegarde (cercle maîtrise) -->
+    <span class="field f-str-save-prof">{{ isSaveProficient('force') ? '●' : '○' }}</span>
+    <span class="field f-dex-save-prof">{{ isSaveProficient('dexterite') ? '●' : '○' }}</span>
+    <span class="field f-con-save-prof">{{ isSaveProficient('constitution') ? '●' : '○' }}</span>
+    <span class="field f-int-save-prof">{{ isSaveProficient('intelligence') ? '●' : '○' }}</span>
+    <span class="field f-wis-save-prof">{{ isSaveProficient('sagesse') ? '●' : '○' }}</span>
+    <span class="field f-cha-save-prof">{{ isSaveProficient('charisme') ? '●' : '○' }}</span>
+
+    <!-- Compétences FORCE -->
+    <span class="field f-athletics-prof">{{ isSkillProficient('Athlétisme') ? '●' : '○' }}</span>
+    <span class="field f-athletics-prof2">○</span>
+
+    <!-- Compétences DEXTÉRITÉ -->
+    <span class="field f-acrobatics-prof">{{ isSkillProficient('Acrobaties') ? '●' : '○' }}</span>
+    <span class="field f-acrobatics-prof2">○</span>
+    <span class="field f-sleight-prof">{{ isSkillProficient('Escamotage') ? '●' : '○' }}</span>
+    <span class="field f-sleight-prof2">○</span>
+    <span class="field f-stealth-prof">{{ isSkillProficient('Discrétion') ? '●' : '○' }}</span>
+    <span class="field f-stealth-prof2">○</span>
+
+    <!-- Compétences INTELLIGENCE -->
+    <span class="field f-arcana-prof">{{ isSkillProficient('Arcanes') ? '●' : '○' }}</span>
+    <span class="field f-arcana-prof2">○</span>
+    <span class="field f-history-prof">{{ isSkillProficient('Histoire') ? '●' : '○' }}</span>
+    <span class="field f-history-prof2">○</span>
+    <span class="field f-investigation-prof">{{
+      isSkillProficient('Investigation') ? '●' : '○'
+    }}</span>
+    <span class="field f-investigation-prof2">○</span>
+    <span class="field f-nature-prof">{{ isSkillProficient('Nature') ? '●' : '○' }}</span>
+    <span class="field f-nature-prof2">○</span>
+    <span class="field f-religion-prof">{{ isSkillProficient('Religion') ? '●' : '○' }}</span>
+    <span class="field f-religion-prof2">○</span>
+
+    <!-- Compétences SAGESSE -->
+    <span class="field f-animal-prof">{{ isSkillProficient('Dressage') ? '●' : '○' }}</span>
+    <span class="field f-animal-prof2">○</span>
+    <span class="field f-insight-prof">{{ isSkillProficient('Intuition') ? '●' : '○' }}</span>
+    <span class="field f-insight-prof2">○</span>
+    <span class="field f-medicine-prof">{{ isSkillProficient('Médecine') ? '●' : '○' }}</span>
+    <span class="field f-medicine-prof2">○</span>
+    <span class="field f-perception-prof">{{ isSkillProficient('Perception') ? '●' : '○' }}</span>
+    <span class="field f-perception-prof2">○</span>
+    <span class="field f-survival-prof">{{ isSkillProficient('Survie') ? '●' : '○' }}</span>
+    <span class="field f-survival-prof2">○</span>
+
+    <!-- Compétences CHARISME -->
+    <span class="field f-intimidation-prof">{{
+      isSkillProficient('Intimidation') ? '●' : '○'
+    }}</span>
+    <span class="field f-intimidation-prof2">○</span>
+    <span class="field f-persuasion-prof">{{ isSkillProficient('Persuasion') ? '●' : '○' }}</span>
+    <span class="field f-persuasion-prof2">○</span>
+    <span class="field f-performance-prof">{{
+      isSkillProficient('Représentation') ? '●' : '○'
+    }}</span>
+    <span class="field f-performance-prof2">○</span>
+    <span class="field f-deception-prof">{{ isSkillProficient('Tromperie') ? '●' : '○' }}</span>
+    <span class="field f-deception-prof2">○</span>
+
+    <!-- Vitesse -->
+    <span class="field f-speed">{{ character.speed }}</span>
+    <span class="field f-speed-climb">{{ character.speedClimb }}</span>
+    <span class="field f-speed-swim">{{ character.speedSwim }}</span>
+    <span class="field f-jump-height">{{ character.jumpHeight }}</span>
+    <span class="field f-jump-length">{{ character.jumpLength }}</span>
+
+    <!-- Attaques (armes avec bonus et dégâts) -->
+    @for (weapon of getWeapons().slice(0, 5); track weapon.name; let i = $index) {
+    <!-- Nom de l'arme -->
+    <span class="field f-attack-name-{{ i }}">{{ weapon.name }}</span>
+    <!-- Bonus d'attaque -->
+    <span class="field f-attack-bonus-{{ i }}">{{ getWeaponAttackBonus(weapon) }}</span>
+    <!-- Dégâts -->
+    <span class="field f-attack-damage-{{ i }}">{{ getWeaponDamage(weapon) }}</span>
+    }
+
+    <!-- Fallback si pas d'armes : afficher les noms d'équipement -->
+    @if (getWeapons().length === 0) { @for (item of character.equipment.slice(0, 5); track
+    item.name; let i = $index) {
+    <span class="field f-attack-name-{{ i }}">{{ item.name }}</span>
+    } }
+  </div>
+
+  <!-- ============================================= -->
+  <!-- PAGE 2 : APTITUDES -->
+  <!-- ============================================= -->
+  <div class="sheet-page page-2">
+    <!-- Armures -->
+    @for (armor of character.armorProficiencies.slice(0, 2); track armor; let i = $index) {
+    <span class="field f2-armor-{{ i }}">{{ armor }}</span>
+    }
+
+    <!-- Armes -->
+    @for (weapon of character.weaponProficiencies.slice(0, 2); track weapon; let i = $index) {
+    <span class="field f2-weapons-{{ i }}">{{ weapon }}</span>
+    }
+
+    <!-- Résistances & immunités -->
+    @if (character.hasDarkvision) {
+    <span class="field f2-resistance-0"
+      >Vision dans le noir ({{ character.darkvisionRadius }}m)</span
+    >
+    } @for (res of character.resistances; track res; let i = $index) { @if (i < 5) {
+    <span class="field f2-resistance-{{ character.hasDarkvision ? i + 1 : i }}">{{ res }}</span>
+    } }
+
+    <!-- Traits raciaux -->
+    @for (trait of character.racialTraits; track trait.name; let i = $index) { @if (i < 10) {
+    <span class="field f2-trait-{{ i }}">{{ trait.name }}</span>
+    } }
+
+    <!-- Class features (suite des traits) -->
+    @for (feature of character.classFeatures; track feature.name; let i = $index) { @if
+    (character.racialTraits.length + i < 10) {
+    <span class="field f2-trait-{{ character.racialTraits.length + i }}">{{ feature.name }}</span>
+    } }
+
+    <!-- Outils & véhicules -->
+    @for (tool of character.toolProficiencies; track tool; let i = $index) { @if (i < 10) {
+    <span class="field f2-tools-{{ i }}">{{ tool }}</span>
+    } }
+
+    <!-- Langues -->
+    @for (lang of character.languages; track lang; let i = $index) { @if (i < 10) {
+    <span class="field f2-lang-{{ i }}">{{ lang }}</span>
+    } }
+  </div>
+
+  <!-- ============================================= -->
+  <!-- PAGE 3 : PERSONNALITÉ -->
+  <!-- ============================================= -->
+  <div class="sheet-page page-3">
+    <span class="field f3-description">{{ character.description }}</span>
+    <span class="field f3-background">{{ character.background }}</span>
+    <span class="field f3-ideal">{{ character.ideal }}</span>
+    <span class="field f3-traits">{{ character.traits }}</span>
+    <span class="field f3-alignment">{{ character.alignment }}</span>
+    <span class="field f3-bonds">{{ character.bonds }}</span>
+    <span class="field f3-flaws">{{ character.flaws }}</span>
+    <span class="field f3-handicap">{{ character.handicap }}</span>
+  </div>
+
+  <!-- ============================================= -->
+  <!-- PAGE 4 : POSSESSIONS -->
+  <!-- ============================================= -->
+  <div class="sheet-page page-4">
+    <!-- Équipement -->
+    @for (item of character.equipment; track item.name; let i = $index) { @if (i < 14) {
+    <span class="field f4-equip-{{ i }}"
+      >{{ item.name }}{{ item.quantity > 1 ? ' x' + item.quantity : '' }}</span
+    >
+    } }
+
+    <!-- Bourse -->
+    <span class="field f4-gold">{{ character.currency.or }}</span>
+    <span class="field f4-silver">{{ character.currency.argent }}</span>
+    <span class="field f4-copper">{{ character.currency.cuivre }}</span>
+
+    <!-- Charge maximale -->
+    <span class="field f4-max-load">{{ character.abilities.force * 7.5 }} kg</span>
+  </div>
+
+  } @else {
+  <div class="no-character">
+    <p>Aucun personnage à afficher</p>
+    <a routerLink="/create" class="create-link">Créer un personnage</a>
+  </div>
+  }
+</div>

@@ -1,0 +1,14 @@
+{
+  "id": "5b7a93e9-b578-48bb-a30f-8f3ef795b06e",
+  "name": "Outils de voleur",
+  "type": "Tool",
+  "subtype": "Thief",
+  "cost": {
+    "value": 25,
+    "unit": "po"
+  },
+  "weight_kg": 0.5,
+  "data": {
+    "description": "Permet d'ajouter bonus de maîtrise aux tests de crochetage/désamorçage."
+  }
+}

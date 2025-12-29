@@ -1,0 +1,48 @@
+<!-- features/character-creation/steps/skills-step/skills-step.component.html -->
+<div class="skills-step">
+  <h2>Choisissez vos compétences</h2>
+  <p class="step-description">
+    Sélectionnez <strong>{{ creationService.character().skillChooseCount }}</strong> compétences
+    parmi celles disponibles pour votre classe.
+  </p>
+
+  <div class="selection-counter" [class.complete]="!canSelectMore()">
+    <span class="counter-label">Sélectionnées</span>
+    <span class="counter-value">
+      {{ creationService.character().selectedSkills.length }} /
+      {{ creationService.character().skillChooseCount }}
+    </span>
+    @if (!canSelectMore()) {
+    <span class="counter-check">✓</span>
+    }
+  </div>
+
+  <div class="cards-grid">
+    @for (skill of getAvailableSkills(); track skill) {
+    <app-selection-card
+      [icon]="isSkillSelected(skill) ? '✅' : '🎯'"
+      [title]="skill"
+      [subtitle]="getSkillAbility(skill)"
+      [selected]="isSkillSelected(skill)"
+      [disabled]="!isSkillSelected(skill) && !canSelectMore()"
+      (cardClick)="toggleSkill(skill)"
+    />
+    }
+  </div>
+
+  @if (creationService.character().selectedSkills.length > 0) {
+  <div class="selection-summary">
+    <h3>✅ Compétences sélectionnées</h3>
+    <div class="selected-skills">
+      @for (skill of creationService.character().selectedSkills; track skill) {
+      <span class="skill-tag">
+        {{ skill }}
+        <span class="skill-ability">({{ getSkillAbility(skill) }})</span>
+        <button class="remove-btn" (click)="toggleSkill(skill)">✕</button>
+      </span>
+      }
+    </div>
+    <button class="clear-btn" (click)="clearSkills()">🔄 Réinitialiser</button>
+  </div>
+  }
+</div>
