@@ -1,0 +1,30 @@
+services:
+  # --- BACKEND ---
+  dragons-api:
+    container_name: dragons-api
+    build:
+      context: ./Dragons.Api
+      dockerfile: Dockerfile
+    restart: always                # Redémarre auto en cas de crash ou reboot serveur
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Production
+    networks:
+      - dragons-network
+
+  # --- FRONTEND (Nginx) ---
+  dragons-web:
+    container_name: dragons-web
+    build:
+      context: ./Dragons.Web
+      dockerfile: Dockerfile
+    restart: always                # Redémarre auto
+    ports:
+      - "80:80"                    # Mappe le port 80 du serveur vers le port 80 du conteneur
+    depends_on:
+      - dragons-api
+    networks:
+      - dragons-network
+
+networks:
+  dragons-network:
+    driver: bridge
