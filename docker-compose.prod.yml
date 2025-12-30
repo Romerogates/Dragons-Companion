@@ -7,6 +7,7 @@ services:
     restart: always
     environment:
       - ASPNETCORE_ENVIRONMENT=Production
+      - Groq__ApiKey=${GROQ_API_KEY}
     networks:
       - dragons-network
 
@@ -34,6 +35,8 @@ services:
       - ./certbot/conf:/etc/letsencrypt
       - ./certbot/www:/var/www/certbot
     entrypoint: "/bin/sh -c 'trap exit TERM; while :; do certbot renew; sleep 12h & wait $${!}; done;'"
+    networks:
+      - dragons-network
 
 networks:
   dragons-network:
