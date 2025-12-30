@@ -1,81 +1,97 @@
-<!-- components/civilization-detail/civilization-detail.component.html -->
-<div class="civilization-detail-container">
-  <a routerLink="/civilizations" class="back-link">← Retour aux civilisations</a>
+<div class="civilization-detail-page">
+  <div class="page-header">
+    <a routerLink="/compendium/civilizations" class="back-btn">← Retour aux civilisations</a>
+  </div>
 
   @if (loading) {
-  <div class="loading">Chargement...</div>
+  <div class="loading">
+    <div class="spinner"></div>
+    <span>Chargement des archives...</span>
+  </div>
   } @else if (civilization) {
-  <header class="civilization-header">
-    <span class="civilization-icon">{{ getIcon(civilization.name) }}</span>
-    <div class="civilization-title">
-      <h1>{{ civilization.name }}</h1>
-      <p class="subtitle">🎲 Jet de dé : {{ getDiceRange() }}</p>
+
+  <header class="civ-hero" [ngClass]="getThemeClass(civilization.name)">
+    <div class="hero-content">
+      <span class="civ-icon">{{ getIcon(civilization.name) }}</span>
+      <div class="civ-info">
+        <h1>{{ civilization.name }}</h1>
+        <div class="hero-badges">
+          <span class="badge dice">🎲 Dé : {{ getDiceRange() }}</span>
+          @if (civilization.demographics.isCosmopolitan) {
+          <span class="badge cosmos">🌍 Cosmopolite</span>
+          }
+        </div>
+      </div>
     </div>
   </header>
 
-  <div class="content-grid">
-    <!-- Lore -->
-    <section class="card lore-card">
-      <h2>📖 Description</h2>
-      <p class="lore-summary">{{ civilization.lore.summary }}</p>
-      <div class="keywords">
-        @for (keyword of civilization.lore.keywords; track keyword) {
-        <span class="keyword-tag">{{ keyword }}</span>
+  <div class="detail-grid">
+    <div class="left-col">
+      <section class="detail-card lore-card">
+        <h2>📖 Description</h2>
+        <p class="lore-summary">{{ civilization.lore.summary }}</p>
+
+        <div class="keywords-list">
+          @for (keyword of civilization.lore.keywords; track keyword) {
+          <span class="keyword-tag">{{ keyword }}</span>
+          }
+        </div>
+      </section>
+    </div>
+
+    <div class="right-col">
+      <section class="detail-card demographics">
+        <h2>👥 Démographie</h2>
+
+        <div class="info-group">
+          <span class="label">Espèces Principales</span>
+          <div class="tags-list">
+            @for (species of civilization.demographics.primarySpecies; track species) {
+            <span class="tag primary">{{ species }}</span>
+            }
+          </div>
+        </div>
+
+        @if (civilization.demographics.secondarySpecies.length > 0) {
+        <div class="info-group">
+          <span class="label">Espèces Secondaires</span>
+          <div class="tags-list">
+            @for (species of civilization.demographics.secondarySpecies; track species) {
+            <span class="tag secondary">{{ species }}</span>
+            }
+          </div>
+        </div>
         }
-      </div>
-    </section>
+      </section>
 
-    <!-- Démographie -->
-    <section class="card demographics-card">
-      <h2>👥 Démographie</h2>
+      <section class="detail-card linguistics">
+        <h2>🗣️ Linguistique</h2>
 
-      <div class="demo-group">
-        <h3>Espèces principales</h3>
-        <div class="tags">
-          @for (species of civilization.demographics.primarySpecies; track species) {
-          <span class="tag primary">{{ species }}</span>
-          }
+        <div class="info-group">
+          <span class="label">Langues Officielles</span>
+          <div class="tags-list">
+            @for (lang of civilization.linguistics.officialLanguages; track lang) {
+            <span class="tag lang">{{ lang }}</span>
+            }
+          </div>
         </div>
-      </div>
 
-      @if (civilization.demographics.secondarySpecies.length > 0) {
-      <div class="demo-group">
-        <h3>Espèces secondaires</h3>
-        <div class="tags">
-          @for (species of civilization.demographics.secondarySpecies; track species) {
-          <span class="tag secondary">{{ species }}</span>
-          }
+        <div class="info-group">
+          <span class="label">Systèmes d'Écriture</span>
+          <div class="tags-list">
+            @for (script of civilization.linguistics.writingSystems; track script) {
+            <span class="tag script">{{ script }}</span>
+            }
+          </div>
         </div>
-      </div>
-      } @if (civilization.demographics.isCosmopolitan) {
-      <div class="cosmopolitan-badge">🌍 Civilisation cosmopolite</div>
-      }
-    </section>
-
-    <!-- Linguistique -->
-    <section class="card linguistics-card">
-      <h2>🗣️ Linguistique</h2>
-
-      <div class="ling-group">
-        <h3>Langues officielles</h3>
-        <div class="tags">
-          @for (lang of civilization.linguistics.officialLanguages; track lang) {
-          <span class="tag language">{{ lang }}</span>
-          }
-        </div>
-      </div>
-
-      <div class="ling-group">
-        <h3>Systèmes d'écriture</h3>
-        <div class="tags">
-          @for (script of civilization.linguistics.writingSystems; track script) {
-          <span class="tag script">{{ script }}</span>
-          }
-        </div>
-      </div>
-    </section>
+      </section>
+    </div>
   </div>
+
   } @else {
-  <div class="error">Civilisation non trouvée</div>
+  <div class="error-state">
+    <h2>Civilisation introuvable</h2>
+    <a routerLink="/compendium/civilizations" class="btn btn-primary">Retour à la liste</a>
+  </div>
   }
 </div>

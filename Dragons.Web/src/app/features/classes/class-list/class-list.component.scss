@@ -1,340 +1,200 @@
-// components/class-list/class-list.component.scss
+// features/compendium/classes/class-list/class-list.component.scss
 
-.class-container {
-  padding: 1.5rem 2rem;
-  max-width: 1500px;
+.class-list-page {
+  padding: 2rem 1rem;
+  max-width: 1400px;
   margin: 0 auto;
-  min-height: calc(100vh - 70px);
-  box-sizing: border-box;
-  overflow-x: hidden;
+  animation: fadeIn 0.3s ease-out;
+
+  // Cacher la scrollbar
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+  &::-webkit-scrollbar { display: none; }
+}
+
+// --- HEADER ---
+.page-header {
+  text-align: center;
+  margin-bottom: 3rem;
 
   h1 {
-    text-align: center;
-    margin-bottom: 1.5rem;
-    color: #2c3e50;
-    font-size: clamp(1.5rem, 3vw, 2rem);
+    font-size: 2.5rem;
+    color: var(--primary-color);
+    margin: 0 0 0.5rem 0;
+    font-family: 'Cinzel', serif;
+  }
+
+  p {
+    color: var(--text-muted);
+    font-size: 1.1rem;
   }
 }
 
 .loading {
   text-align: center;
-  padding: 3rem;
-  color: #7f8c8d;
+  padding: 4rem;
+  color: var(--text-muted);
   font-size: 1.2rem;
+  .spinner { margin-bottom: 1rem; }
 }
 
-// ========================================
-// GRID - Centré et responsive
-// ========================================
+// --- GRID (Smart Responsive) ---
 .class-grid {
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: 1rem;
-  justify-items: center;
-  max-width: 1300px;
-  margin: 0 auto;
+  // S'adapte automatiquement : colonnes min de 260px
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: 1.5rem;
+  justify-content: center;
 }
 
+// --- CARD ---
 .class-card {
   display: flex;
   align-items: center;
-  gap: 0.8rem;
-  padding: 1rem;
-  width: 100%;
-  max-width: 300px;
-  background: #fff;
-  border-radius: 10px;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  gap: 1.2rem;
+  padding: 1.2rem;
+
+  background: var(--bg-cards);
+  border: 1px solid var(--border-color);
+  border-radius: 12px;
+  box-shadow: var(--shadow-sm);
+
   text-decoration: none;
-  color: inherit;
-  transition: transform 0.2s, box-shadow 0.2s, border-color 0.2s;
-  border: 2px solid transparent;
-  box-sizing: border-box;
+  color: var(--text-main);
+  transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+  position: relative;
+  overflow: hidden;
+
+  // Bordure latérale colorée (par défaut)
+  border-left: 5px solid var(--border-color);
 
   &:hover {
-    transform: translateY(-3px);
-    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.15);
-    border-color: #f1c40f;
-    background: #fffef5;
+    transform: translateY(-5px);
+    box-shadow: var(--shadow-md);
+
+    .class-icon {
+      transform: scale(1.2);
+    }
   }
 }
 
-.class-icon {
-  font-size: 2.5rem;
-  line-height: 1;
+.card-icon-wrapper {
+  width: 60px;
+  height: 60px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: var(--section-alt-bg);
+  border-radius: 12px;
   flex-shrink: 0;
-  width: 50px;
-  text-align: center;
+  transition: background-color 0.3s;
+}
+
+.class-icon {
+  font-size: 2.2rem;
+  line-height: 1;
+  transition: transform 0.3s ease;
+  filter: drop-shadow(0 2px 4px rgba(0,0,0,0.1));
 }
 
 .class-info {
   flex: 1;
-  min-width: 0;
-  overflow: hidden;
+  overflow: hidden; // Pour gérer les noms longs
 
   h2 {
-    margin: 0 0 0.4rem 0;
+    margin: 0 0 0.5rem 0;
     font-size: 1.1rem;
-    color: #34495e;
     font-weight: 700;
+    font-family: 'Cinzel', serif;
+    color: var(--text-main);
     text-transform: uppercase;
-    letter-spacing: 0.5px;
+
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
   }
 }
 
+// --- STATS BADGES ---
 .class-stats {
   display: flex;
   flex-wrap: wrap;
-  gap: 0.4rem;
+  gap: 0.5rem;
 }
 
 .stat {
   display: inline-flex;
   align-items: center;
-  gap: 0.25rem;
-  padding: 0.25rem 0.5rem;
+  gap: 0.3rem;
+  padding: 0.25rem 0.6rem;
   border-radius: 6px;
   font-size: 0.8rem;
-  font-weight: 500;
+  font-weight: 600;
 
-  .die-icon {
-    font-size: 0.9rem;
-  }
+  .die-icon { font-size: 0.9rem; }
 }
 
+// Couleurs des dés de vie
 .hit-die {
-  &.high {
-    background: #e8f5e9;
-    color: #2e7d32;
-  }
-  &.medium {
-    background: #fff3e0;
-    color: #ef6c00;
-  }
-  &.low {
-    background: #fce4ec;
-    color: #c2185b;
-  }
-  &.very-low {
-    background: #f3e5f5;
-    color: #7b1fa2;
-  }
+  &.high { background: rgba(39, 174, 96, 0.1); color: #27ae60; }     // d12
+  &.medium { background: rgba(243, 156, 18, 0.1); color: #d35400; }  // d10
+  &.low { background: rgba(127, 140, 141, 0.1); color: #7f8c8d; }    // d8
+  &.very-low { background: rgba(192, 57, 43, 0.1); color: #c0392b; } // d6
 }
 
+// Type de classe
 .spellcaster {
-  background: #e3f2fd;
-  color: #1565c0;
+  background: rgba(155, 89, 182, 0.1);
+  color: #8e44ad;
 }
 
 .martial {
-  background: #ffebee;
-  color: #c62828;
+  background: rgba(44, 62, 80, 0.1);
+  color: #34495e;
 }
 
-// ========================================
-// TRÈS GRAND ÉCRAN (≥1500px) - 4 colonnes larges
-// ========================================
-@media screen and (min-width: 1500px) {
-  .class-container {
-    padding: 2rem 3rem;
+// --- THÈMES DE COULEUR ---
+// Applique la couleur sur la bordure gauche et l'icône au survol
+
+@mixin class-theme($color) {
+  border-left-color: $color;
+
+  .card-icon-wrapper {
+    color: $color;
   }
 
+  &:hover {
+    border-color: $color; // Toute la bordure se colore au survol
+    border-left-color: $color; // On garde la barre gauche visible
+
+    .card-icon-wrapper {
+      background-color: rgba($color, 0.1);
+    }
+  }
+}
+
+.theme-red { @include class-theme(#c0392b); }
+.theme-blue { @include class-theme(#2980b9); }
+.theme-green { @include class-theme(#27ae60); }
+.theme-gold { @include class-theme(#f1c40f); }
+.theme-purple { @include class-theme(#8e44ad); }
+.theme-gray { @include class-theme(#7f8c8d); }
+.theme-cyan { @include class-theme(#00cec9); }
+.theme-pink { @include class-theme(#e84393); }
+.theme-default { @include class-theme(#bdc3c7); }
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+// Ajustement mobile
+@media (max-width: 480px) {
   .class-grid {
-    grid-template-columns: repeat(4, 1fr);
-    gap: 1.2rem;
-    max-width: 1400px;
+    grid-template-columns: 1fr; // 1 colonne sur mobile
   }
 
   .class-card {
-    max-width: 320px;
-    padding: 1.1rem;
-  }
-
-  .class-icon {
-    font-size: 2.8rem;
-    width: 55px;
-  }
-
-  .class-info h2 {
-    font-size: 1.15rem;
-  }
-
-  .stat {
-    font-size: 0.85rem;
-    padding: 0.3rem 0.6rem;
-  }
-}
-
-// ========================================
-// GRAND ÉCRAN (1200px - 1499px) - 4 colonnes
-// ========================================
-@media screen and (min-width: 1200px) and (max-width: 1499px) {
-  .class-grid {
-    grid-template-columns: repeat(4, 1fr);
-    gap: 0.9rem;
-    max-width: 1150px;
-  }
-
-  .class-card {
-    max-width: 270px;
-    padding: 0.9rem;
-  }
-
-  .class-icon {
-    font-size: 2.2rem;
-    width: 45px;
-  }
-
-  .class-info h2 {
-    font-size: 1rem;
-  }
-
-  .stat {
-    font-size: 0.75rem;
-    padding: 0.2rem 0.45rem;
-  }
-}
-
-// ========================================
-// ÉCRAN MOYEN (900px - 1199px) - 3 colonnes
-// ========================================
-@media screen and (min-width: 900px) and (max-width: 1199px) {
-  .class-container {
-    padding: 1rem 1.5rem;
-  }
-
-  .class-grid {
-    grid-template-columns: repeat(3, 1fr);
-    gap: 0.8rem;
-    max-width: 900px;
-  }
-
-  .class-card {
-    max-width: 280px;
-    padding: 0.8rem;
-    gap: 0.6rem;
-  }
-
-  .class-icon {
-    font-size: 2rem;
-    width: 42px;
-  }
-
-  .class-info h2 {
-    font-size: 0.95rem;
-    margin-bottom: 0.3rem;
-  }
-
-  .stat {
-    font-size: 0.72rem;
-    padding: 0.2rem 0.4rem;
-  }
-}
-
-// ========================================
-// TABLETTE (600px - 899px) - 2 colonnes
-// ========================================
-@media screen and (min-width: 600px) and (max-width: 899px) {
-  .class-container {
     padding: 1rem;
-    min-height: auto;
-  }
-
-  .class-grid {
-    grid-template-columns: repeat(2, 1fr);
-    gap: 0.8rem;
-    max-width: 600px;
-  }
-
-  .class-card {
-    max-width: 280px;
-    padding: 0.8rem;
-  }
-
-  .class-icon {
-    font-size: 2rem;
-    width: 42px;
-  }
-
-  .class-info h2 {
-    font-size: 1rem;
-  }
-
-  .stat {
-    font-size: 0.75rem;
-  }
-}
-
-// ========================================
-// MOBILE (< 600px) - 1 colonne
-// ========================================
-@media screen and (max-width: 599px) {
-  .class-container {
-    padding: 0.8rem;
-    min-height: auto;
-
-    h1 {
-      margin-bottom: 1rem;
-      font-size: 1.4rem;
-    }
-  }
-
-  .class-grid {
-    grid-template-columns: 1fr;
-    gap: 0.6rem;
-    max-width: 350px;
-  }
-
-  .class-card {
-    max-width: 100%;
-    padding: 0.8rem;
-  }
-
-  .class-icon {
-    font-size: 2.2rem;
-    width: 48px;
-  }
-
-  .class-info h2 {
-    font-size: 1.05rem;
-  }
-
-  .stat {
-    font-size: 0.8rem;
-    padding: 0.25rem 0.5rem;
-  }
-}
-
-// ========================================
-// TRÈS PETIT ÉCRAN (< 380px)
-// ========================================
-@media screen and (max-width: 379px) {
-  .class-container {
-    padding: 0.5rem;
-
-    h1 {
-      font-size: 1.2rem;
-    }
-  }
-
-  .class-card {
-    padding: 0.6rem;
-    gap: 0.5rem;
-  }
-
-  .class-icon {
-    font-size: 1.8rem;
-    width: 40px;
-  }
-
-  .class-info h2 {
-    font-size: 0.95rem;
-  }
-
-  .stat {
-    font-size: 0.72rem;
   }
 }

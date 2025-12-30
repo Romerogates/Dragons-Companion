@@ -1,46 +1,61 @@
-<!-- components/language-detail/language-detail.component.html -->
-<div class="language-detail-container">
-  <a routerLink="/languages" class="back-link">← Retour aux langues</a>
+<div class="language-detail-page no-scrollbar">
+  <div class="page-header">
+    <a routerLink="/compendium/languages" class="back-btn">← Retour aux langues</a>
+  </div>
 
   @if (loading) {
-  <div class="loading">Chargement...</div>
+  <div class="loading">
+    <div class="spinner"></div>
+    <span>Déchiffrement des runes...</span>
+  </div>
   } @else if (language) {
-  <header class="language-header" [class]="getCategoryClass(language.category)">
-    <span class="language-icon">{{ getCategoryIcon(language.category) }}</span>
-    <div class="language-title">
-      <h1>{{ language.name }}</h1>
-      <span class="category-badge">{{ language.category }}</span>
+
+  <header class="lang-hero" [class]="getThemeClass(language.category)">
+    <div class="hero-content">
+      <span class="lang-icon">{{ getCategoryIcon(language.category) }}</span>
+      <div class="lang-info">
+        <h1>{{ language.name }}</h1>
+        <div class="hero-badges">
+          <span class="badge cat">{{ language.category }}</span>
+          <span class="badge script">✍️ {{ language.scripts.length }} script(s)</span>
+        </div>
+      </div>
     </div>
   </header>
 
-  <div class="content-grid">
-    <!-- Lore -->
-    <section class="card lore-card">
-      <h2>📖 Description</h2>
-      <p class="lore-text">{{ language.lore }}</p>
-    </section>
+  <div class="detail-grid">
+    <div class="left-col">
+      <section class="detail-card lore-card">
+        <h2>📖 Histoire & Usage</h2>
+        <p class="lore-text">{{ language.lore }}</p>
+      </section>
+    </div>
 
-    <!-- Scripts -->
-    <section class="card scripts-card">
-      <h2>✍️ Systèmes d'écriture</h2>
-      <div class="tags">
-        @for (script of language.scripts; track script) {
-        <span class="tag script">{{ script }}</span>
-        }
-      </div>
-    </section>
+    <div class="right-col">
+      <section class="detail-card scripts">
+        <h2>✍️ Écriture</h2>
+        <div class="tags-list">
+          @for (script of language.scripts; track script) {
+          <span class="tag script">{{ script }}</span>
+          }
+        </div>
+      </section>
 
-    <!-- Locuteurs -->
-    <section class="card speakers-card">
-      <h2>👥 Locuteurs typiques</h2>
-      <div class="tags">
-        @for (speaker of language.typicalSpeakers; track speaker) {
-        <span class="tag speaker">{{ speaker }}</span>
-        }
-      </div>
-    </section>
+      <section class="detail-card speakers">
+        <h2>🗣️ Locuteurs</h2>
+        <div class="tags-list">
+          @for (speaker of language.typicalSpeakers; track speaker) {
+          <span class="tag speaker">{{ speaker }}</span>
+          }
+        </div>
+      </section>
+    </div>
   </div>
+
   } @else {
-  <div class="error">Langue non trouvée</div>
+  <div class="error-state">
+    <h2>Langue inconnue</h2>
+    <a routerLink="/compendium/languages" class="btn btn-primary">Retour à la liste</a>
+  </div>
   }
 </div>

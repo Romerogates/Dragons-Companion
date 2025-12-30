@@ -1,33 +1,45 @@
-<!-- components/species-list/species-list.component.html -->
-<div class="species-container">
-  <h1>🐉 Espèces jouables</h1>
+<div class="species-list-page no-scrollbar">
+  <header class="page-header">
+    <h1>🐉 Espèces Jouables</h1>
+    <p>Choisissez vos origines parmi les peuples d'Eana</p>
+  </header>
 
   @if (loading) {
-  <div class="loading">Chargement des espèces...</div>
+  <div class="loading">
+    <div class="spinner"></div>
+    <span>Chargement des espèces...</span>
+  </div>
   } @else {
   <div class="species-grid">
-    @for (s of species; track s.id) {
-    <a [routerLink]="['/species', s.id]" class="species-card">
-      <div class="species-icon">{{ getIcon(s.name) }}</div>
-      <div class="species-info">
+    @for (s of speciesList; track s.id) {
+    <a
+      [routerLink]="['/compendium/species', s.id]"
+      class="species-card"
+      [class]="getThemeClass(s.name)"
+    >
+      <div class="card-header">
+        <div class="icon-wrapper">
+          <span class="species-icon">{{ getIcon(s.name) }}</span>
+        </div>
         <h2>{{ s.name }}</h2>
-        <div class="species-stats">
-          <span class="stat">
-            <span class="label">Bonus:</span>
-            {{ formatAbilityBonuses(s.baseStats.abilityBonuses) }}
+      </div>
+
+      <div class="species-body">
+        <div class="tags-container info-row">
+          <span class="badge info" [class]="getSizeClass(s.baseStats.sizeCategory)">
+            📏 {{ getSizeLabel(s.baseStats.sizeCategory) }}
           </span>
-          <span class="stat">
-            <span class="label">Taille:</span>
-            {{ getSizeLabel(s.baseStats.sizeCategory) }}
-          </span>
-          <span class="stat">
-            <span class="label">Vitesse:</span>
-            {{ s.baseStats.speedMeters }}m
-          </span>
+          <span class="badge info"> 🏃 {{ s.baseStats.speedMeters }}m </span>
           @if (s.baseStats.hasDarkvision) {
-          <span class="stat darkvision">
-            👁️ Vision nocturne ({{ s.baseStats.darkvisionRadiusMeters }}m)
-          </span>
+          <span class="badge info vision">👁️ Nuit</span>
+          }
+        </div>
+
+        <hr class="divider" />
+
+        <div class="tags-container bonus-row">
+          @for (badge of getStatsBadges(s); track $index) {
+          <span [class]="badge.cssClass">{{ badge.label }}</span>
           }
         </div>
       </div>

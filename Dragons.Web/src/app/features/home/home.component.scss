@@ -1,10 +1,10 @@
-// On n'importe plus de variables locales ici, on utilise celles de styles.scss !
+// features/home/home.component.scss
 
+// On utilise les variables globales définies dans styles.scss
 .home-container {
   display: flex;
   flex-direction: column;
   min-height: 100vh;
-  // Utilisation des variables globales
   background-color: var(--bg-page);
   color: var(--text-main);
   box-sizing: border-box;
@@ -13,7 +13,7 @@
 /* --- HERO SECTION --- */
 .hero {
   position: relative;
-  height: 90vh;
+  height: 85vh; // Un peu moins haut pour inciter au scroll
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -21,18 +21,28 @@
   text-align: center;
   padding: 0 1.5rem;
   overflow: hidden;
-  color: #ffffff; // Le texte du Hero reste blanc (sur image sombre) quel que soit le thème
+  color: #ffffff;
 
   .hero-background {
     position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    // On garde l'image sombre pour le contraste
-    background: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.8)),
-                url('/assets/images/hero-bg.jpg') center/cover no-repeat;
+    top: 0; left: 0; width: 100%; height: 100%;
     z-index: 0;
+
+    // --- MOTIF ÉCAILLES DE DRAGON (CSS PUR) ---
+    background-color: #111; // Fond très sombre
+    background-image:
+      // 1. Overlay dégradé pour assombrir le bas et faire ressortir le texte
+      linear-gradient(to bottom, rgba(0,0,0,0.4) 0%, rgba(0,0,0,0.9) 100%),
+
+      // 2. Motif géométrique "Écailles"
+      linear-gradient(45deg, #1a1a1d 25%, transparent 25%, transparent 75%, #1a1a1d 75%, #1a1a1d),
+      linear-gradient(45deg, #1a1a1d 25%, transparent 25%, transparent 75%, #1a1a1d 75%, #1a1a1d);
+
+    background-position: 0 0, 0 0, 10px 10px;
+    background-size: auto, 20px 20px, 20px 20px;
+
+    // Petit effet subtil pour donner de la profondeur
+    box-shadow: inset 0 0 100px rgba(0,0,0,0.9);
   }
 
   .hero-content {
@@ -48,28 +58,27 @@
   .hero-logo {
     width: 120px;
     height: auto;
-    margin-bottom: 1rem;
+    margin-bottom: 1.5rem;
     animation: fadeInDown 1s ease-out;
-    filter: drop-shadow(0 0 10px rgba(255,255,255,0.2));
+    filter: drop-shadow(0 0 15px rgba(255,255,255,0.3));
   }
 
   .hero-title {
-    font-size: clamp(2rem, 5vw, 4rem);
+    font-size: clamp(2.5rem, 6vw, 4.5rem);
     margin-bottom: 1rem;
-    color: #ffffff; // Blanc sur l'image
-    text-shadow: 0 2px 4px rgba(0,0,0,0.5);
-    text-transform: uppercase;
-    letter-spacing: 2px;
+    color: #ffffff;
+    font-family: 'Cinzel', serif;
+    text-shadow: 0 4px 8px rgba(0,0,0,0.6);
     line-height: 1.1;
   }
 
   .hero-subtitle {
-    font-size: clamp(1rem, 3vw, 1.25rem);
+    font-size: clamp(1.1rem, 3vw, 1.4rem);
     line-height: 1.6;
     margin-bottom: 2.5rem;
     color: rgba(255, 255, 255, 0.9);
-    max-width: 600px;
-    text-shadow: 0 1px 2px rgba(0,0,0,0.5);
+    max-width: 650px;
+    text-shadow: 0 2px 4px rgba(0,0,0,0.5);
   }
 }
 
@@ -82,15 +91,10 @@
   flex-wrap: wrap;
   width: 100%;
 
-  // CORRECTION MOBILE
-  @media (max-width: 768px) {
+  @media (max-width: 600px) {
     flex-direction: column;
     gap: 1rem;
-
-    .btn {
-      width: 100%;
-      max-width: 280px;
-    }
+    .btn { width: 100%; max-width: 300px; }
   }
 }
 
@@ -98,63 +102,57 @@
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  padding: 0.8rem 1.5rem;
-  border-radius: 4px;
+  padding: 0.9rem 1.8rem;
+  border-radius: 6px;
   text-decoration: none;
-  font-weight: bold;
+  font-weight: 700;
   transition: all 0.3s ease;
   cursor: pointer;
   border: 1px solid transparent;
-  white-space: nowrap;
-  box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+  font-size: 1.1rem;
+  box-shadow: 0 4px 6px rgba(0,0,0,0.2);
 
   .btn-icon {
-    margin-right: 0.5rem;
-    font-size: 1.2em;
-    display: flex;
-    align-items: center;
+    margin-right: 0.6rem;
+    font-size: 1.3em;
   }
 
   &.btn-primary {
     background-color: var(--primary-color);
-    color: #ffffff; // Blanc par défaut sur l'or
-    text-shadow: 0 1px 2px rgba(0,0,0,0.2);
+    color: #ffffff; // Toujours blanc sur l'accent
 
-    // Exception : En dark mode, on met le texte en noir pour la lisibilité sur l'or
-    body.dark-mode & {
-      color: #000000;
-      text-shadow: none;
-    }
+    // Exception Dark Mode : texte noir sur or pour lisibilité
+    body.dark-mode & { color: #000; }
 
     &:hover {
-      filter: brightness(1.1); // Éclaircit légèrement au survol
-      transform: translateY(-2px);
+      filter: brightness(1.15);
+      transform: translateY(-3px);
+      box-shadow: 0 6px 12px rgba(0,0,0,0.3);
     }
   }
 
   &.btn-secondary {
-    background-color: rgba(255, 255, 255, 0.15); // Transparence
-    backdrop-filter: blur(5px);
+    background-color: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(8px);
     color: #ffffff;
-    border: 1px solid rgba(255, 255, 255, 0.4);
+    border: 1px solid rgba(255, 255, 255, 0.3);
 
     &:hover {
-      background-color: rgba(255, 255, 255, 0.25);
+      background-color: rgba(255, 255, 255, 0.2);
+      border-color: rgba(255, 255, 255, 0.6);
+      transform: translateY(-3px);
     }
   }
 }
 
 .badge {
-  background: var(--color-danger, #c0392b);
+  background: var(--color-danger, #e74c3c);
   color: white;
-  border-radius: 50%;
-  padding: 0.2em 0.5em;
-  font-size: 0.8em;
-  margin-left: 0.5rem;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  min-width: 20px;
+  border-radius: 12px;
+  padding: 0.1em 0.6em;
+  font-size: 0.75em;
+  margin-left: 0.6rem;
+  font-weight: bold;
 }
 
 /* --- SCROLL INDICATOR --- */
@@ -165,21 +163,24 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  opacity: 0.8;
+  opacity: 0.7;
   animation: bounce 2s infinite;
   color: #ffffff;
+  cursor: pointer;
 
   span {
-    font-size: 0.9rem;
+    font-size: 0.8rem;
     text-transform: uppercase;
-    letter-spacing: 1px;
+    letter-spacing: 2px;
     margin-bottom: 0.5rem;
   }
+
+  .scroll-arrow { font-size: 1.5rem; }
 }
 
 /* --- STATS SECTION --- */
 .stats-section {
-  background-color: var(--bg-cards); // S'adapte au thème
+  background-color: var(--bg-cards);
   padding: 3rem 1rem;
   border-bottom: 1px solid var(--border-color);
 }
@@ -187,25 +188,32 @@
 .stats-grid {
   display: flex;
   justify-content: center;
-  gap: 2rem 4rem;
+  gap: 3rem 5rem;
   flex-wrap: wrap;
+  max-width: 1200px;
+  margin: 0 auto;
 
   .stat-item {
     text-align: center;
     display: flex;
     flex-direction: column;
-    min-width: 100px;
+    min-width: 120px;
 
     .stat-value {
-      font-size: 2.5rem;
-      font-weight: bold;
+      font-size: 3rem;
+      font-weight: 800;
       color: var(--primary-color);
+      font-family: 'Cinzel', serif;
+      line-height: 1;
+      margin-bottom: 0.5rem;
     }
 
     .stat-label {
       text-transform: uppercase;
       font-size: 0.85rem;
+      font-weight: 600;
       color: var(--text-muted);
+      letter-spacing: 1px;
     }
   }
 }
@@ -214,74 +222,98 @@
 .features-section {
   padding: 5rem 1rem;
   text-align: center;
-  background-color: var(--bg-page); // Fond de page standard
+  background-color: var(--bg-page);
 
   .section-title {
     font-size: 2.5rem;
     margin-bottom: 3rem;
     color: var(--primary-color);
+    font-family: 'Cinzel', serif;
   }
 }
 
+// Grille 2x2
 .features-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
   gap: 2rem;
-  max-width: 1200px;
+  max-width: 1000px;
   margin: 0 auto;
   padding: 0 1rem;
+
+  // MOBILE : 1 colonne
+  grid-template-columns: 1fr;
+
+  // TABLETTE & DESKTOP : 2 colonnes égales (2x2)
+  @media (min-width: 768px) {
+    grid-template-columns: repeat(2, 1fr);
+  }
 }
 
 .feature-card {
-  background: var(--bg-cards); // Carte qui ressort
-  padding: 2rem;
-  border-radius: 8px;
-  transition: transform 0.3s;
+  background: var(--bg-cards);
+  padding: 2.5rem 2rem;
+  border-radius: 16px;
+  transition: all 0.3s ease;
   border: 1px solid var(--border-color);
   box-shadow: var(--shadow-sm);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  height: 100%;
 
   &:hover {
-    transform: translateY(-5px);
+    transform: translateY(-8px);
     border-color: var(--primary-color);
     box-shadow: var(--shadow-md);
   }
 
   .feature-icon {
-    font-size: 3rem;
-    margin-bottom: 1rem;
+    font-size: 3.5rem;
+    margin-bottom: 1.5rem;
+    line-height: 1;
+    transition: transform 0.3s;
+  }
+
+  &:hover .feature-icon {
+    transform: scale(1.1);
   }
 
   .feature-title {
-    font-size: 1.5rem;
+    font-size: 1.4rem;
     margin-bottom: 1rem;
     color: var(--text-main);
+    font-family: 'Cinzel', serif;
+    font-weight: 700;
   }
 
   .feature-description {
     color: var(--text-muted);
     line-height: 1.6;
+    font-size: 1rem;
   }
 }
 
 /* --- QUICK ACCESS --- */
 .quick-access-section {
-  padding: 4rem 1rem;
-  background: var(--section-alt-bg); // Fond alternatif pour casser la monotonie
+  padding: 5rem 1rem;
+  background: var(--section-alt-bg);
   text-align: center;
   border-top: 1px solid var(--border-color);
   border-bottom: 1px solid var(--border-color);
 
   .section-title {
     font-size: 2rem;
-    margin-bottom: 2rem;
+    margin-bottom: 2.5rem;
     color: var(--primary-color);
+    font-family: 'Cinzel', serif;
   }
 }
 
 .quick-links {
   display: flex;
   justify-content: center;
-  gap: 1.5rem;
+  gap: 2rem;
   flex-wrap: wrap;
 }
 
@@ -290,27 +322,31 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  width: 120px;
-  height: 120px;
+  width: 130px;
+  height: 130px;
   background: var(--bg-cards);
-  border-radius: 12px;
+  border-radius: 16px;
   text-decoration: none;
   color: var(--text-main);
   border: 1px solid var(--border-color);
-  transition: all 0.2s;
+  transition: all 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275);
   box-shadow: var(--shadow-sm);
 
   &:hover {
-    background: var(--bg-cards); // Garde le fond, change la bordure
     border-color: var(--primary-color);
     color: var(--primary-color);
-    transform: translateY(-3px);
+    transform: translateY(-5px) scale(1.05);
     box-shadow: var(--shadow-md);
   }
 
   .quick-icon {
-    font-size: 2rem;
+    font-size: 2.5rem;
     margin-bottom: 0.5rem;
+  }
+
+  .quick-label {
+    font-weight: 600;
+    font-size: 0.9rem;
   }
 }
 
@@ -318,11 +354,23 @@
 .cta-section {
   padding: 6rem 1rem;
   text-align: center;
-  // Fond sombre fixe pour le CTA pour le style dramatique
-  background: linear-gradient(to top, #1a1a1d, #2c3e50);
+  background: linear-gradient(135deg, #1a1a1d, #2c3e50);
   color: #ffffff;
+  position: relative;
+  overflow: hidden;
+
+  &::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; width: 100%; height: 100%;
+    background-image: radial-gradient(circle at 50% 50%, rgba(255,255,255,0.05) 1px, transparent 1px);
+    background-size: 20px 20px;
+    opacity: 0.5;
+  }
 
   .cta-content {
+    position: relative;
+    z-index: 1;
     max-width: 600px;
     margin: 0 auto;
     display: flex;
@@ -330,32 +378,36 @@
     align-items: center;
 
     h2 {
-      font-size: clamp(1.8rem, 4vw, 2.5rem);
+      font-family: 'Cinzel', serif;
+      font-size: clamp(2rem, 5vw, 2.8rem);
       margin-bottom: 1rem;
       color: #ffffff;
     }
 
     p {
       font-size: 1.2rem;
-      margin-bottom: 2rem;
+      margin-bottom: 2.5rem;
       color: rgba(255, 255, 255, 0.8);
     }
   }
 
   .btn-large {
     padding: 1rem 2.5rem;
-    font-size: 1.2rem;
+    font-size: 1.3rem;
+    border-radius: 50px;
   }
 }
 
 /* --- FOOTER --- */
 .home-footer {
-  padding: 2rem;
+  padding: 3rem 1rem;
   text-align: center;
   background-color: var(--bg-cards);
   border-top: 1px solid var(--border-color);
   font-size: 0.9rem;
   color: var(--text-muted);
+
+  p { margin: 0.5rem 0; }
 
   a {
     color: var(--primary-color);
@@ -363,11 +415,16 @@
     font-weight: bold;
     &:hover { text-decoration: underline; }
   }
+
+  .footer-note {
+    font-size: 0.8rem;
+    opacity: 0.7;
+  }
 }
 
 /* Animations */
 @keyframes fadeInDown {
-  from { opacity: 0; transform: translateY(-20px); }
+  from { opacity: 0; transform: translateY(-30px); }
   to { opacity: 1; transform: translateY(0); }
 }
 

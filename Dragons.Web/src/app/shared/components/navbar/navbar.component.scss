@@ -1,96 +1,89 @@
-.navbar {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 0.8rem 2rem;
+// Variables locales
+$navbar-height: 70px;
 
-  // Utilisation des variables globales pour le thème
+:host {
+  display: block;
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  width: 100%;
+}
+
+.navbar {
   background-color: var(--bg-cards);
   border-bottom: 1px solid var(--border-color);
-  color: var(--text-main);
-
   box-shadow: var(--shadow-sm);
-  position: relative;
-  z-index: 1000;
+  transition: all 0.3s ease;
+  box-sizing: border-box;
+  height: $navbar-height;
+  display: flex;
+  justify-content: space-between; // Espace entre Brand et (Menu ou Links)
+  align-items: center;
+  padding: 0 1rem; // Padding un peu réduit sur les côtés pour mobile
 
-  // Transition douce lors du changement de thème
-  transition: background-color 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+  // Sur Desktop, on peut augmenter le padding
+  @media (min-width: 768px) {
+    padding: 0 2rem;
+  }
+
+
 }
 
 // ========================================
-// BRAND AVEC LOGO
+// BRAND (LOGO + TEXTE)
 // ========================================
 .brand {
   display: flex;
   align-items: center;
-  gap: 0.75rem;
+  height: 100%;
+  gap: 0.8rem;
   text-decoration: none;
-  transition: transform 0.2s, opacity 0.2s;
-
-  &:hover {
-    transform: scale(1.02);
-    opacity: 0.9;
-  }
-}
-
-.logo {
-  height: 45px;
-  width: auto;
-  // Ombre portée adaptée pour être visible sur fond clair ou sombre
-  filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.2));
-  transition: transform 0.3s ease;
-
-  .brand:hover & {
-    transform: rotate(-5deg) scale(1.05);
-  }
-}
-
-.brand-text {
-  font-family: 'Cinzel', serif;
-  font-size: 1.4rem;
-  font-weight: bold;
-  // Couleur "Or" définie globalement
-  color: var(--primary-color);
-  letter-spacing: 1px;
-  // Plus d'ombre noire forcée, pour rester propre sur fond clair
-  text-shadow: none;
-}
-
-// ========================================
-// MENU HAMBURGER (Mobile)
-// ========================================
-.menu-toggle {
-  display: none; // Caché sur desktop
-  flex-direction: column;
-  justify-content: space-between;
-  width: 28px;
-  height: 20px;
-  background: transparent;
-  border: none;
+  z-index: 1002;
   cursor: pointer;
-  padding: 0;
-  z-index: 1001;
 
-  span {
+  // --- MAGIE DU LAYOUT MOBILE ---
+  // On lui dit de prendre toute la place disponible
+  flex: 1;
+  // Indispensable pour que le text-overflow fonctionne dans un flex child
+  min-width: 0;
+  // Marge à droite pour ne pas coller au burger ou aux liens
+  margin-right: 1rem;
+
+  .logo {
+    height: 40px; // Légèrement réduit pour mobile par défaut
+    width: auto;
+    object-fit: contain;
+    filter: drop-shadow(0 2px 4px rgba(0,0,0,0.2));
+    transition: transform 0.3s ease;
     display: block;
-    width: 100%;
-    height: 3px;
-    // Les barres prennent la couleur du texte principal (noir ou blanc selon le mode)
-    background-color: var(--text-main);
-    border-radius: 2px;
-    transition: all 0.3s ease;
+    flex-shrink: 0; // Empêche le logo de s'écraser
+
+    @media (min-width: 768px) {
+      height: 42px;
+    }
   }
 
-  &.open {
-    span:nth-child(1) {
-      transform: rotate(45deg) translate(5px, 5px);
+  .brand-text {
+    font-family: 'Cinzel', serif;
+    font-size: 1.2rem; // Taille mobile par défaut
+    font-weight: 700;
+    color: var(--primary-color);
+    letter-spacing: 1px;
+
+    // Gestion de l'espace et du centrage
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis; // Ajoute "..." si ça dépasse
+    padding-top: 4px; // Correction optique Cinzel
+    line-height: 1;
+
+    @media (min-width: 768px) {
+      font-size: 1.4rem;
     }
-    span:nth-child(2) {
-      opacity: 0;
-    }
-    span:nth-child(3) {
-      transform: rotate(-45deg) translate(6px, -6px);
-    }
+  }
+
+  &:hover .logo {
+    transform: scale(1.1) rotate(-5deg);
   }
 }
 
@@ -99,205 +92,186 @@
 // ========================================
 .nav-links {
   display: flex;
-  gap: 1rem;
   align-items: center;
+  gap: 0.5rem;
+  height: 100%;
+  // Important : ne pas laisser les liens grandir pour pousser le logo
+  flex-shrink: 0;
 
   a {
-    color: var(--text-main); // Couleur dynamique
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    height: 38px;
+    padding: 0 1rem;
+
+    color: var(--text-main);
     text-decoration: none;
-    padding: 0.5rem 0.8rem;
-    border-radius: var(--radius-sm);
     font-weight: 600;
     font-size: 0.95rem;
-    transition: background 0.2s, color 0.2s, transform 0.2s;
-    white-space: nowrap;
-    border: 1px solid transparent; // Pour éviter le saut au hover si on ajoute une bordure
+    border-radius: 6px;
+    transition: all 0.2s;
+    border: 1px solid transparent;
 
     &:hover {
-      background-color: rgba(0, 0, 0, 0.05); // Hover léger universel
-      // Ajustement spécifique Dark Mode via nesting CSS
-      body.dark-mode & { background-color: rgba(255, 255, 255, 0.1); }
-
-      transform: translateY(-1px);
+      background-color: var(--section-alt-bg);
       color: var(--primary-color);
     }
 
     &.active {
       background-color: var(--primary-color);
-      color: #ffffff; // Toujours blanc sur fond or
-
-      // En dark mode, texte noir sur or pour contraste
-      body.dark-mode & { color: #000000; }
+      color: white;
+      body.dark-mode & { color: #000; }
     }
   }
 }
 
 // ========================================
-// BOUTON THEME (Soleil / Lune)
+// BOUTON THÈME
 // ========================================
 .theme-btn {
-  background: transparent;
-  border: 1px solid var(--border-color);
-  color: var(--text-main);
-  cursor: pointer;
-  font-size: 1.2rem;
-  padding: 0;
-  border-radius: 50%;
-  width: 36px;
-  height: 36px;
   display: flex;
   align-items: center;
   justify-content: center;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  border: 1px solid var(--border-color);
+  background: transparent;
+  color: var(--text-main);
+  cursor: pointer;
+  font-size: 1.2rem;
+  margin-left: 0.8rem;
   transition: all 0.3s ease;
-  margin-left: 0.5rem;
+  flex-shrink: 0; // Empêche l'écrasement
 
   &:hover {
-    transform: rotate(20deg);
-    background-color: var(--bg-page); // Fond du hover
+    background-color: var(--section-alt-bg);
     border-color: var(--primary-color);
-    color: var(--primary-color);
+    transform: rotate(20deg);
   }
 }
 
 // ========================================
-// RESPONSIVE - DESKTOP PETIT
+// BURGER MENU (Mobile)
 // ========================================
-@media screen and (max-width: 1024px) {
-  .nav-links {
-    gap: 0.5rem;
+.menu-toggle {
+  display: none;
+  flex-direction: column;
+  justify-content: center;
+  gap: 6px;
+  width: 32px;
+  height: 32px;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  z-index: 1002;
+  flex-shrink: 0; // IMPORTANT : Empêche le burger de rétrécir
 
-    a {
-      padding: 0.4rem 0.6rem;
-      font-size: 0.85rem;
-    }
+  span {
+    display: block;
+    width: 100%;
+    height: 3px;
+    background-color: var(--text-main);
+    border-radius: 3px;
+    transition: all 0.3s ease-in-out;
+    transform-origin: center;
   }
 
-  .brand-text {
-    font-size: 1.2rem;
+  &.open {
+    span:nth-child(1) { transform: translateY(9px) rotate(45deg); }
+    span:nth-child(2) { opacity: 0; transform: translateX(10px); }
+    span:nth-child(3) { transform: translateY(-9px) rotate(-45deg); }
   }
 }
 
 // ========================================
-// RESPONSIVE - TABLETTE (Menu Déroulant)
+// RESPONSIVE (Tablette & Mobile)
 // ========================================
-@media screen and (max-width: 768px) {
-  .navbar {
-    padding: 0.6rem 1rem;
-  }
-
-  .logo {
-    height: 38px;
-  }
-
-  .brand-text {
-    font-size: 1.1rem;
-  }
-
+@media screen and (max-width: 1150px) {
   .menu-toggle {
-    display: flex; // Apparition du burger
+    display: flex;
   }
 
   .nav-links {
-    position: absolute;
-    top: 100%; // Juste en dessous de la navbar
+    position: fixed;
+    top: $navbar-height;
     left: 0;
-    right: 0;
-    flex-direction: column;
-
-    // Le menu déroulant prend la même couleur que la navbar
+    width: 100%;
+    height: calc(100vh - #{$navbar-height});
     background-color: var(--bg-cards);
-    border-bottom: 1px solid var(--border-color);
+    backdrop-filter: blur(10px);
 
-    padding: 0;
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 2rem;
     gap: 0;
-    max-height: 0;
-    overflow: hidden;
-    transition: max-height 0.3s ease, padding 0.3s ease;
-    box-shadow: var(--shadow-md);
+
+    border-top: 1px solid var(--border-color);
+    transform: translateX(100%);
+    transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    overflow-y: auto;
 
     &.open {
-      max-height: 500px; // Assez grand pour tout contenir
-      padding: 0.5rem 0;
+      transform: translateX(0);
+      box-shadow: -5px 0 15px rgba(0,0,0,0.1);
     }
 
     a {
       width: 100%;
-      padding: 1rem 1.5rem;
+      height: auto;
+      padding: 1.2rem 0;
+      font-size: 1.1rem;
       border-radius: 0;
-      text-align: left;
-      font-size: 1rem;
-      border: none; // Reset desktop border
+      border: none;
       border-bottom: 1px solid var(--border-color);
-
-      &:last-child {
-        border-bottom: none;
-      }
+      justify-content: flex-start;
 
       &:hover {
-        background-color: rgba(0, 0, 0, 0.03);
-        transform: none;
-        // Ajustement dark mode
-        body.dark-mode & { background-color: rgba(255, 255, 255, 0.05); }
+        background-color: transparent;
+        color: var(--primary-color);
+        padding-left: 10px;
       }
 
       &.active {
-        // Style "Bande latérale" sur mobile au lieu du bouton plein
         background-color: transparent;
         color: var(--primary-color);
-        border-left: 4px solid var(--primary-color);
-        padding-left: calc(1.5rem - 4px); // Compensation du padding pour le texte
+        border-left: none;
+        font-weight: 800;
+
+        &::before {
+          content: '•';
+          color: var(--primary-color);
+          margin-right: 10px;
+          font-size: 1.5rem;
+        }
       }
     }
 
-    // Centrage du bouton thème dans le menu mobile
     .theme-btn {
-      margin: 1rem auto;
+      margin: 2rem auto 0;
       width: 100%;
       max-width: 200px;
-      border-radius: 8px; // Forme bouton rectangulaire arrondi sur mobile
-      display: flex;
-      gap: 0.5rem; // Si tu ajoutes du texte "Changer thème" plus tard
+      border-radius: 8px;
+      height: 45px;
 
-      &:hover {
-        background-color: rgba(0,0,0,0.05);
-        transform: none;
+      &::after {
+        content: "Changer le thème";
+        font-size: 1rem;
+        margin-left: 10px;
+        font-weight: 600;
       }
     }
   }
 }
 
-// ========================================
-// RESPONSIVE - MOBILE
-// ========================================
-@media screen and (max-width: 480px) {
-  .navbar {
-    padding: 0.5rem 0.8rem;
+// Tweak pour très petits écrans
+@media screen and (max-width: 380px) {
+  .brand .logo {
+    height: 32px; // On réduit un peu le logo
   }
-
-  .logo {
-    height: 32px;
-  }
-
-  .brand-text {
-    font-size: 0.95rem;
-    letter-spacing: 0;
-  }
-
-  .nav-links a {
-    padding: 0.9rem 1.2rem;
-    font-size: 0.95rem;
-  }
-}
-
-// ========================================
-// TRÈS PETITS ÉCRANS
-// ========================================
-@media screen and (max-width: 360px) {
-  .logo {
-    height: 28px;
-  }
-
-  .brand-text {
-    display: none; // On cache le texte s'il n'y a plus de place
+  .brand .brand-text {
+    font-size: 1rem; // On réduit le texte
   }
 }

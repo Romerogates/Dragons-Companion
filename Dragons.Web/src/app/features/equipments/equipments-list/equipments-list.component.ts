@@ -1,19 +1,26 @@
-// features/equipment/equipment-list/equipment-list.component.ts
-import { Component, OnInit, inject } from '@angular/core';
+import {
+  Component,
+  OnInit,
+  inject,
+  ChangeDetectionStrategy,
+  ChangeDetectorRef,
+} from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterLink } from '@angular/router';
 import { DataService } from '../../../core/services/data.service';
 import { EquipmentSummary } from '../../../core/models/game-data.models';
 
 @Component({
-  selector: 'app-equipment-list',
+  selector: 'app-equipments-list',
   standalone: true,
   imports: [CommonModule, RouterLink],
-  templateUrl: './equipments-list.component.html',
+  templateUrl: './equipments-list.component.html', // Vérifie bien le nom du fichier (il y avait une typo "equipments" dans ton exemple)
   styleUrl: './equipments-list.component.scss',
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class EquipmentListComponent implements OnInit {
   private dataService = inject(DataService);
+  private cd = inject(ChangeDetectorRef);
 
   allEquipment: EquipmentSummary[] = [];
   weapons: EquipmentSummary[] = [];
@@ -56,6 +63,7 @@ export class EquipmentListComponent implements OnInit {
     Thief: '🔓',
     // Mounts
     Animal: '🐴',
+    Vehicle: '🛒',
   };
 
   ngOnInit(): void {
@@ -68,10 +76,12 @@ export class EquipmentListComponent implements OnInit {
         this.tools = data.filter((e) => e.type === 'Tool');
         this.mounts = data.filter((e) => e.type === 'Mount');
         this.loading = false;
+        this.cd.markForCheck();
       },
       error: (err) => {
         console.error('Erreur chargement équipement:', err);
         this.loading = false;
+        this.cd.markForCheck();
       },
     });
   }

@@ -1,7 +1,6 @@
-// features/characters/characters.component.ts
-import { Component, OnInit, inject } from '@angular/core';
+import { Component, OnInit, inject, ChangeDetectionStrategy } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { RouterLink } from '@angular/router';
+import { Router, RouterLink } from '@angular/router'; // Import Router
 import { PdfGeneratorService } from '../character-sheet/services/pdf-generator.service';
 import { Character } from '../../core/models/character.models';
 
@@ -17,9 +16,11 @@ interface SavedCharacter extends Character {
   imports: [CommonModule, RouterLink],
   templateUrl: './characters.component.html',
   styleUrl: './characters.component.scss',
+  changeDetection: ChangeDetectionStrategy.OnPush, // Performance
 })
 export class CharactersComponent implements OnInit {
   private pdfService = inject(PdfGeneratorService);
+  private router = inject(Router); // Injection du Router
 
   characters: SavedCharacter[] = [];
   showDeleteModal = false;
@@ -34,15 +35,20 @@ export class CharactersComponent implements OnInit {
       const saved = localStorage.getItem('dragons-characters');
       if (saved) {
         this.characters = JSON.parse(saved);
-        this.characters.sort(
-          (a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
-        );
+        // Tri par date de mise à jour (ou création si pas d'update)
+        this.characters.sort((a, b) => {
+          const dateA = new Date(a.updatedAt || a.createdAt).getTime();
+          const dateB = new Date(b.updatedAt || b.createdAt).getTime();
+          return dateB - dateA; // Le plus récent en premier
+        });
       }
     } catch (error) {
       console.error('Erreur lors du chargement des personnages:', error);
       this.characters = [];
     }
   }
+
+  // === UI HELPERS ===
 
   getClassIcon(className: string): string {
     const icons: Record<string, string> = {
@@ -60,7 +66,9 @@ export class CharactersComponent implements OnInit {
       Roublard: '🗡️',
       Sorcier: '👁️',
     };
-    return icons[className] || '⚔️';
+    // Recherche partielle pour gérer les sous-classes éventuelles
+    const key = Object.keys(icons).find((k) => className.includes(k));
+    return key ? icons[key] : '⚔️';
   }
 
   getSpeciesIcon(speciesName: string): string {
@@ -74,21 +82,18 @@ export class CharactersComponent implements OnInit {
       Tieffelin: '😈',
       'Demi-elfe': '🧝‍♂️',
       'Demi-orc': '👹',
-      'Melessë (Demi-elfe)': '🧝‍♂️',
-      Félys: '🐱',
-      'Merosi (Demi-orc)': '👹',
     };
-    return icons[speciesName] || '👤';
+    const key = Object.keys(icons).find((k) => speciesName.includes(k));
+    return key ? icons[key] : '👤';
   }
 
   formatDate(dateString: string): string {
+    if (!dateString) return '';
     const date = new Date(dateString);
     return date.toLocaleDateString('fr-FR', {
       day: 'numeric',
       month: 'short',
       year: 'numeric',
-      hour: '2-digit',
-      minute: '2-digit',
     });
   }
 
@@ -100,13 +105,34 @@ export class CharactersComponent implements OnInit {
 
   viewCharacter(character: SavedCharacter): void {
     localStorage.setItem('dragons-current-character', JSON.stringify(character));
-    window.location.href = '/character-sheet';
+    // CORRECTION : Utiliser le Router Angular pour ne pas recharger la page
+    this.router.navigate(['/character-sheet']);
   }
 
   editCharacter(character: SavedCharacter, event: Event): void {
     event.stopPropagation();
     localStorage.setItem('dragons-edit-character', JSON.stringify(character));
-    window.location.href = '/create';
+    // CORRECTION : Utiliser le Router Angular
+    this.router.navigate(['/create']);
+  }
+
+  duplicateCharacter(character: SavedCharacter, event: Event): void {
+    event.stopPropagation();
+
+    const duplicate: SavedCharacter = {
+      ...character,
+      id: crypto.randomUUID(),
+      name: `${character.name} (copie)`,
+      createdAt: new Date().toISOString(),
+      updatedAt: new Date().toISOString(),
+    };
+
+    // Ajout au début de la liste
+    this.characters.unshift(duplicate);
+    // Sauvegarde
+    localStorage.setItem('dragons-characters', JSON.stringify(this.characters));
+    // Recharger pour être sûr du tri (optionnel si on unshift juste)
+    this.loadCharacters();
   }
 
   downloadPdf(character: SavedCharacter, event: Event): void {
@@ -134,19 +160,5 @@ export class CharactersComponent implements OnInit {
 
     this.showDeleteModal = false;
     this.characterToDelete = null;
-  }
-
-  duplicateCharacter(character: SavedCharacter, event: Event): void {
-    event.stopPropagation();
-
-    const duplicate: SavedCharacter = {
-      ...character,
-      id: crypto.randomUUID(),
-      name: `${character.name} (copie)`,
-      createdAt: new Date().toISOString(),
-    };
-
-    this.characters.unshift(duplicate);
-    localStorage.setItem('dragons-characters', JSON.stringify(this.characters));
   }
 }

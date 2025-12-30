@@ -13,7 +13,7 @@
     <div class="language-grid">
       @for (lang of getLanguagesByCategory(category); track lang.id) {
       <a
-        [routerLink]="['/languages', lang.id]"
+        [routerLink]="['/compendium/languages', lang.id]"
         class="language-card"
         [class]="getCategoryClass(lang.category)"
       >

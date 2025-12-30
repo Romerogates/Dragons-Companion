@@ -1,105 +1,119 @@
-<!-- components/species-detail/species-detail.component.html -->
-<div class="species-detail-container">
-  <a routerLink="/species" class="back-link">← Retour aux espèces</a>
+<div class="species-detail-page">
+  <div class="page-header">
+    <a routerLink="/compendium/species" class="back-btn">← Retour à la liste</a>
+  </div>
 
   @if (loading) {
-  <div class="loading">Chargement...</div>
+  <div class="loading">
+    <div class="spinner"></div>
+    <span>Chargement des données...</span>
+  </div>
   } @else if (species) {
-  <header class="species-header">
-    <span class="species-icon">{{ getIcon(species.name) }}</span>
-    <div class="species-title">
+  <header class="species-header-card">
+    <div class="icon-wrapper">
+      <span class="species-icon">{{ getIcon(species.name) }}</span>
+    </div>
+    <div class="header-content">
       <h1>{{ species.name }}</h1>
-      <p class="subtitle">{{ formatAbilityBonuses(species.baseStats.abilityBonuses) }}</p>
+      <div class="badges">
+        <span class="badge size">{{ getSizeLabel(species.baseStats.sizeCategory) }}</span>
+        <span class="badge speed">{{ species.baseStats.speedMeters }}m</span>
+        @if (species.baseStats.hasDarkvision) {
+        <span class="badge vision"
+          >Vision nuit {{ species.baseStats.darkvisionRadiusMeters }}m</span
+        >
+        }
+      </div>
+    </div>
+    <div class="header-stats">
+      <span class="stat-label">Bonus de base</span>
+      <span class="stat-value">{{ formatAbilityBonuses(species.baseStats.abilityBonuses) }}</span>
     </div>
   </header>
 
-  <div class="content-grid">
-    <!-- Stats de base -->
-    <section class="card stats-card">
-      <h2>📊 Caractéristiques</h2>
-      <div class="stats-grid">
-        <div class="stat-item">
-          <span class="stat-label">Taille</span>
-          <span class="stat-value">{{ getSizeLabel(species.baseStats.sizeCategory) }}</span>
-        </div>
-        <div class="stat-item">
-          <span class="stat-label">Vitesse</span>
-          <span class="stat-value">{{ species.baseStats.speedMeters }}m</span>
-        </div>
-        <div class="stat-item">
-          <span class="stat-label">Vision dans le noir</span>
-          <span class="stat-value">
-            @if (species.baseStats.hasDarkvision) { 👁️
-            {{ species.baseStats.darkvisionRadiusMeters }}m } @else { ❌ Non }
-          </span>
-        </div>
-      </div>
-
-      @if (selectedSubspecies) {
-      <div class="total-bonuses">
-        <h3>Bonus totaux avec {{ selectedSubspecies.name }}</h3>
-        <span class="bonus-value">{{ formatAbilityBonuses(getTotalBonuses()) }}</span>
-      </div>
-      }
-    </section>
-
-    <!-- Langues -->
-    <section class="card languages-card">
-      <h2>🗣️ Langues</h2>
-      <div class="language-tags">
-        @for (lang of species.languages; track lang) {
-        <span class="tag">{{ lang }}</span>
-        }
-      </div>
-    </section>
-
-    <!-- Traits -->
-    <section class="card traits-card">
-      <h2>✨ Traits raciaux</h2>
-      <div class="traits-list">
-        @for (trait of species.traits; track trait.name) {
-        <div class="trait">
-          <h3>{{ trait.name }}</h3>
-          <p>{{ trait.description }}</p>
-        </div>
-        }
-      </div>
-    </section>
-
-    <!-- Sous-espèces -->
-    @if (species.subspecies.length > 0) {
-    <section class="card subspecies-card">
-      <h2>🌿 Sous-espèces</h2>
-      <div class="subspecies-list">
-        @for (sub of species.subspecies; track sub.id) {
-        <div
-          class="subspecies-item"
-          [class.selected]="selectedSubspecies?.id === sub.id"
-          (click)="selectSubspecies(sub)"
-        >
-          <div class="subspecies-header">
-            <h3>{{ sub.name }}</h3>
-            <span class="subspecies-bonus">{{
-              formatAbilityBonuses(sub.additionalStats.abilityBonuses)
-            }}</span>
-          </div>
-          @if (selectedSubspecies?.id === sub.id) {
-          <div class="subspecies-traits">
-            @for (trait of sub.additionalTraits; track trait.name) {
-            <div class="trait">
-              <h4>{{ trait.name }}</h4>
-              <p>{{ trait.description }}</p>
-            </div>
-            }
+  <div class="detail-grid">
+    <div class="left-col">
+      <section class="detail-card">
+        <h2>✨ Traits Raciaux</h2>
+        <div class="traits-list">
+          @for (trait of species.traits; track trait.name) {
+          <div class="trait-item">
+            <h3>{{ trait.name }}</h3>
+            <p>{{ trait.description }}</p>
           </div>
           }
         </div>
+      </section>
+
+      <section class="detail-card">
+        <h2>🗣️ Langues Parlées</h2>
+        <div class="tags-list">
+          @for (lang of species.languages; track lang) {
+          <span class="tag">{{ lang }}</span>
+          }
+        </div>
+      </section>
+    </div>
+
+    <div class="right-col">
+      @if (species.subspecies.length > 0) {
+      <section class="detail-card subspecies-section">
+        <h2>🌿 Sous-espèces</h2>
+        <p class="section-desc">Sélectionnez une variante pour voir ses bonus.</p>
+
+        <div class="subspecies-list">
+          @for (sub of species.subspecies; track sub.id) {
+          <div
+            class="subspecies-card"
+            [class.active]="selectedSubspecies?.id === sub.id"
+            (click)="selectSubspecies(sub)"
+          >
+            <div class="card-head">
+              <span class="radio-circle"></span>
+              <h3>{{ sub.name }}</h3>
+            </div>
+
+            <div class="card-body">
+              <div class="bonus-row">
+                <span class="bonus-tag">{{
+                  formatAbilityBonuses(sub.additionalStats.abilityBonuses)
+                }}</span>
+              </div>
+
+              @if (selectedSubspecies?.id === sub.id) {
+              <div class="sub-traits fade-in">
+                @for (trait of sub.additionalTraits; track trait.name) {
+                <div class="mini-trait">
+                  <strong>{{ trait.name }}</strong
+                  >: {{ trait.description }}
+                </div>
+                }
+              </div>
+              }
+            </div>
+          </div>
+          }
+        </div>
+
+        @if (selectedSubspecies) {
+        <div class="total-summary fade-in">
+          <h4>Total Bonus (Base + {{ selectedSubspecies.name }})</h4>
+          <div class="big-score">{{ formatAbilityBonuses(getTotalBonuses()) }}</div>
+        </div>
         }
-      </div>
-    </section>
-    }
+      </section>
+      } @else {
+      <section class="detail-card info-card">
+        <h3>ℹ️ Information</h3>
+        <p>Cette espèce ne possède pas de sous-espèces connues dans le SRD.</p>
+      </section>
+      }
+    </div>
   </div>
   } @else {
-  <div class="error">Espèce non trouvée</div>
+  <div class="error-state">
+    <h2>Espèce introuvable</h2>
+    <a routerLink="/compendium/species" class="btn btn-primary">Retour à la liste</a>
+  </div>
   }
 </div>

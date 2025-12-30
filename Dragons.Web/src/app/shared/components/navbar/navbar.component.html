@@ -1,31 +1,46 @@
-<nav class="navbar">
+<nav class="navbar" role="navigation">
   <a class="brand" routerLink="/" (click)="closeMenu()">
-    <img src="/images/dragons_logo.svg" alt="Dragons Companion" class="logo" />
+    <img src="/images/dragons_logo.svg" alt="Logo" class="logo" />
     <span class="brand-text">EANA / DRAGONS</span>
   </a>
 
-  <button class="menu-toggle" [class.open]="menuOpen" (click)="toggleMenu()" aria-label="Menu">
+  <button
+    class="menu-toggle"
+    [class.open]="menuOpen"
+    (click)="toggleMenu()"
+    aria-label="Ouvrir le menu"
+    aria-expanded="false"
+  >
     <span></span>
     <span></span>
     <span></span>
   </button>
 
   <div class="nav-links" [class.open]="menuOpen">
-    <a routerLink="/create" routerLinkActive="active" (click)="closeMenu()"> ✨ Créer </a>
-    <a routerLink="/characters" routerLinkActive="active" (click)="closeMenu()"
-      >🧙‍♂️ Mes Personnages</a
+    <a routerLink="/create" routerLinkActive="active" (click)="closeMenu()">✨ Créer</a>
+    <a routerLink="/characters" routerLinkActive="active" (click)="closeMenu()">🧙‍♂️ Mes Persos</a>
+
+    <a routerLink="/compendium/species" routerLinkActive="active" (click)="closeMenu()"
+      >🧬 Espèces</a
     >
-    <a routerLink="/species" routerLinkActive="active" (click)="closeMenu()"> 🧬 Espèces </a>
-    <a routerLink="/classes" routerLinkActive="active" (click)="closeMenu()"> ⚔️ Classes </a>
-    <a routerLink="/civilizations" routerLinkActive="active" (click)="closeMenu()"
+    <a routerLink="/compendium/classes" routerLinkActive="active" (click)="closeMenu()"
+      >⚔️ Classes</a
+    >
+    <a routerLink="/compendium/civilizations" routerLinkActive="active" (click)="closeMenu()"
       >🏰 Civilisations</a
     >
-    <a routerLink="/languages" routerLinkActive="active" (click)="closeMenu()"> 📜 Langues </a>
-    <a routerLink="/equipment" routerLinkActive="active" (click)="closeMenu()"> 🎒 Équipement </a>
-
-    <button class="theme-btn" (click)="toggleTheme()" title="Changer le thème">
-      @if (themeService.isDarkMode()) {
-      <span>☀️</span> } @else { <span>🌙</span> }
+    <a routerLink="/compendium/equipment" routerLinkActive="active" (click)="closeMenu()"
+      >🎒 Équipement</a
+    >
+    <a routerLink="/compendium/languages" routerLinkActive="active" (click)="closeMenu()"
+      >📜 Langues</a
+    >
+    <button
+      class="theme-btn"
+      (click)="toggleTheme()"
+      [title]="themeService.isDarkMode() ? 'Mode clair' : 'Mode sombre'"
+    >
+      @if (themeService.isDarkMode()) { <span>☀️</span> } @else { <span>🌙</span> }
     </button>
   </div>
 </nav>

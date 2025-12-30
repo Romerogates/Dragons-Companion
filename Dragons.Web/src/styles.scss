@@ -1,4 +1,10 @@
 /* ==========================================================================
+   0. IMPORTS & FONTS
+   ========================================================================== */
+/* Import de Cinzel (Titres) et Lato/Roboto (Corps) depuis Google Fonts */
+@import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&family=Lato:wght@400;700&display=swap');
+
+/* ==========================================================================
    1. DESIGN TOKENS & THEME CONFIGURATION
    ========================================================================== */
 :root {
@@ -21,7 +27,7 @@
   --text-inverted: #ffffff;
   --border-color: #e0e0e0;
 
-  /* États fonctionnels (Enterprise standard) */
+  /* États fonctionnels */
   --color-success: #27ae60;
   --color-danger: #c0392b;
   --color-warning: #f39c12;
@@ -30,22 +36,22 @@
   --shadow-sm: 0 2px 4px rgba(0, 0, 0, 0.05);
   --shadow-md: 0 4px 6px rgba(0, 0, 0, 0.1);
 
-  /* Dimensions */
+  /* Dimensions & Transitions */
   --radius-sm: 4px;
   --radius-md: 8px;
   --header-height: 70px;
+  --transition-speed: 0.3s;
 }
 
 /* --- OVERRIDES MODE SOMBRE (Dark Mode) --- */
-/* Appliqué via la classe .dark-mode sur le body */
 body.dark-mode {
   /* Marque & Accents */
-  --primary-color: #d4af37;       /* Or plus brillant pour le contraste */
+  --primary-color: #d4af37;       /* Or plus brillant */
   --primary-hover: #f1c40f;
   --secondary-color: #ecf0f1;
 
   /* Fond & Surfaces */
-  --bg-page: #1a1a1d;             /* Noir charbon léger */
+  --bg-page: #1a1a1d;             /* Noir charbon */
   --bg-cards: #252529;            /* Gris foncé */
   --bg-input: #2c2c30;
   --section-alt-bg: #222225;
@@ -59,13 +65,27 @@ body.dark-mode {
   /* États */
   --color-danger: #e74c3c;        /* Rouge plus vif */
 
-  /* Ombres */
+  /* Ombres plus marquées en dark mode */
   --shadow-sm: 0 2px 4px rgba(0, 0, 0, 0.3);
   --shadow-md: 0 4px 8px rgba(0, 0, 0, 0.5);
 }
 
 /* ==========================================================================
-   2. RESET & BASE STYLES
+   2. SCROLLBAR HIDING (GLOBAL)
+   ========================================================================== */
+/* Cacher la barre de défilement pour Chrome, Safari et Opera */
+::-webkit-scrollbar {
+  display: none;
+}
+
+/* Cacher la barre pour IE, Edge et Firefox */
+html, body {
+  -ms-overflow-style: none;  /* IE and Edge */
+  scrollbar-width: none;  /* Firefox */
+}
+
+/* ==========================================================================
+   3. RESET & BASE STYLES
    ========================================================================== */
 * {
   margin: 0;
@@ -76,37 +96,33 @@ body.dark-mode {
 html, body {
   width: 100%;
   height: 100%;
-  overflow-x: hidden;
+  overflow-x: hidden; /* Empêche le scroll horizontal accidentel */
 }
 
 html {
   font-size: 16px;
-  /* Scrollbar masquée (Ton choix UX) */
-  scrollbar-width: none;
-  -ms-overflow-style: none;
-  &::-webkit-scrollbar { display: none; }
 }
 
 body {
-  /* Application des variables de thème */
   background-color: var(--bg-page);
   color: var(--text-main);
 
-  font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+  /* Fallback fonts si Google Fonts ne charge pas */
+  font-family: 'Lato', 'Segoe UI', Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 
-  /* Transition douce lors du changement de thème */
-  transition: background-color 0.3s ease, color 0.3s ease;
+  transition: background-color var(--transition-speed) ease,
+              color var(--transition-speed) ease;
 }
 
 /* ==========================================================================
-   3. TYPOGRAPHY
+   4. TYPOGRAPHY
    ========================================================================== */
-h1, h2, h3, h4, .brand {
+h1, h2, h3, h4, .brand-text {
   font-family: 'Cinzel', serif;
   font-weight: 700;
-  color: var(--primary-color); /* Les titres prennent la couleur accent */
+  color: var(--primary-color);
   line-height: 1.2;
   margin-bottom: 0.5em;
 }
@@ -128,7 +144,7 @@ a {
 }
 
 /* ==========================================================================
-   4. UTILITIES & LAYOUT
+   5. UTILITIES & LAYOUT
    ========================================================================== */
 .container {
   width: 100%;
@@ -137,7 +153,13 @@ a {
   padding: 0 15px;
 }
 
-/* Utility pour cacher des éléments visuellement mais pas pour les lecteurs d'écran */
+/* Classe utilitaire pour forcer le masquage de scroll sur des divs spécifiques si besoin */
+.no-scrollbar {
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+  &::-webkit-scrollbar { display: none; }
+}
+
 .visually-hidden {
   position: absolute;
   width: 1px;
@@ -150,46 +172,43 @@ a {
 }
 
 /* ==========================================================================
-   5. RESPONSIVE BREAKPOINTS
+   6. RESPONSIVE BREAKPOINTS
    ========================================================================== */
-/* Mobile - < 480px */
+/* Mobile */
 @media screen and (max-width: 480px) {
   html { font-size: 14px; }
-
   h1 { font-size: 1.75rem; }
   h2 { font-size: 1.5rem; }
-
   .container { padding: 0 12px; }
 }
 
-/* Tablette - 481px à 768px */
+/* Tablette */
 @media screen and (min-width: 481px) and (max-width: 768px) {
   html { font-size: 15px; }
   .container { padding: 0 20px; }
 }
 
-/* Desktop - > 769px */
+/* Desktop */
 @media screen and (min-width: 769px) {
   html { font-size: 16px; }
 }
 
 /* ==========================================================================
-   6. PRINT STYLES (Impression A4)
+   7. PRINT STYLES
    ========================================================================== */
 @media print {
-  /* Réinitialisation forcée pour économiser l'encre */
   :root {
     --bg-page: #ffffff !important;
     --bg-cards: #ffffff !important;
     --text-main: #000000 !important;
     --text-muted: #333333 !important;
-    --primary-color: #000000 !important; /* On évite la couleur à l'impression */
+    --primary-color: #000000 !important;
     --border-color: #000000 !important;
   }
 
   *, *::before, *::after {
     background: transparent !important;
-    color: #000 !important; /* Force le texte noir */
+    color: #000 !important;
     box-shadow: none !important;
     text-shadow: none !important;
     -webkit-print-color-adjust: exact !important;
@@ -205,14 +224,7 @@ a {
     background: white !important;
   }
 
-  /* Masquer les éléments interactifs inutiles sur papier */
-  app-navbar,
-  .navbar,
-  .theme-btn,
-  .theme-toggle,
-  .sheet-actions,
-  .btn,
-  .no-print {
+  app-navbar, .navbar, .theme-btn, .menu-toggle, .no-print {
     display: none !important;
   }
 
@@ -222,18 +234,11 @@ a {
     margin: 0 !important;
   }
 
-  /* Mise en page physique */
   @page {
     size: A4 portrait;
-    margin: 1cm; /* Marge standard imprimante */
+    margin: 1cm;
   }
 
-  /* Gestion des sauts de page */
-  h1, h2, h3 {
-    page-break-after: avoid;
-  }
-
-  img, tr, .card {
-    page-break-inside: avoid;
-  }
+  h1, h2, h3 { page-break-after: avoid; }
+  img, tr, .card { page-break-inside: avoid; }
 }

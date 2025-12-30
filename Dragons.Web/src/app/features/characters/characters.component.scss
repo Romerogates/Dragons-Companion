@@ -1,14 +1,5 @@
 // features/characters/characters.component.scss
 
-// Variables
-$primary: #8b0000;
-$primary-light: #a52a2a;
-$gold: #f1c40f;
-$dark: #2c3e50;
-$danger: #e74c3c;
-$parchment: #fdfaf6;
-$parchment-dark: #f5e6d3;
-
 .characters-container {
   padding: 2rem;
   max-width: 1400px;
@@ -17,22 +8,20 @@ $parchment-dark: #f5e6d3;
   box-sizing: border-box;
 }
 
-// ========================================
-// HEADER
-// ========================================
+// --- HEADER ---
 .page-header {
   text-align: center;
-  margin-bottom: 2rem;
+  margin-bottom: 3rem;
 
   h1 {
     font-family: 'Cinzel', serif;
     font-size: clamp(1.8rem, 4vw, 2.5rem);
-    color: $dark;
+    color: var(--primary-color);
     margin: 0 0 0.5rem 0;
   }
 
   .subtitle {
-    color: #7f8c8d;
+    color: var(--text-muted);
     font-size: 1rem;
     margin: 0;
   }
@@ -44,9 +33,7 @@ $parchment-dark: #f5e6d3;
   margin-bottom: 2rem;
 }
 
-// ========================================
-// BUTTONS
-// ========================================
+// --- BUTTONS ---
 .btn {
   display: inline-flex;
   align-items: center;
@@ -62,39 +49,38 @@ $parchment-dark: #f5e6d3;
 }
 
 .btn-primary {
-  background: linear-gradient(135deg, $primary 0%, $primary-light 100%);
+  background-color: var(--primary-color);
   color: white;
-  box-shadow: 0 2px 8px rgba(139, 0, 0, 0.3);
+  box-shadow: var(--shadow-sm);
 
   &:hover {
     transform: translateY(-2px);
-    box-shadow: 0 4px 12px rgba(139, 0, 0, 0.4);
+    box-shadow: var(--shadow-md);
+    filter: brightness(1.1);
   }
 }
 
 .btn-secondary {
-  background: white;
-  color: $dark;
-  border: 2px solid #ddd;
+  background-color: var(--bg-cards);
+  color: var(--text-main);
+  border: 1px solid var(--border-color);
 
   &:hover {
-    border-color: $dark;
-    background: #f5f5f5;
+    background-color: var(--section-alt-bg);
+    border-color: var(--text-muted);
   }
 }
 
 .btn-danger {
-  background: $danger;
+  background-color: var(--color-danger, #e74c3c);
   color: white;
 
   &:hover {
-  background: #c0392b; // Version plus foncée de $danger (#e74c3c)
+    filter: brightness(0.9);
   }
 }
 
-// ========================================
-// EMPTY STATE
-// ========================================
+// --- EMPTY STATE ---
 .empty-state {
   display: flex;
   flex-direction: column;
@@ -102,9 +88,12 @@ $parchment-dark: #f5e6d3;
   justify-content: center;
   padding: 4rem 2rem;
   text-align: center;
-  background: white;
+
+  background-color: var(--bg-cards);
   border-radius: 16px;
-  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.08);
+  box-shadow: var(--shadow-md);
+  border: 1px dashed var(--border-color);
+
   max-width: 500px;
   margin: 2rem auto;
 
@@ -117,47 +106,42 @@ $parchment-dark: #f5e6d3;
   h2 {
     font-family: 'Cinzel', serif;
     font-size: 1.5rem;
-    color: $dark;
+    color: var(--primary-color);
     margin: 0 0 0.5rem 0;
   }
 
   p {
-    color: #7f8c8d;
+    color: var(--text-muted);
     margin: 0 0 2rem 0;
     line-height: 1.5;
   }
 }
 
-// ========================================
-// CHARACTERS GRID
-// ========================================
+// --- GRID ---
 .characters-grid {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 1.5rem;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 2rem;
   justify-items: center;
-  max-width: 1200px;
-  margin: 0 auto;
 }
 
-// ========================================
-// CHARACTER CARD
-// ========================================
+// --- CARD ---
 .character-card {
   width: 100%;
-  max-width: 360px;
-  background: white;
+  background-color: var(--bg-cards);
   border-radius: 12px;
-  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.08);
+  box-shadow: var(--shadow-sm);
   overflow: hidden;
   cursor: pointer;
   transition: all 0.3s ease;
-  border: 2px solid transparent;
+  border: 1px solid var(--border-color);
+  display: flex;
+  flex-direction: column;
 
   &:hover {
     transform: translateY(-4px);
-    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.12);
-    border-color: $gold;
+    box-shadow: var(--shadow-md);
+    border-color: var(--primary-color);
   }
 }
 
@@ -166,36 +150,35 @@ $parchment-dark: #f5e6d3;
   justify-content: space-between;
   align-items: center;
   padding: 1rem 1.2rem;
-  background: linear-gradient(135deg, $dark 0%, #34495e 100%);
+  // Dégradé sombre pour le header
+  background: linear-gradient(135deg, #2c3e50 0%, #34495e 100%);
+  color: white;
 }
 
 .character-icons {
   display: flex;
   gap: 0.5rem;
-
-  span {
-    font-size: 1.8rem;
-    filter: drop-shadow(0 2px 2px rgba(0, 0, 0, 0.3));
-  }
+  span { font-size: 1.5rem; }
 }
 
 .character-level {
-  background: $gold;
-  color: $dark;
-  padding: 0.3rem 0.8rem;
-  border-radius: 20px;
-  font-size: 0.85rem;
+  background-color: var(--primary-color);
+  color: white;
+  padding: 0.2rem 0.6rem;
+  border-radius: 12px;
+  font-size: 0.8rem;
   font-weight: 700;
 }
 
 .card-body {
   padding: 1.2rem;
+  flex: 1; // Permet de pousser le footer en bas
 }
 
 .character-name {
   font-family: 'Cinzel', serif;
   font-size: 1.3rem;
-  color: $dark;
+  color: var(--text-main);
   margin: 0 0 0.3rem 0;
   white-space: nowrap;
   overflow: hidden;
@@ -204,20 +187,22 @@ $parchment-dark: #f5e6d3;
 
 .character-info {
   font-size: 0.95rem;
-  color: $primary;
+  color: var(--primary-color);
   font-weight: 600;
   margin: 0 0 0.2rem 0;
 }
 
 .character-civilization {
   font-size: 0.85rem;
-  color: #7f8c8d;
+  color: var(--text-muted);
   margin: 0 0 1rem 0;
 }
 
 .character-stats {
   display: flex;
   gap: 1.5rem;
+  padding-top: 1rem;
+  border-top: 1px dashed var(--border-color);
 }
 
 .stat {
@@ -225,19 +210,15 @@ $parchment-dark: #f5e6d3;
   align-items: center;
   gap: 0.4rem;
 
-  .stat-icon {
-    font-size: 1rem;
-  }
-
   .stat-value {
     font-size: 1.1rem;
     font-weight: 700;
-    color: $dark;
+    color: var(--text-main);
   }
 
   .stat-label {
     font-size: 0.75rem;
-    color: #95a5a6;
+    color: var(--text-muted);
     text-transform: uppercase;
   }
 }
@@ -247,13 +228,13 @@ $parchment-dark: #f5e6d3;
   justify-content: space-between;
   align-items: center;
   padding: 0.8rem 1.2rem;
-  background: $parchment;
-  border-top: 1px solid #eee;
+  background-color: var(--section-alt-bg);
+  border-top: 1px solid var(--border-color);
 }
 
 .created-date {
   font-size: 0.75rem;
-  color: #95a5a6;
+  color: var(--text-muted);
 }
 
 .card-actions {
@@ -269,55 +250,43 @@ $parchment-dark: #f5e6d3;
   cursor: pointer;
   border-radius: 6px;
   transition: all 0.2s;
-  opacity: 0.6;
+  color: var(--text-muted);
 
   &:hover {
-    opacity: 1;
+    background-color: rgba(0,0,0,0.05);
+    color: var(--text-main);
     transform: scale(1.1);
   }
-  &.edit:hover {
-  background: #e8f5e9;
+
+  &.edit:hover { color: #f1c40f; } // Jaune
+  &.duplicate:hover { color: #3498db; } // Bleu
+  &.pdf:hover { color: #e67e22; } // Orange
+  &.delete:hover { color: #e74c3c; } // Rouge
 }
 
-  &.duplicate:hover {
-    background: #e3f2fd;
-  }
-
-  &.pdf:hover {
-    background: #fff3e0;
-  }
-
-  &.delete:hover {
-    background: #ffebee;
-  }
-}
-
-// ========================================
-// MODAL
-// ========================================
+// --- MODAL ---
 .modal-overlay {
   position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background: rgba(0, 0, 0, 0.5);
+  top: 0; left: 0; right: 0; bottom: 0;
+  background: rgba(0, 0, 0, 0.7);
   display: flex;
   align-items: center;
   justify-content: center;
   z-index: 2000;
   padding: 1rem;
+  backdrop-filter: blur(2px);
 }
 
 .modal {
-  background: white;
+  background-color: var(--bg-cards);
   border-radius: 16px;
   padding: 2rem;
   max-width: 400px;
   width: 100%;
   text-align: center;
-  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
   animation: modalIn 0.2s ease;
+  border: 1px solid var(--border-color);
 
   .modal-icon {
     font-size: 3rem;
@@ -327,20 +296,20 @@ $parchment-dark: #f5e6d3;
   h3 {
     font-family: 'Cinzel', serif;
     font-size: 1.3rem;
-    color: $dark;
+    color: var(--text-main);
     margin: 0 0 0.5rem 0;
   }
 
   .modal-character-name {
     font-size: 1.1rem;
     font-weight: 600;
-    color: $primary;
+    color: var(--primary-color);
     margin: 0 0 0.5rem 0;
   }
 
   .modal-warning {
     font-size: 0.9rem;
-    color: #7f8c8d;
+    color: var(--text-muted);
     margin: 0 0 1.5rem 0;
   }
 
@@ -352,59 +321,14 @@ $parchment-dark: #f5e6d3;
 }
 
 @keyframes modalIn {
-  from {
-    opacity: 0;
-    transform: scale(0.9);
-  }
-  to {
-    opacity: 1;
-    transform: scale(1);
-  }
+  from { opacity: 0; transform: scale(0.9); }
+  to { opacity: 1; transform: scale(1); }
 }
 
-// ========================================
-// RESPONSIVE - TABLETTE
-// ========================================
-@media screen and (max-width: 1024px) {
-  .characters-grid {
-    grid-template-columns: repeat(2, 1fr);
-    gap: 1.2rem;
-    max-width: 800px;
-  }
-}
-
-// ========================================
-// RESPONSIVE - MOBILE
-// ========================================
-@media screen and (max-width: 700px) {
-  .characters-container {
-    padding: 1rem;
-  }
-
-  .page-header {
-    margin-bottom: 1.5rem;
-
-    h1 {
-      font-size: 1.6rem;
-    }
-  }
-
+// Media Queries
+@media screen and (max-width: 600px) {
   .characters-grid {
     grid-template-columns: 1fr;
-    gap: 1rem;
-    max-width: 400px;
-  }
-
-  .character-card {
-    max-width: 100%;
-  }
-
-  .character-icons span {
-    font-size: 1.5rem;
-  }
-
-  .character-name {
-    font-size: 1.15rem;
   }
 
   .card-footer {
@@ -416,43 +340,5 @@ $parchment-dark: #f5e6d3;
   .card-actions {
     width: 100%;
     justify-content: flex-end;
-  }
-}
-
-// ========================================
-// RESPONSIVE - PETIT MOBILE
-// ========================================
-@media screen and (max-width: 400px) {
-  .characters-container {
-    padding: 0.8rem;
-  }
-
-  .empty-state {
-    padding: 2rem 1rem;
-
-    .empty-icon {
-      font-size: 3.5rem;
-    }
-  }
-
-  .card-body {
-    padding: 1rem;
-  }
-
-  .character-stats {
-    gap: 1rem;
-  }
-
-  .modal {
-    padding: 1.5rem;
-
-    .modal-actions {
-      flex-direction: column;
-
-      .btn {
-        width: 100%;
-        justify-content: center;
-      }
-    }
   }
 }

@@ -1,185 +1,208 @@
-// features/equipment/equipment-detail/equipment-detail.component.scss
+// features/compendium/equipment/equipment-detail/equipment-detail.component.scss
+
 .equipment-detail-page {
   max-width: 900px;
   margin: 0 auto;
-  padding: 2rem;
+  padding: 2rem 1rem;
+  animation: fadeIn 0.3s ease-out;
+
+  // Cacher Scrollbar
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+  &::-webkit-scrollbar { display: none; }
 }
 
-.back-link {
-  display: inline-block;
+// --- HEADER ---
+.page-header {
   margin-bottom: 1.5rem;
-  color: #3498db;
-  text-decoration: none;
-  font-weight: 500;
 
-  &:hover {
-    text-decoration: underline;
+  .back-btn {
+    display: inline-flex;
+    align-items: center;
+    color: var(--text-muted);
+    text-decoration: none;
+    font-weight: 600;
+    transition: color 0.2s;
+
+    &:hover { color: var(--primary-color); }
   }
 }
 
-.loading,
-.not-found {
+.loading {
   text-align: center;
-  padding: 3rem;
-  color: #7f8c8d;
-  font-size: 1.2rem;
+  padding: 4rem;
+  color: var(--text-muted);
+  .spinner { margin-bottom: 1rem; }
 }
 
-.equipment-header {
-  display: flex;
-  align-items: center;
-  gap: 1.5rem;
-  margin-bottom: 2rem;
-  padding: 1.5rem;
-  background: linear-gradient(135deg, #667eea, #764ba2);
+// --- HERO CARD ---
+.equip-hero {
   border-radius: 16px;
+  padding: 2.5rem;
+  margin-bottom: 2rem;
   color: white;
+  box-shadow: var(--shadow-md);
+  position: relative;
+  overflow: hidden;
 
-  .equipment-icon {
-    font-size: 4rem;
-    width: 100px;
-    height: 100px;
+  // Thèmes
+  &.theme-red { background: linear-gradient(135deg, #c0392b, #e74c3c); }    // Armes
+  &.theme-blue { background: linear-gradient(135deg, #2980b9, #3498db); }   // Armures
+  &.theme-gold { background: linear-gradient(135deg, #f39c12, #f1c40f); color:#2c1810; } // Gear
+  &.theme-gray { background: linear-gradient(135deg, #7f8c8d, #95a5a6); }   // Outils
+  &.theme-green { background: linear-gradient(135deg, #27ae60, #2ecc71); }  // Montures
+  &.theme-default { background: linear-gradient(135deg, var(--primary-color), #a52a2a); }
+
+  .hero-content {
     display: flex;
     align-items: center;
-    justify-content: center;
-    background: rgba(255, 255, 255, 0.2);
-    border-radius: 16px;
+    gap: 2rem;
+    position: relative;
+    z-index: 1;
+
+    @media (max-width: 768px) {
+      flex-direction: column;
+      text-align: center;
+    }
   }
 
-  .equipment-title {
-    flex: 1;
+  .equip-icon {
+    font-size: 4.5rem;
+    filter: drop-shadow(0 4px 6px rgba(0,0,0,0.3));
+  }
 
+  .equip-info {
     h1 {
+      font-family: 'Cinzel', serif;
+      font-size: 3rem;
       margin: 0 0 0.5rem 0;
-      font-size: 2rem;
+      line-height: 1;
     }
   }
 
-  .equipment-meta {
+  .hero-badges {
     display: flex;
-    gap: 0.5rem;
-  }
+    gap: 0.8rem;
+    flex-wrap: wrap;
 
-  .type-badge,
-  .subtype-badge {
-    padding: 0.4rem 0.8rem;
-    background: rgba(255, 255, 255, 0.2);
-    border-radius: 20px;
-    font-size: 0.85rem;
+    @media (max-width: 768px) { justify-content: center; }
+
+    .badge {
+      background: rgba(255, 255, 255, 0.2);
+      backdrop-filter: blur(4px);
+      padding: 0.3rem 0.8rem;
+      border-radius: 20px;
+      font-size: 0.9rem;
+      font-weight: 600;
+      border: 1px solid rgba(255,255,255,0.3);
+      text-transform: uppercase;
+    }
   }
 }
 
-.stats-grid {
+// --- GRID ---
+.detail-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
-  gap: 1rem;
-  margin-bottom: 2rem;
-}
+  // Gauche: Petit (Stats) | Droite: Grand (Description)
+  grid-template-columns: 1fr 1.5fr;
+  gap: 2rem;
+  align-items: start;
 
-.stat-card {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  padding: 1.25rem;
-  background: white;
-  border-radius: 12px;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-
-  .stat-label {
-    font-size: 0.85rem;
-    color: #7f8c8d;
-    margin-bottom: 0.5rem;
-  }
-
-  .stat-value {
-    font-size: 1.5rem;
-    font-weight: 700;
-    color: #2c3e50;
-
-    &.gold {
-      color: #f39c12;
-    }
-
-    &.damage {
-      color: #e74c3c;
-    }
-
-    &.ac {
-      color: #3498db;
-    }
-  }
-
-  &.warning {
-    background: #fff5f5;
-    border: 1px solid #feb2b2;
-
-    .stat-value {
-      color: #c53030;
-    }
+  @media (max-width: 768px) {
+    grid-template-columns: 1fr;
   }
 }
 
-.properties-section,
-.description-section {
-  background: white;
+.detail-card {
+  background-color: var(--bg-cards);
+  border: 1px solid var(--border-color);
   border-radius: 12px;
   padding: 1.5rem;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-  margin-bottom: 1.5rem;
+  box-shadow: var(--shadow-sm);
+  margin-bottom: 2rem;
 
   h2 {
-    margin: 0 0 1rem 0;
-    color: #2c3e50;
-    font-size: 1.2rem;
+    font-family: 'Cinzel', serif;
+    font-size: 1.4rem;
+    color: var(--primary-color);
+    margin: 0 0 1.5rem 0;
+    border-bottom: 1px solid var(--border-color);
+    padding-bottom: 0.5rem;
   }
 }
 
-.properties-list {
+// --- STATS SUMMARY (Gauche) ---
+.stat-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1rem;
+
+  &.warning {
+    background-color: rgba(231, 76, 60, 0.1);
+    color: #c0392b;
+    padding: 0.8rem;
+    border-radius: 6px;
+    font-size: 0.9rem;
+  }
+}
+
+.mini-stat {
+  display: flex;
+  flex-direction: column;
+
+  .label {
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    margin-bottom: 0.2rem;
+  }
+
+  .value {
+    font-size: 1.2rem;
+    font-weight: 700;
+    color: var(--text-main);
+
+    &.gold { color: #f39c12; }
+    &.damage { color: #c0392b; }
+    &.ac { color: #2980b9; }
+    &.speed { color: #27ae60; }
+  }
+}
+
+.divider {
+  border: 0;
+  border-top: 1px dashed var(--border-color);
+  margin: 1.5rem 0;
+}
+
+// --- TAGS ---
+.tags-list {
   display: flex;
   flex-wrap: wrap;
   gap: 0.5rem;
-}
 
-.property-tag {
-  padding: 0.5rem 1rem;
-  background: #e3f2fd;
-  color: #1565c0;
-  border-radius: 8px;
-  font-weight: 500;
-}
+  .tag {
+    padding: 0.4rem 0.8rem;
+    border-radius: 6px;
+    font-size: 0.9rem;
+    background-color: var(--section-alt-bg);
+    border: 1px solid var(--border-color);
+    color: var(--text-main);
+    font-weight: 500;
 
-.description-section p {
-  margin: 0;
-  color: #555;
-  line-height: 1.6;
-}
-
-// features/equipment/equipment-detail/equipment-detail.component.scss (ajouter dans .stat-value)
-.stat-value {
-  font-size: 1.5rem;
-  font-weight: 700;
-  color: #2c3e50;
-
-  &.gold {
-    color: #f39c12;
-  }
-
-  &.damage {
-    color: #e74c3c;
-  }
-
-  &.ac {
-    color: #3498db;
-  }
-
-  &.speed {
-    color: #27ae60;
+    &.prop {
+      border-left: 3px solid var(--primary-color);
+    }
   }
 }
 
-@media (max-width: 768px) {
-  .equipment-header {
-    flex-direction: column;
-    text-align: center;
-  }
+p {
+  color: var(--text-main);
+  line-height: 1.8;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
 }

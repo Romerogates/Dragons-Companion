@@ -1,5 +1,10 @@
-// features/equipment/equipment-detail/equipment-detail.component.ts
-import { Component, OnInit, inject } from '@angular/core';
+import {
+  Component,
+  OnInit,
+  inject,
+  ChangeDetectionStrategy,
+  ChangeDetectorRef,
+} from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ActivatedRoute, RouterLink } from '@angular/router';
 import { DataService } from '../../../core/services/data.service';
@@ -18,10 +23,12 @@ import {
   imports: [CommonModule, RouterLink],
   templateUrl: './equipment-detail.component.html',
   styleUrl: './equipment-detail.component.scss',
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class EquipmentDetailComponent implements OnInit {
   private route = inject(ActivatedRoute);
   private dataService = inject(DataService);
+  private cd = inject(ChangeDetectorRef);
 
   equipment: Equipment | null = null;
   loading = true;
@@ -34,6 +41,15 @@ export class EquipmentDetailComponent implements OnInit {
     Mount: '🐴',
   };
 
+  // NOUVEAU : Mapping pour les couleurs du header
+  private typeThemes: Record<string, string> = {
+    Weapon: 'theme-red',
+    Armor: 'theme-blue',
+    Gear: 'theme-gold',
+    Tool: 'theme-gray',
+    Mount: 'theme-green',
+  };
+
   ngOnInit(): void {
     const id = this.route.snapshot.paramMap.get('id');
     if (id) {
@@ -41,10 +57,12 @@ export class EquipmentDetailComponent implements OnInit {
         next: (data) => {
           this.equipment = data;
           this.loading = false;
+          this.cd.markForCheck();
         },
         error: (err) => {
           console.error('Erreur chargement équipement:', err);
           this.loading = false;
+          this.cd.markForCheck();
         },
       });
     }
@@ -52,6 +70,11 @@ export class EquipmentDetailComponent implements OnInit {
 
   getTypeIcon(): string {
     return this.equipment ? this.typeIcons[this.equipment.type] ?? '📦' : '📦';
+  }
+
+  // Renvoie la classe CSS pour le thème (ex: 'theme-red')
+  getTypeTheme(type: string): string {
+    return this.typeThemes[type] ?? 'theme-default';
   }
 
   formatCost(): string {
@@ -63,88 +86,56 @@ export class EquipmentDetailComponent implements OnInit {
   isWeapon(): boolean {
     return this.equipment?.type === 'Weapon';
   }
-
   isArmor(): boolean {
     return this.equipment?.type === 'Armor';
   }
-
   isGear(): boolean {
     return this.equipment?.type === 'Gear';
   }
-
   isTool(): boolean {
     return this.equipment?.type === 'Tool';
   }
-
   isMount(): boolean {
     return this.equipment?.type === 'Mount';
   }
 
-  // === Data getters ===
+  // === Data getters (Type Guarding simplifiés) ===
   getWeaponData(): WeaponData | null {
-    if (this.isWeapon() && this.equipment?.data) {
-      return this.equipment.data as WeaponData;
-    }
-    return null;
+    return this.isWeapon() ? (this.equipment?.data as WeaponData) : null;
   }
-
   getArmorData(): ArmorData | null {
-    if (this.isArmor() && this.equipment?.data) {
-      return this.equipment.data as ArmorData;
-    }
-    return null;
+    return this.isArmor() ? (this.equipment?.data as ArmorData) : null;
   }
-
   getGearData(): GearData | null {
-    if (this.isGear() && this.equipment?.data) {
-      return this.equipment.data as GearData;
-    }
-    return null;
+    return this.isGear() ? (this.equipment?.data as GearData) : null;
   }
-
   getToolData(): ToolData | null {
-    if (this.isTool() && this.equipment?.data) {
-      return this.equipment.data as ToolData;
-    }
-    return null;
+    return this.isTool() ? (this.equipment?.data as ToolData) : null;
   }
-
   getMountData(): MountData | null {
-    if (this.isMount() && this.equipment?.data) {
-      return this.equipment.data as MountData;
-    }
-    return null;
+    return this.isMount() ? (this.equipment?.data as MountData) : null;
   }
 
   // === Has data checks ===
   hasWeaponDamage(): boolean {
-    const weapon = this.getWeaponData();
-    return weapon !== null && !!weapon.damage_dice;
+    return !!this.getWeaponData()?.damage_dice;
   }
-
   hasWeaponProperties(): boolean {
-    const weapon = this.getWeaponData();
-    return weapon !== null && weapon.properties && weapon.properties.length > 0;
+    return (this.getWeaponData()?.properties?.length ?? 0) > 0;
   }
-
   hasArmorData(): boolean {
-    const armor = this.getArmorData();
-    return armor !== null && (!!armor.ac_base || !!armor.ac_bonus);
+    const a = this.getArmorData();
+    return !!a && (!!a.ac_base || !!a.ac_bonus);
   }
-
   hasMountData(): boolean {
-    const mount = this.getMountData();
-    return mount !== null && (!!mount.speed || !!mount.carry_capacity_kg);
+    const m = this.getMountData();
+    return !!m && (!!m.speed || !!m.carry_capacity_kg);
   }
-
   hasGearDescription(): boolean {
-    const gear = this.getGearData();
-    return gear !== null && !!gear.description;
+    return !!this.getGearData()?.description;
   }
-
   hasToolDescription(): boolean {
-    const tool = this.getToolData();
-    return tool !== null && !!tool.description;
+    return !!this.getToolData()?.description;
   }
 
   // === Display helpers ===
@@ -152,19 +143,15 @@ export class EquipmentDetailComponent implements OnInit {
     const armor = this.getArmorData();
     if (!armor) return '';
 
-    if (armor.ac_bonus) {
-      return `+${armor.ac_bonus}`;
-    }
-
+    if (armor.ac_bonus) return `+${armor.ac_bonus}`;
     if (!armor.ac_base) return '';
 
     let display = `${armor.ac_base}`;
     if (armor.add_dex_mod) {
-      if (armor.max_dex_bonus && armor.max_dex_bonus > 0) {
-        display += ` + Dex (max ${armor.max_dex_bonus})`;
-      } else {
-        display += ` + Dex`;
-      }
+      display +=
+        armor.max_dex_bonus && armor.max_dex_bonus > 0
+          ? ` + Dex (max ${armor.max_dex_bonus})`
+          : ` + Dex`;
     }
     return display;
   }

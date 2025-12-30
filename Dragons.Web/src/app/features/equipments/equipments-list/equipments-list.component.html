@@ -1,101 +1,114 @@
-<!-- features/equipment/equipment-list/equipment-list.component.html -->
-<div class="equipment-list-page">
+<div class="equipment-list-page no-scrollbar">
   <header class="page-header">
-    <h1>🎒 Équipement</h1>
-    <p>Armes, armures et objets disponibles dans Dragons</p>
+    <h1>🎒 Arsenal & Équipement</h1>
+    <p>Tout le nécessaire pour survivre aux périls d'Eana</p>
   </header>
 
   @if (loading) {
-  <div class="loading">Chargement de l'équipement...</div>
-  } @else {
-  <!-- Armes -->
-  @if (weapons.length > 0) {
+  <div class="loading">
+    <div class="spinner"></div>
+    <span>Inventaire en cours de chargement...</span>
+  </div>
+  } @else { @if (weapons.length > 0) {
   <section class="equipment-section">
-    <h2>⚔️ Armes ({{ weapons.length }})</h2>
+    <h2 class="section-title">
+      <span class="icon">⚔️</span>
+      Armes <span class="count">({{ weapons.length }})</span>
+    </h2>
     <div class="equipment-grid">
       @for (item of weapons; track item.id) {
-      <a [routerLink]="['/equipment', item.id]" class="equipment-card">
+      <a [routerLink]="['/compendium/equipment', item.id]" class="equipment-card weapon">
         <span class="card-icon">{{ getSubtypeIcon(item.subtype) }}</span>
         <div class="card-content">
           <h3>{{ item.name }}</h3>
-          <span class="subtype">{{ item.subtype }}</span>
-          <span class="cost">{{ formatCost(item.cost) }}</span>
+          <div class="card-meta">
+            <span class="subtype">{{ item.subtype }}</span>
+            <span class="cost">{{ formatCost(item.cost) }}</span>
+          </div>
         </div>
       </a>
       }
     </div>
   </section>
-  }
-
-  <!-- Armures -->
-  @if (armors.length > 0) {
+  } @if (armors.length > 0) {
   <section class="equipment-section">
-    <h2>🛡️ Armures & Boucliers ({{ armors.length }})</h2>
+    <h2 class="section-title">
+      <span class="icon">🛡️</span>
+      Armures & Boucliers <span class="count">({{ armors.length }})</span>
+    </h2>
     <div class="equipment-grid">
       @for (item of armors; track item.id) {
-      <a [routerLink]="['/equipment', item.id]" class="equipment-card">
+      <a [routerLink]="['/compendium/equipment', item.id]" class="equipment-card armor">
         <span class="card-icon">{{ getSubtypeIcon(item.subtype) }}</span>
         <div class="card-content">
           <h3>{{ item.name }}</h3>
-          <span class="subtype">{{ item.subtype }}</span>
-          <span class="cost">{{ formatCost(item.cost) }}</span>
+          <div class="card-meta">
+            <span class="subtype">{{ item.subtype }}</span>
+            <span class="cost">{{ formatCost(item.cost) }}</span>
+          </div>
         </div>
       </a>
       }
     </div>
   </section>
-  }
-
-  <!-- Matériel -->
-  @if (gear.length > 0) {
+  } @if (gear.length > 0) {
   <section class="equipment-section">
-    <h2>🎒 Matériel d'aventurier ({{ gear.length }})</h2>
+    <h2 class="section-title">
+      <span class="icon">🎒</span>
+      Matériel d'Aventurier <span class="count">({{ gear.length }})</span>
+    </h2>
     <div class="equipment-grid">
       @for (item of gear; track item.id) {
-      <a [routerLink]="['/equipment', item.id]" class="equipment-card">
+      <a [routerLink]="['/compendium/equipment', item.id]" class="equipment-card gear">
         <span class="card-icon">{{ getSubtypeIcon(item.subtype) }}</span>
         <div class="card-content">
           <h3>{{ item.name }}</h3>
-          <span class="subtype">{{ item.subtype }}</span>
-          <span class="cost">{{ formatCost(item.cost) }}</span>
+          <div class="card-meta">
+            <span class="subtype">{{ item.subtype }}</span>
+            <span class="cost">{{ formatCost(item.cost) }}</span>
+          </div>
         </div>
       </a>
       }
     </div>
   </section>
-  }
-
-  <!-- Outils -->
-  @if (tools.length > 0) {
+  } @if (tools.length > 0) {
   <section class="equipment-section">
-    <h2>🔧 Outils ({{ tools.length }})</h2>
+    <h2 class="section-title">
+      <span class="icon">🔧</span>
+      Outils & Instruments <span class="count">({{ tools.length }})</span>
+    </h2>
     <div class="equipment-grid">
       @for (item of tools; track item.id) {
-      <a [routerLink]="['/equipment', item.id]" class="equipment-card">
+      <a [routerLink]="['/compendium/equipment', item.id]" class="equipment-card tool">
         <span class="card-icon">{{ getSubtypeIcon(item.subtype) }}</span>
         <div class="card-content">
           <h3>{{ item.name }}</h3>
-          <span class="subtype">{{ item.subtype }}</span>
-          <span class="cost">{{ formatCost(item.cost) }}</span>
+          <div class="card-meta">
+            <span class="subtype">{{ item.subtype }}</span>
+            <span class="cost">{{ formatCost(item.cost) }}</span>
+          </div>
         </div>
       </a>
       }
     </div>
   </section>
-  }
-
-  <!-- Montures -->
-  @if (mounts.length > 0) {
+  } @if (mounts.length > 0) {
   <section class="equipment-section">
-    <h2>🐴 Montures ({{ mounts.length }})</h2>
+    <h2 class="section-title">
+      <span class="icon">🐴</span>
+      Montures & Véhicules <span class="count">({{ mounts.length }})</span>
+    </h2>
     <div class="equipment-grid">
       @for (item of mounts; track item.id) {
-      <a [routerLink]="['/equipment', item.id]" class="equipment-card">
+      <a [routerLink]="['/compendium/equipment', item.id]" class="equipment-card mount">
         <span class="card-icon">{{ getSubtypeIcon(item.subtype) }}</span>
         <div class="card-content">
           <h3>{{ item.name }}</h3>
-          <span class="subtype">{{ item.subtype }}</span>
-          <span class="cost">{{ formatCost(item.cost) }}</span>
+          <div class="card-meta">
+            <span class="subtype">{{ item.subtype }}</span>
+            <span class="cost">{{ formatCost(item.cost) }}</span>
+          </div>
         </div>
       </a>
       }

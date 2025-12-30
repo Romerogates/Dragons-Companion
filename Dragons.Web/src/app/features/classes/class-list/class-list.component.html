@@ -1,23 +1,36 @@
-<!-- components/class-list/class-list.component.html -->
-<div class="class-container">
-  <h1>⚔️ Classes de personnage</h1>
+<div class="class-list-page no-scrollbar">
+  <header class="page-header">
+    <h1>⚔️ Classes</h1>
+    <p>Choisissez votre voie parmi les héros d'Eana</p>
+  </header>
 
   @if (loading) {
-  <div class="loading">Chargement des classes...</div>
+  <div class="loading">
+    <div class="spinner"></div>
+    <span>Rassemblement des héros...</span>
+  </div>
   } @else {
   <div class="class-grid">
     @for (c of classes; track c.id) {
-    <a [routerLink]="['/classes', c.id]" class="class-card">
-      <div class="class-icon">{{ getIcon(c.name) }}</div>
+    <a
+      [routerLink]="['/compendium/classes', c.id]"
+      class="class-card"
+      [class]="getThemeClass(c.name)"
+    >
+      <div class="card-icon-wrapper">
+        <span class="class-icon">{{ getIcon(c.name) }}</span>
+      </div>
+
       <div class="class-info">
         <h2>{{ c.name }}</h2>
+
         <div class="class-stats">
           <span class="stat hit-die" [class]="getHitDieColor(c.hitDie)">
-            <span class="die-icon">🎲</span>
-            d{{ c.hitDie }}
+            <span class="die-icon">🎲</span> d{{ c.hitDie }}
           </span>
+
           @if (c.hasSpellcasting) {
-          <span class="stat spellcaster">✨ Sorts</span>
+          <span class="stat spellcaster">✨ Lanceur de sorts</span>
           } @else {
           <span class="stat martial">⚔️ Martial</span>
           }

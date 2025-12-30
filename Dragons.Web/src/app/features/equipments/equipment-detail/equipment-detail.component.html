@@ -1,116 +1,124 @@
-<!-- features/equipment/equipment-detail/equipment-detail.component.html -->
-<div class="equipment-detail-page">
-  <a routerLink="/equipment" class="back-link">← Retour à l'équipement</a>
+<div class="equipment-detail-page no-scrollbar">
+  <div class="page-header">
+    <a routerLink="/compendium/equipment" class="back-btn">← Retour à l'équipement</a>
+  </div>
 
   @if (loading) {
-  <div class="loading">Chargement...</div>
+  <div class="loading">
+    <div class="spinner"></div>
+    <span>Recherche dans l'arsenal...</span>
+  </div>
   } @else if (equipment) {
-  <div class="equipment-header">
-    <span class="equipment-icon">{{ getTypeIcon() }}</span>
-    <div class="equipment-title">
-      <h1>{{ equipment.name }}</h1>
-      <div class="equipment-meta">
-        <span class="type-badge">{{ equipment.type }}</span>
-        <span class="subtype-badge">{{ equipment.subtype }}</span>
+
+  <header class="equip-hero" [class]="getTypeTheme(equipment.type)">
+    <div class="hero-content">
+      <span class="equip-icon">{{ getTypeIcon() }}</span>
+      <div class="equip-info">
+        <h1>{{ equipment.name }}</h1>
+        <div class="hero-badges">
+          <span class="badge type">{{ equipment.type }}</span>
+          <span class="badge subtype">{{ equipment.subtype }}</span>
+        </div>
       </div>
     </div>
-  </div>
+  </header>
 
-  <div class="stats-grid">
-    <!-- Infos communes -->
-    <div class="stat-card">
-      <span class="stat-label">💰 Prix</span>
-      <span class="stat-value gold">{{ formatCost() }}</span>
+  <div class="detail-grid">
+    <div class="left-col">
+      <section class="detail-card stats-summary">
+        <div class="stat-row">
+          <div class="mini-stat">
+            <span class="label">Coût</span>
+            <span class="value gold">{{ formatCost() }}</span>
+          </div>
+          @if (equipment.weightKg > 0) {
+          <div class="mini-stat">
+            <span class="label">Poids</span>
+            <span class="value">{{ equipment.weightKg }} kg</span>
+          </div>
+          }
+        </div>
+
+        @if (hasWeaponDamage()) {
+        <hr class="divider" />
+        <div class="stat-row">
+          <div class="mini-stat">
+            <span class="label">Dégâts</span>
+            <span class="value damage">{{ getWeaponData()!.damage_dice }}</span>
+          </div>
+          <div class="mini-stat">
+            <span class="label">Type</span>
+            <span class="value">{{ getWeaponData()!.damage_type }}</span>
+          </div>
+        </div>
+        } @if (hasArmorData()) {
+        <hr class="divider" />
+        <div class="stat-row">
+          <div class="mini-stat">
+            <span class="label">Classe d'Armure</span>
+            <span class="value ac">{{ getArmorClassDisplay() }}</span>
+          </div>
+        </div>
+
+        @if (getArmorData()!.str_requirement && getArmorData()!.str_requirement! > 0) {
+        <div class="stat-row warning">
+          <span
+            >💪 Force min. requise : <strong>{{ getArmorData()!.str_requirement }}</strong></span
+          >
+        </div>
+        } @if (getArmorData()!.stealth_disadvantage) {
+        <div class="stat-row warning">
+          <span>🤫 Désavantage Discrétion</span>
+        </div>
+        } } @if (hasMountData()) {
+        <hr class="divider" />
+        <div class="stat-row">
+          <div class="mini-stat">
+            <span class="label">Vitesse</span>
+            <span class="value speed">{{ getMountData()!.speed }}</span>
+          </div>
+          <div class="mini-stat">
+            <span class="label">Charge</span>
+            <span class="value">{{ getMountData()!.carry_capacity_kg }} kg</span>
+          </div>
+        </div>
+        }
+      </section>
     </div>
 
-    @if (equipment.weightKg > 0) {
-    <div class="stat-card">
-      <span class="stat-label">⚖️ Poids</span>
-      <span class="stat-value">{{ equipment.weightKg }} kg</span>
-    </div>
-    }
-
-    <!-- Stats Arme -->
-    @if (hasWeaponDamage()) {
-    <div class="stat-card">
-      <span class="stat-label">🎲 Dégâts</span>
-      <span class="stat-value damage">{{ getWeaponData()!.damage_dice }}</span>
-    </div>
-
-    <div class="stat-card">
-      <span class="stat-label">💥 Type</span>
-      <span class="stat-value">{{ getWeaponData()!.damage_type }}</span>
-    </div>
-    }
-
-    <!-- Stats Armure -->
-    @if (hasArmorData()) {
-    <div class="stat-card">
-      <span class="stat-label">🛡️ Classe d'armure</span>
-      <span class="stat-value ac">{{ getArmorClassDisplay() }}</span>
-    </div>
-
-    @if (getArmorData()!.str_requirement && getArmorData()!.str_requirement! > 0) {
-    <div class="stat-card">
-      <span class="stat-label">💪 Force requise</span>
-      <span class="stat-value">{{ getArmorData()!.str_requirement }}</span>
-    </div>
-    } @if (getArmorData()!.stealth_disadvantage) {
-    <div class="stat-card warning">
-      <span class="stat-label">🤫 Discrétion</span>
-      <span class="stat-value">Désavantage</span>
-    </div>
-    } }
-
-    <!-- Stats Monture -->
-    @if (hasMountData()) {
-    <div class="stat-card">
-      <span class="stat-label">🏃 Vitesse</span>
-      <span class="stat-value speed">{{ getMountData()!.speed }}</span>
-    </div>
-
-    <div class="stat-card">
-      <span class="stat-label">📦 Capacité de charge</span>
-      <span class="stat-value">{{ getMountData()!.carry_capacity_kg }} kg</span>
-    </div>
-    }
-  </div>
-
-  <!-- Propriétés Arme -->
-  @if (hasWeaponProperties()) {
-  <section class="properties-section">
-    <h2>📋 Propriétés</h2>
-    <div class="properties-list">
-      @for (prop of getWeaponData()!.properties; track prop) {
-      <span class="property-tag">{{ prop }}</span>
+    <div class="right-col">
+      @if (hasWeaponProperties()) {
+      <section class="detail-card properties">
+        <h2>📋 Propriétés</h2>
+        <div class="tags-list">
+          @for (prop of getWeaponData()!.properties; track prop) {
+          <span class="tag prop">{{ prop }}</span>
+          }
+        </div>
+      </section>
+      } @if (hasGearDescription()) {
+      <section class="detail-card description">
+        <h2>📖 Description</h2>
+        <p>{{ getGearData()!.description }}</p>
+      </section>
+      } @if (hasToolDescription()) {
+      <section class="detail-card description">
+        <h2>🔧 Usage</h2>
+        <p>{{ getToolData()!.description }}</p>
+      </section>
+      } @if (isMount() && getMountData()?.description) {
+      <section class="detail-card description">
+        <h2>🐎 Traits</h2>
+        <p>{{ getMountData()!.description }}</p>
+      </section>
       }
     </div>
-  </section>
-  }
+  </div>
 
-  <!-- Description Gear -->
-  @if (hasGearDescription()) {
-  <section class="description-section">
-    <h2>📖 Description</h2>
-    <p>{{ getGearData()!.description }}</p>
-  </section>
-  }
-
-  <!-- Description Tool -->
-  @if (hasToolDescription()) {
-  <section class="description-section">
-    <h2>📖 Description</h2>
-    <p>{{ getToolData()!.description }}</p>
-  </section>
-  }
-
-  <!-- Description Mount -->
-  @if (isMount() && getMountData()?.description) {
-  <section class="description-section">
-    <h2>📖 Description</h2>
-    <p>{{ getMountData()!.description }}</p>
-  </section>
-  } } @else {
-  <div class="not-found">Équipement non trouvé</div>
+  } @else {
+  <div class="error-state">
+    <h2>Objet introuvable</h2>
+    <a routerLink="/compendium/equipment" class="btn btn-primary">Retour à la liste</a>
+  </div>
   }
 </div>

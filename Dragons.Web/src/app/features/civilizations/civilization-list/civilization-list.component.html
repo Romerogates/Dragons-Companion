@@ -1,14 +1,26 @@
-<!-- components/civilization-list/civilization-list.component.html -->
-<div class="civilization-container">
-  <h1>🏰 Civilisations</h1>
+<div class="civilization-list-page no-scrollbar">
+  <header class="page-header">
+    <h1>🏰 Civilisations</h1>
+    <p>Les grandes nations et cultures d'Eana</p>
+  </header>
 
   @if (loading) {
-  <div class="loading">Chargement des civilisations...</div>
+  <div class="loading">
+    <div class="spinner"></div>
+    <span>Exploration de la carte...</span>
+  </div>
   } @else {
   <div class="civilization-grid">
     @for (civ of civilizations; track civ.id) {
-    <a [routerLink]="['/civilizations', civ.id]" class="civilization-card">
-      <div class="civilization-icon">{{ getIcon(civ.name) }}</div>
+    <a
+      [routerLink]="['/compendium/civilizations', civ.id]"
+      class="civilization-card"
+      [class]="getThemeClass(civ.name)"
+    >
+      <div class="card-icon-wrapper">
+        <span class="civilization-icon">{{ getIcon(civ.name) }}</span>
+      </div>
+
       <div class="civilization-info">
         <h2>{{ civ.name }}</h2>
       </div>
