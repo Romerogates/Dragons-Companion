@@ -1,40 +1,50 @@
 // features/character-creation/character-creation.component.scss
+
 .creation-container {
   min-height: 100vh;
   display: flex;
   flex-direction: column;
-  background: #fdfaf6;
+  // Fond global
+  background-color: var(--bg-page);
+  color: var(--text-main);
+  transition: background-color 0.3s ease;
 }
 
-// Header
+// --- HEADER ---
 .creation-header {
   display: flex;
   justify-content: space-between;
   align-items: center;
   padding: 1rem 2rem;
-  background: linear-gradient(135deg, #2c3e50, #34495e);
-  color: white;
+  // Utilise le fond "Card" pour s'intégrer ou une couleur sombre fixe si tu préfères
+  background-color: var(--bg-cards);
+  border-bottom: 1px solid var(--border-color);
+  color: var(--text-main);
 
   h1 {
     margin: 0;
     font-size: 1.5rem;
+    font-family: 'Cinzel', serif;
+    color: var(--primary-color);
   }
 
   .back-link {
-    color: #ecf0f1;
+    color: var(--text-muted);
     text-decoration: none;
     font-weight: 500;
     padding: 0.5rem 1rem;
     border-radius: 6px;
-    transition: background 0.2s;
+    transition: all 0.2s;
+    border: 1px solid transparent;
 
     &:hover {
-      background: rgba(255, 255, 255, 0.1);
+      background-color: var(--section-alt-bg);
+      color: var(--text-main);
     }
   }
 
   .reset-btn {
-    background: rgba(231, 76, 60, 0.8);
+    background-color: var(--color-danger, #e74c3c); // Fallback si variable pas définie
     color: white;
     border: none;
     padding: 0.5rem 1rem;
@@ -42,23 +52,31 @@
     cursor: pointer;
     font-weight: 500;
     transition: background 0.2s;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
 
     &:hover {
-      background: #e74c3c;
+      filter: brightness(1.1);
     }
   }
 }
 
-// Stepper
+// --- STEPPER ---
 .stepper {
   display: flex;
   align-items: center;
   justify-content: center;
   padding: 1.5rem 1rem;
-  background: white;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  background-color: var(--bg-cards);
+  box-shadow: var(--shadow-sm);
   overflow-x: auto;
   gap: 0;
+  border-bottom: 1px solid var(--border-color);
+
+  // Masquer la scrollbar proprement
+  scrollbar-width: none;
+  &::-webkit-scrollbar { display: none; }
 }
 
 .step {
@@ -69,29 +87,40 @@
   padding: 0.5rem;
   opacity: 0.5;
   transition: all 0.2s;
+  min-width: 80px; // Assure une taille min sur mobile
 
+  // Actif (Étape en cours)
   &.active {
     opacity: 1;
 
     .step-icon {
-      background: #3498db;
-      color: white;
+      background-color: var(--primary-color); // Or
+      color: #fff; // Texte blanc
+      // Exception Dark Mode : texte noir sur or
+      body.dark-mode & { color: #000; }
+
       transform: scale(1.1);
+      box-shadow: 0 0 0 3px rgba(var(--primary-color), 0.2); // Petit halo (si rgb dispo) ou simple shadow
+    }
+
+    .step-title {
+      font-weight: bold;
+      color: var(--primary-color);
     }
   }
 
+  // Complété (Étape passée)
   &.completed {
     opacity: 1;
 
     .step-icon {
-      background: #27ae60;
+      background-color: var(--color-success, #27ae60);
       color: white;
     }
   }
 
   &.clickable {
     cursor: pointer;
-
     &:hover .step-icon {
       transform: scale(1.1);
     }
@@ -102,35 +131,37 @@
   width: 40px;
   height: 40px;
   border-radius: 50%;
-  background: #ecf0f1;
+  background-color: var(--section-alt-bg);
+  color: var(--text-muted);
   display: flex;
   align-items: center;
   justify-content: center;
   font-size: 1.2rem;
   transition: all 0.2s;
+  border: 1px solid var(--border-color);
 }
 
 .step-title {
   font-size: 0.75rem;
-  color: #2c3e50;
+  color: var(--text-muted);
   text-align: center;
   white-space: nowrap;
 }
 
 .step-connector {
-  width: 30px;
+  width: 40px;
   height: 3px;
-  background: #ecf0f1;
+  background-color: var(--section-alt-bg);
   margin: 0 0.25rem;
-  margin-bottom: 1.5rem;
+  margin-bottom: 1.5rem; // Pour s'aligner avec les icônes
   transition: background 0.2s;
 
   &.completed {
-    background: #27ae60;
+    background-color: var(--color-success, #27ae60);
   }
 }
 
-// Contenu
+// --- CONTENU ---
 .step-content {
   flex: 1;
   padding: 2rem;
@@ -139,14 +170,15 @@
   margin: 0 auto;
 }
 
-// Footer
+// --- FOOTER NAV ---
 .creation-footer {
   display: flex;
   justify-content: space-between;
   align-items: center;
   padding: 1rem 2rem;
-  background: white;
-  box-shadow: 0 -2px 8px rgba(0, 0, 0, 0.1);
+  background-color: var(--bg-cards);
+  border-top: 1px solid var(--border-color);
+  box-shadow: 0 -2px 8px rgba(0, 0, 0, 0.05);
 }
 
 .nav-btn {
@@ -161,50 +193,68 @@
   &:disabled {
     opacity: 0.5;
     cursor: not-allowed;
+    filter: grayscale(1);
   }
 
   &.prev {
-    background: #ecf0f1;
-    color: #2c3e50;
+    background-color: var(--section-alt-bg);
+    color: var(--text-main);
+    border: 1px solid var(--border-color);
 
     &:hover:not(:disabled) {
-      background: #bdc3c7;
+      background-color: var(--border-color);
     }
   }
 
   &.next {
-    background: #3498db;
+    background-color: var(--primary-color);
     color: white;
+    // Exception Dark Mode
+    body.dark-mode & { color: #000; }
 
     &:hover:not(:disabled) {
-      background: #2980b9;
+      filter: brightness(1.1);
+      transform: translateX(2px);
     }
   }
 
   &.finish {
-    background: #27ae60;
+    background-color: var(--color-success, #27ae60);
     color: white;
 
-    &:hover {
-      background: #1e8449;
+    &:hover:not(:disabled) {
+      filter: brightness(1.1);
+      transform: scale(1.05);
     }
   }
 }
 
 .step-indicator {
   font-size: 0.9rem;
-  color: #7f8c8d;
+  color: var(--text-muted);
   font-weight: 500;
+  font-family: 'Cinzel', serif;
 }
 
-// Responsive
+// --- RESPONSIVE ---
 @media (max-width: 768px) {
+  .creation-header {
+    padding: 1rem;
+    h1 { font-size: 1.2rem; }
+    .reset-btn { span { display: none; } } // Cache le texte "Recommencer" sur mobile
+  }
+
   .stepper {
+    justify-content: flex-start; // Permet le scroll horizontal
     padding: 1rem 0.5rem;
   }
 
+  .step {
+    min-width: auto;
+  }
+
   .step-title {
-    display: none;
+    display: none; // Cache les titres des étapes sur mobile pour gagner place
   }
 
   .step-connector {
@@ -213,6 +263,18 @@
   }
 
   .step-content {
+    padding: 1rem 0.5rem;
+  }
+
+  .creation-footer {
     padding: 1rem;
+
+    // Sur mobile, on simplifie l'affichage
+    .step-indicator { display: none; }
+
+    .nav-btn {
+      flex: 1; // Boutons pleine largeur partagée
+      max-width: 45%;
+    }
   }
 }

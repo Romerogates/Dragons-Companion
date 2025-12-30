@@ -1,21 +1,31 @@
-// app.component.scss
-
 :host {
   display: block;
   width: 100%;
   min-height: 100vh;
+  /* Application des variables globales pour assurer la continuité du thème */
+  background-color: var(--bg-page);
+  color: var(--text-main);
+  /* Transition douce lors du changement de mode (Clair/Sombre) */
+  transition: background-color 0.3s ease, color 0.3s ease;
 }
 
 main {
   width: 100%;
-  min-height: calc(100vh - 70px);
+  /* Utilise la variable définie dans styles.scss, avec un fallback à 70px */
+  min-height: calc(100vh - var(--header-height, 70px));
   display: flex;
   flex-direction: column;
+  position: relative;
 }
 
-// Mobile - navbar plus petite
+/* ========================================
+   RESPONSIVE LAYOUT ADJUSTMENTS
+   ======================================== */
+
+// Mobile - Ajustement pour la navbar plus petite
 @media screen and (max-width: 480px) {
   main {
+    // La navbar fait souvent ~56px sur mobile standard
     min-height: calc(100vh - 56px);
   }
 }
@@ -23,6 +33,7 @@ main {
 // Tablette
 @media screen and (min-width: 481px) and (max-width: 768px) {
   main {
+    // La navbar intermédiaire
     min-height: calc(100vh - 60px);
   }
 }
@@ -39,6 +50,8 @@ main {
     overflow: visible !important;
     margin: 0 !important;
     padding: 0 !important;
+    background-color: white !important; /* Force le blanc papier */
+    color: black !important;
   }
 
   main {
@@ -49,5 +62,6 @@ main {
     overflow: visible !important;
     margin: 0 !important;
     padding: 0 !important;
+    background: none !important;
   }
 }

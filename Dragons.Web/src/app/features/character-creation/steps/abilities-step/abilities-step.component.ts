@@ -1,5 +1,4 @@
-// features/character-creation/steps/abilities-step/abilities-step.component.ts
-import { Component, inject } from '@angular/core';
+import { Component, inject, ChangeDetectionStrategy, ChangeDetectorRef } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { CharacterCreationService } from '../../../../core/services/character-creation.service';
 import {
@@ -16,9 +15,12 @@ import {
   imports: [CommonModule],
   templateUrl: './abilities-step.component.html',
   styleUrl: './abilities-step.component.scss',
+  // PERFORMANCE OPTIMIZATION
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class AbilitiesStepComponent {
   creationService = inject(CharacterCreationService);
+  private cd = inject(ChangeDetectorRef);
 
   abilities: (keyof AbilityScores)[] = [
     'force',
@@ -33,6 +35,20 @@ export class AbilitiesStepComponent {
   minScore = MIN_ABILITY_SCORE;
   maxScore = MAX_ABILITY_SCORE;
 
+  // Icônes pour embellir l'UI
+  private icons: Record<keyof AbilityScores, string> = {
+    force: '💪',
+    dexterite: '🏃',
+    constitution: '🛡️',
+    intelligence: '🧠',
+    sagesse: '🦉',
+    charisme: '🎭',
+  };
+
+  getAbilityIcon(ability: keyof AbilityScores): string {
+    return this.icons[ability];
+  }
+
   getBaseValue(ability: keyof AbilityScores): number {
     return this.creationService.character().baseAbilities[ability];
   }
@@ -43,6 +59,10 @@ export class AbilitiesStepComponent {
 
   getFinalValue(ability: keyof AbilityScores): number {
     return this.creationService.finalAbilities()[ability];
+  }
+
+  getModifierValue(ability: keyof AbilityScores): number {
+    return Math.floor((this.getFinalValue(ability) - 10) / 2);
   }
 
   getModifier(ability: keyof AbilityScores): string {
@@ -71,16 +91,24 @@ export class AbilitiesStepComponent {
   increment(ability: keyof AbilityScores): void {
     if (this.canIncrement(ability)) {
       this.creationService.incrementAbility(ability);
+      this.cd.markForCheck(); // Mise à jour UI
     }
   }
 
   decrement(ability: keyof AbilityScores): void {
     if (this.canDecrement(ability)) {
       this.creationService.decrementAbility(ability);
+      this.cd.markForCheck(); // Mise à jour UI
     }
   }
 
   reset(): void {
     this.creationService.resetAbilities();
+    this.cd.markForCheck();
+  }
+
+  // Helper pour surligner le coût dans le tableau
+  hasBaseValue(value: number): boolean {
+    return Object.values(this.creationService.character().baseAbilities).includes(value);
   }
 }

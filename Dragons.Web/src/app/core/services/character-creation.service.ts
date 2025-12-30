@@ -1,5 +1,4 @@
-// core/services/character-creation.service.ts
-import { Injectable, signal, computed } from '@angular/core';
+import { Injectable, signal, computed, effect } from '@angular/core';
 import {
   CharacterCreation,
   Character,
@@ -20,6 +19,9 @@ interface EditingCharacter {
   id: string;
   createdAt: string;
 }
+
+// Clé pour le LocalStorage
+const STORAGE_KEY = 'dragon_character_creation_v1';
 
 @Injectable({ providedIn: 'root' })
 export class CharacterCreationService {
@@ -99,6 +101,21 @@ export class CharacterCreationService {
 
   // === MODE ÉDITION ===
   private editingCharacter = signal<EditingCharacter | null>(null);
+
+  constructor() {
+    // 1. Tenter de charger une sauvegarde existante (Draft)
+    this.loadFromStorage();
+
+    // 2. Sauvegarde automatique à chaque changement
+    effect(() => {
+      // Cet effet se déclenche à chaque fois que 'character' ou 'currentStep' change
+      this.saveToStorage({
+        character: this.character(),
+        step: this.currentStep(),
+        editing: this.editingCharacter(),
+      });
+    });
+  }
 
   // === COMPUTED ===
 
@@ -181,6 +198,7 @@ export class CharacterCreationService {
       case 6:
         return true;
       case 7:
+        // Vérification basique : on a au moins les langues natives
         return char.languages.length > 0;
       case 8:
         return char.name.trim().length > 0;
@@ -191,7 +209,41 @@ export class CharacterCreationService {
     }
   });
 
-  // === MODE ÉDITION ===
+  // === MODE ÉDITION & PERSISTANCE ===
+
+  private saveToStorage(data: any) {
+    try {
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
+    } catch (e) {
+      console.error('Erreur sauvegarde localStorage', e);
+    }
+  }
+
+  private loadFromStorage() {
+    try {
+      const stored = localStorage.getItem(STORAGE_KEY);
+      if (stored) {
+        const parsed = JSON.parse(stored);
+        if (parsed.character) {
+          this.character.set(parsed.character);
+        }
+        if (parsed.step) {
+          this.currentStep.set(parsed.step);
+        }
+        if (parsed.editing) {
+          this.editingCharacter.set(parsed.editing);
+        }
+      }
+    } catch (e) {
+      console.error('Erreur lecture localStorage', e);
+      this.clearStorage();
+    }
+  }
+
+  private clearStorage() {
+    localStorage.removeItem(STORAGE_KEY);
+  }
+
   checkForEditMode(): void {
     const editData = localStorage.getItem('dragons-edit-character');
     if (editData) {
@@ -226,7 +278,7 @@ export class CharacterCreationService {
 
     // Charger toutes les données dans le character
     this.character.set({
-      // Espèce - On met les noms, les IDs seront null (pas grave pour l'affichage)
+      // Espèce
       speciesId: speciesName ? 'edit-mode' : null,
       speciesName: speciesName || null,
       subspeciesId: subspeciesName ? 'edit-mode' : null,
@@ -260,7 +312,7 @@ export class CharacterCreationService {
       classFeatures: savedChar.classFeatures || [],
       startingEquipment: [],
 
-      // Caractéristiques - Enlever les bonus raciaux pour avoir la base
+      // Caractéristiques
       baseAbilities: savedChar.abilities || {
         force: DEFAULT_ABILITY_SCORE,
         dexterite: DEFAULT_ABILITY_SCORE,
@@ -269,7 +321,7 @@ export class CharacterCreationService {
         sagesse: DEFAULT_ABILITY_SCORE,
         charisme: DEFAULT_ABILITY_SCORE,
       },
-      pointsRemaining: 0, // En mode édition, on ne recalcule pas les points
+      pointsRemaining: 0,
 
       // Compétences
       selectedSkills: savedChar.skills || [],
@@ -309,7 +361,9 @@ export class CharacterCreationService {
     return this.editingCharacter()?.createdAt || null;
   }
 
-  // === ÉTAPE 1 - ESPÈCE ===
+  // === SETTERS (ACTIONS) ===
+
+  // ÉTAPE 1
   setSpecies(
     speciesId: string,
     speciesName: string,
@@ -361,7 +415,7 @@ export class CharacterCreationService {
     }));
   }
 
-  // === ÉTAPE 2 - CIVILISATION ===
+  // ÉTAPE 2
   setCivilization(
     civilizationId: string,
     civilizationName: string,
@@ -389,7 +443,7 @@ export class CharacterCreationService {
     }));
   }
 
-  // === ÉTAPE 3 - CLASSE ===
+  // ÉTAPE 3
   setClass(
     classId: string,
     className: string,
@@ -446,7 +500,7 @@ export class CharacterCreationService {
     }));
   }
 
-  // === ÉTAPE 4 - CARACTÉRISTIQUES ===
+  // ÉTAPE 4
   setAbilityScore(ability: keyof AbilityScores, value: number): void {
     if (value < MIN_ABILITY_SCORE || value > MAX_ABILITY_SCORE) return;
 
@@ -498,7 +552,7 @@ export class CharacterCreationService {
     }));
   }
 
-  // === ÉTAPE 5 - COMPÉTENCES ===
+  // ÉTAPE 5
   toggleSkill(skill: string): void {
     this.character.update((c) => {
       const isSelected = c.selectedSkills.includes(skill);
@@ -526,7 +580,7 @@ export class CharacterCreationService {
     }));
   }
 
-  // === ÉTAPE 6 - ÉQUIPEMENT ===
+  // ÉTAPE 6
   addEquipment(item: EquipmentItem): void {
     this.character.update((c) => ({
       ...c,
@@ -558,7 +612,7 @@ export class CharacterCreationService {
     }));
   }
 
-  // === ÉTAPE 7 - LANGUES ===
+  // ÉTAPE 7
   addLanguage(language: string): void {
     this.character.update((c) => ({
       ...c,
@@ -580,7 +634,7 @@ export class CharacterCreationService {
     }));
   }
 
-  // === ÉTAPE 8 - IDENTITÉ ===
+  // ÉTAPE 8
   setIdentity(identity: {
     name?: string;
     description?: string;
@@ -622,6 +676,7 @@ export class CharacterCreationService {
     this.character.set({ ...this.initialState });
     this.currentStep.set(1);
     this.editingCharacter.set(null);
+    this.clearStorage();
   }
 
   // === UTILITAIRES ===

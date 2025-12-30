@@ -1,32 +1,25 @@
-<div class="civilization-step">
-  <h2>Choisissez votre civilisation</h2>
-  <p class="step-description">
-    Votre civilisation détermine votre origine géographique, vos valeurs culturelles et vos langues
-    parlées.
-  </p>
+<div class="step-container">
+  <div class="step-header">
+    <h2>Choisissez votre Civilisation</h2>
+    <p class="step-description">
+      Votre civilisation détermine votre origine géographique, vos valeurs culturelles et vos
+      langues parlées.
+    </p>
+  </div>
 
   @if (loading) {
   <div class="loading">Chargement des civilisations...</div>
   } @else {
-
   <div class="civilization-grid">
     @for (civ of civilizations; track civ.id) {
-    <div
-      class="civ-cardable"
-      [class.selected]="isCivilizationSelected(civ.id)"
-      (click)="selectCivilization(civ)"
+    <app-selection-card
+      [title]="civ.name"
+      [icon]="getIcon(civ.name)"
+      [details]="getCivTags(civ)"
+      [selected]="isCivilizationSelected(civ.id)"
+      (cardClick)="selectCivilization(civ)"
     >
-      <div class="civ-icon">{{ getIcon(civ.name) }}</div>
-
-      <div class="civ-info">
-        <div class="header-row">
-          <h2>{{ civ.name }}</h2>
-          @if(isCivilizationSelected(civ.id)) {
-          <span class="check-mark">✓</span>
-          }
-        </div>
-      </div>
-    </div>
+    </app-selection-card>
     }
   </div>
 

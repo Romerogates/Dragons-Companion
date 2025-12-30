@@ -1,5 +1,4 @@
-// features/character-creation/steps/skills-step/skills-step.component.ts
-import { Component, inject } from '@angular/core';
+import { Component, inject, ChangeDetectionStrategy, ChangeDetectorRef } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { CharacterCreationService } from '../../../../core/services/character-creation.service';
 import { SelectionCardComponent } from '../../../../shared/components/selection-card/selection-card.component';
@@ -10,9 +9,12 @@ import { SelectionCardComponent } from '../../../../shared/components/selection-
   imports: [CommonModule, SelectionCardComponent],
   templateUrl: './skills-step.component.html',
   styleUrl: './skills-step.component.scss',
+  // OPTIMISATION PERFORMANCE
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class SkillsStepComponent {
   creationService = inject(CharacterCreationService);
+  private cd = inject(ChangeDetectorRef);
 
   // Liste complète de toutes les compétences
   private allSkills: string[] = [
@@ -57,28 +59,17 @@ export class SkillsStepComponent {
     Tromperie: 'Charisme',
   };
 
-  // Retourne les options disponibles, en gérant les cas spéciaux
   getAvailableSkills(): string[] {
     const options = this.creationService.character().skillOptions;
 
-    // Si aucune option ou tableau vide, retourner toutes les compétences
+    // Si aucune option, on retourne tout
     if (!options || options.length === 0) {
       return this.allSkills;
     }
 
-    // Normaliser pour la comparaison (minuscule, sans accents)
+    // Gestion du cas "Toutes les compétences"
     const normalizedOptions = options.map((opt) => opt.toLowerCase().trim());
-
-    // Vérifier les différentes variantes qui signifient "toutes les compétences"
-    const allSkillsKeywords = [
-      'toutes',
-      'au choix',
-      'any',
-      'all',
-      'libre',
-      "n'importe laquelle",
-      "n'importe lesquelles",
-    ];
+    const allSkillsKeywords = ['toutes', 'au choix', 'any', 'all', 'libre', "n'importe"];
 
     const hasAllSkillsOption = normalizedOptions.some((opt) =>
       allSkillsKeywords.some((keyword) => opt.includes(keyword))
@@ -88,7 +79,6 @@ export class SkillsStepComponent {
       return this.allSkills;
     }
 
-    // Sinon retourner les options spécifiques
     return options;
   }
 
@@ -107,9 +97,11 @@ export class SkillsStepComponent {
 
   toggleSkill(skill: string): void {
     this.creationService.toggleSkill(skill);
+    this.cd.markForCheck(); // Mise à jour UI
   }
 
   clearSkills(): void {
     this.creationService.clearSkills();
+    this.cd.markForCheck(); // Mise à jour UI
   }
 }

@@ -1,10 +1,11 @@
-<!-- features/character-creation/steps/skills-step/skills-step.component.html -->
-<div class="skills-step">
-  <h2>Choisissez vos compétences</h2>
-  <p class="step-description">
-    Sélectionnez <strong>{{ creationService.character().skillChooseCount }}</strong> compétences
-    parmi celles disponibles pour votre classe.
-  </p>
+<div class="step-container">
+  <div class="step-header">
+    <h2>Choisissez vos compétences</h2>
+    <p class="step-description">
+      Sélectionnez <strong>{{ creationService.character().skillChooseCount }}</strong> compétences
+      parmi celles disponibles pour votre classe. Elles définissent vos talents hors combat.
+    </p>
+  </div>
 
   <div class="selection-counter" [class.complete]="!canSelectMore()">
     <span class="counter-label">Sélectionnées</span>
@@ -26,19 +27,20 @@
       [selected]="isSkillSelected(skill)"
       [disabled]="!isSkillSelected(skill) && !canSelectMore()"
       (cardClick)="toggleSkill(skill)"
-    />
+    >
+    </app-selection-card>
     }
   </div>
 
   @if (creationService.character().selectedSkills.length > 0) {
   <div class="selection-summary">
-    <h3>✅ Compétences sélectionnées</h3>
+    <h3>✅ Compétences choisies</h3>
     <div class="selected-skills">
       @for (skill of creationService.character().selectedSkills; track skill) {
       <span class="skill-tag">
         {{ skill }}
         <span class="skill-ability">({{ getSkillAbility(skill) }})</span>
-        <button class="remove-btn" (click)="toggleSkill(skill)">✕</button>
+        <button class="remove-btn" (click)="toggleSkill(skill)" aria-label="Retirer">✕</button>
       </span>
       }
     </div>

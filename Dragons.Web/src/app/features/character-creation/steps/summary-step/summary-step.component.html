@@ -1,61 +1,70 @@
-<!-- features/character-creation/steps/summary-step/summary-step.component.html -->
-<div class="summary-step">
-  <h2>Récapitulatif de votre personnage</h2>
-  <p class="step-description">Vérifiez les informations avant de finaliser la création.</p>
+<div class="step-container">
+  <div class="step-header">
+    <h2>Fiche de Personnage</h2>
+    <p class="step-description">Vérifiez toutes les informations avant de finaliser la création.</p>
+  </div>
 
   <div class="summary-grid">
-    <!-- Identité -->
-    <section class="summary-card identity">
-      <h3>🪪 Identité</h3>
-      <div class="identity-header">
-        <span class="character-name">{{ character.name || 'Sans nom' }}</span>
+    <section class="summary-card identity-card">
+      <div class="card-header">
+        <h3>🪪 Identité</h3>
       </div>
-      <div class="identity-details">
-        <p>
-          <strong>Espèce:</strong> {{ character.speciesName }} @if (character.subspeciesName) { ({{
-            character.subspeciesName
-          }}) }
-        </p>
-        <p><strong>Civilisation:</strong> {{ character.civilizationName }}</p>
-        <p><strong>Classe:</strong> {{ character.className }}</p>
-        @if (character.alignment) {
-        <p><strong>Alignement:</strong> {{ character.alignment }}</p>
-        } @if (character.background) {
-        <p><strong>Historique:</strong> {{ character.background }}</p>
-        }
+
+      <div class="identity-content">
+        <div class="char-avatar-placeholder">
+          <span>{{ (character.name || '?').charAt(0).toUpperCase() }}</span>
+        </div>
+
+        <div class="char-info">
+          <h1 class="character-name">{{ character.name || 'Sans nom' }}</h1>
+          <div class="char-meta">
+            <span class="meta-tag">{{ character.speciesName }}</span>
+            <span class="meta-tag">{{ character.civilizationName }}</span>
+            <span class="meta-tag class-tag">{{ character.className }}</span>
+            @if (character.alignment) {
+            <span class="meta-tag align-tag">{{ character.alignment }}</span> }
+          </div>
+
+          @if (character.background) {
+          <div class="char-background">
+            <strong>Historique :</strong> {{ character.background }}
+          </div>
+          }
+        </div>
       </div>
     </section>
 
-    <!-- Caractéristiques -->
-    <section class="summary-card abilities">
-      <h3>📊 Caractéristiques</h3>
+    <section class="summary-card abilities-card">
+      <div class="card-header">
+        <h3>📊 Attributs</h3>
+      </div>
       <div class="abilities-grid">
-        <div class="ability-item">
+        <div class="ability-box">
           <span class="ability-label">FOR</span>
           <span class="ability-value">{{ finalAbilities.force }}</span>
           <span class="ability-mod">{{ formatModifier(modifiers.force) }}</span>
         </div>
-        <div class="ability-item">
+        <div class="ability-box">
           <span class="ability-label">DEX</span>
           <span class="ability-value">{{ finalAbilities.dexterite }}</span>
           <span class="ability-mod">{{ formatModifier(modifiers.dexterite) }}</span>
         </div>
-        <div class="ability-item">
+        <div class="ability-box">
           <span class="ability-label">CON</span>
           <span class="ability-value">{{ finalAbilities.constitution }}</span>
           <span class="ability-mod">{{ formatModifier(modifiers.constitution) }}</span>
         </div>
-        <div class="ability-item">
+        <div class="ability-box">
           <span class="ability-label">INT</span>
           <span class="ability-value">{{ finalAbilities.intelligence }}</span>
           <span class="ability-mod">{{ formatModifier(modifiers.intelligence) }}</span>
         </div>
-        <div class="ability-item">
+        <div class="ability-box">
           <span class="ability-label">SAG</span>
           <span class="ability-value">{{ finalAbilities.sagesse }}</span>
           <span class="ability-mod">{{ formatModifier(modifiers.sagesse) }}</span>
         </div>
-        <div class="ability-item">
+        <div class="ability-box">
           <span class="ability-label">CHA</span>
           <span class="ability-value">{{ finalAbilities.charisme }}</span>
           <span class="ability-mod">{{ formatModifier(modifiers.charisme) }}</span>
@@ -63,51 +72,56 @@
       </div>
     </section>
 
-    <!-- Combat -->
-    <section class="summary-card combat">
-      <h3>⚔️ Combat</h3>
+    <section class="summary-card combat-card">
+      <div class="card-header">
+        <h3>⚔️ Combat</h3>
+      </div>
       <div class="combat-stats">
-        <div class="stat-box">
+        <div class="stat-box hp">
           <span class="stat-value">{{ creationService.hitPointsMax() }}</span>
           <span class="stat-label">PV Max</span>
         </div>
-        <div class="stat-box">
+        <div class="stat-box ac">
           <span class="stat-value">{{ creationService.armorClass() }}</span>
           <span class="stat-label">CA</span>
         </div>
-        <div class="stat-box">
+        <div class="stat-box init">
           <span class="stat-value">{{ formatModifier(creationService.initiative()) }}</span>
           <span class="stat-label">Initiative</span>
         </div>
-        <div class="stat-box">
+        <div class="stat-box speed">
           <span class="stat-value">{{ character.speciesSpeed }}m</span>
           <span class="stat-label">Vitesse</span>
         </div>
       </div>
     </section>
 
-    <!-- Maîtrises -->
-    <section class="summary-card proficiencies">
-      <h3>🎯 Maîtrises</h3>
-      <div class="proficiency-group">
-        <span class="prof-label">Jets de sauvegarde:</span>
-        <div class="tags">
+    <section class="summary-card proficiencies-card">
+      <div class="card-header">
+        <h3>🎯 Maîtrises</h3>
+      </div>
+
+      <div class="prof-group">
+        <span class="group-label">Jets de Sauvegarde</span>
+        <div class="tags-list">
           @for (st of character.savingThrows; track st) {
           <span class="tag save">{{ st }}</span>
           }
         </div>
       </div>
-      <div class="proficiency-group">
-        <span class="prof-label">Compétences:</span>
-        <div class="tags">
+
+      <div class="prof-group">
+        <span class="group-label">Compétences</span>
+        <div class="tags-list">
           @for (skill of character.selectedSkills; track skill) {
           <span class="tag skill">{{ skill }}</span>
           }
         </div>
       </div>
-      <div class="proficiency-group">
-        <span class="prof-label">Langues:</span>
-        <div class="tags">
+
+      <div class="prof-group">
+        <span class="group-label">Langues</span>
+        <div class="tags-list">
           @for (lang of character.languages; track lang) {
           <span class="tag lang">{{ lang }}</span>
           }
@@ -115,19 +129,32 @@
       </div>
     </section>
 
-    <!-- Traits -->
-    @if (character.speciesTraits.length > 0) {
-    <section class="summary-card traits">
-      <h3>✨ Traits raciaux</h3>
-      <div class="traits-list">
-        @for (trait of character.speciesTraits; track trait.name) {
-        <div class="trait-item">
-          <strong>{{ trait.name }}</strong>
-          <p>{{ trait.description }}</p>
+    <section class="summary-card extras-card">
+      <div class="card-header">
+        <h3>🎒 Équipement & Traits</h3>
+      </div>
+
+      <div class="extras-content">
+        <div class="sub-section">
+          <h4>Inventaire</h4>
+          <ul class="simple-list">
+            @for (item of character.selectedEquipment; track item.name) {
+            <li>{{ item.name }} @if(item.quantity > 1){ (x{{ item.quantity }}) }</li>
+            }
+          </ul>
+        </div>
+
+        @if (character.speciesTraits.length > 0) {
+        <div class="sub-section">
+          <h4>Traits Raciaux</h4>
+          <div class="traits-mini-list">
+            @for (trait of character.speciesTraits; track trait.name) {
+            <span class="trait-pill" [title]="trait.description">{{ trait.name }}</span>
+            }
+          </div>
         </div>
         }
       </div>
     </section>
-    }
   </div>
 </div>

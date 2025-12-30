@@ -1,5 +1,3 @@
-// shared/components/selection-card/selection-card.component.scss
-
 :host {
   display: block;
   height: 100%;
@@ -11,41 +9,65 @@
   height: 100%;
   min-height: 200px;
   padding: 1.25rem;
-  border: 2px solid #d4c4a8;
+
+  // Utilisation des variables globales (Enterprise Standard)
+  background-color: var(--bg-cards);
+  border: 2px solid var(--border-color);
+  color: var(--text-main);
+
   border-radius: 12px;
-  background: rgba(255, 255, 255, 0.85);
   cursor: pointer;
   transition: all 0.2s ease;
   position: relative;
+  box-shadow: var(--shadow-sm);
+  outline: none; // On gère le focus nous-même via border-color
 
+  // --- ETATS ---
+
+  // Hover (si pas désactivé)
   &:hover:not(.disabled) {
-    border-color: #8b0000;
+    border-color: var(--primary-color);
     transform: translateY(-3px);
-    box-shadow: 0 6px 20px rgba(139, 0, 0, 0.15);
+    box-shadow: var(--shadow-md);
   }
 
+  // Focus Clavier (Accessibilité)
+  &:focus-visible:not(.disabled) {
+    border-color: var(--primary-color);
+    box-shadow: 0 0 0 4px rgba(var(--primary-color), 0.2); // Halo autour
+  }
+
+  // Sélectionné
   &.selected {
-    border-color: #8b0000;
-    background: rgba(139, 0, 0, 0.08);
-    box-shadow: 0 0 0 3px rgba(139, 0, 0, 0.2);
+    border-color: var(--primary-color);
+    // Ombre interne légère + ombre externe
+    box-shadow: inset 0 0 0 1px var(--primary-color), var(--shadow-md);
+    background-color: var(--bg-cards); // On garde le fond propre
   }
 
+  // Désactivé
   &.disabled {
-    opacity: 0.5;
+    opacity: 0.6;
     cursor: not-allowed;
+    background-color: var(--section-alt-bg); // Fond grisé
+    border-color: var(--border-color);
+    box-shadow: none;
 
     &:hover {
       transform: none;
-      box-shadow: none;
+      border-color: var(--border-color);
     }
   }
 }
+
+// --- CONTENU ---
 
 .card-icon {
   font-size: 2.5rem;
   text-align: center;
   margin-bottom: 0.75rem;
   flex-shrink: 0;
+  line-height: 1;
 }
 
 .card-content {
@@ -57,19 +79,21 @@
 
 .card-title {
   font-size: 1.15rem;
-  font-weight: 600;
-  color: #2c1810;
+  font-weight: 700;
+  color: var(--text-main);
   font-family: 'Cinzel', serif;
-  margin: 0 0 0.25rem 0;
+  margin: 0 0 0.5rem 0;
   text-align: center;
 }
 
 .card-subtitle {
   font-size: 0.9rem;
-  color: #8b0000;
+  color: var(--primary-color); // Couleur Or/Accent
   font-weight: 600;
   margin: 0 0 0.75rem 0;
   text-align: center;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
 }
 
 .card-details {
@@ -79,20 +103,31 @@
   gap: 0.4rem;
   justify-content: center;
   align-content: flex-start;
-  overflow: hidden;
+  margin-top: auto; // Pousse les tags vers le bas si espace vide
 }
 
 .detail-tag {
   display: inline-block;
   padding: 0.25rem 0.6rem;
-  background: rgba(139, 0, 0, 0.08);
-  border: 1px solid rgba(139, 0, 0, 0.2);
+
+  background-color: var(--section-alt-bg);
+  border: 1px solid var(--border-color);
+  color: var(--text-muted);
+
   border-radius: 20px;
   font-size: 0.75rem;
-  color: #5c4033;
   white-space: nowrap;
+  transition: all 0.2s;
+
+  // Quand la carte est survolée ou sélectionnée, les tags s'allument un peu
+  .selection-card:hover:not(.disabled) &,
+  .selection-card.selected & {
+    border-color: var(--primary-color);
+    color: var(--text-main);
+  }
 }
 
+// --- CHECK MARK (La coche) ---
 .card-check {
   position: absolute;
   top: 0.75rem;
@@ -102,17 +137,31 @@
   display: flex;
   align-items: center;
   justify-content: center;
+  pointer-events: none; // Ne gêne pas le clic
 }
 
 .check-icon {
   width: 28px;
   height: 28px;
-  background: #8b0000;
-  color: white;
+  background-color: var(--primary-color);
+  color: #fff; // Blanc sur Or
+
+  // Ajustement Dark Mode pour le contraste de l'icône
+  body.dark-mode & { color: #000; }
+
   border-radius: 50%;
   display: flex;
   align-items: center;
   justify-content: center;
   font-size: 1rem;
   font-weight: bold;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+
+  // Animation d'apparition "Pop"
+  animation: popIn 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+@keyframes popIn {
+  0% { transform: scale(0); opacity: 0; }
+  100% { transform: scale(1); opacity: 1; }
 }

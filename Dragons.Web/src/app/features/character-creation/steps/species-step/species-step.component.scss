@@ -1,252 +1,136 @@
-// ========================================
-// VARIABLES & BASE STYLE
-// ========================================
-.species-step {
-  padding: 0.5rem;
-  max-width: 1400px;
+// features/character-creation/steps/species-step/species-step.component.scss
+
+.step-container {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  animation: fadeIn 0.4s ease-out;
+}
+
+// --- HEADER ---
+.step-header {
+  text-align: center;
+  max-width: 800px;
   margin: 0 auto;
 
   h2 {
-    margin: 0 0 0.5rem 0;
-    color: #8b0000;
+    font-size: 2rem;
+    color: var(--primary-color);
+    margin-bottom: 1rem;
     font-family: 'Cinzel', serif;
-    font-size: 1.5rem;
-    text-align: center;
   }
 
   .step-description {
-    margin: 0 auto 1.5rem auto;
-    color: #5c4033;
-    font-size: 0.95rem;
-    text-align: center;
-    max-width: 800px;
+    color: var(--text-main);
+    font-size: 1.1rem;
+    line-height: 1.6;
+    opacity: 0.8;
   }
 }
 
 .loading {
   text-align: center;
   padding: 3rem;
-  color: #7f8c8d;
+  color: var(--text-muted);
   font-size: 1.2rem;
 }
 
-// ========================================
-// GRID LAYOUT (Inspiré de species-list)
-// ========================================
+// --- GRID LAYOUT ---
 .species-grid {
   display: grid;
-  grid-template-columns: repeat(3, 1fr); // Par défaut 3 colonnes
-  gap: 0.8rem;
-  justify-items: center;
+  // Responsive auto-fill : remplace tes media queries complexes
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 1.5rem;
   width: 100%;
 }
 
-// ========================================
-// CARTE SÉLECTIONNABLE (species-cardable)
-// ========================================
-.species-cardable {
-  display: flex;
-  align-items: flex-start;
-  gap: 0.8rem;
-  padding: 0.8rem;
-  width: 100%;
-  background: #fff;
-  border-radius: 10px;
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.08);
-  border: 2px solid transparent; // Bordure invisible par défaut
-  box-sizing: border-box;
-  cursor: pointer; // Indique que c'est cliquable
-  transition: all 0.2s ease-in-out;
-  position: relative;
-
-  &:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.12);
-    border-color: #f1c40f; // Jaune au survol
-    background: #fffef5;
-  }
-
-  // État SÉLECTIONNÉ
-  &.selected {
-    background: linear-gradient(135deg, #fff, #fff5f5);
-    border-color: #8b0000; // Rouge sombre typé RPG
-    box-shadow: 0 0 0 1px rgba(139, 0, 0, 0.2), 0 4px 12px rgba(139, 0, 0, 0.15);
-
-    .species-info h2 {
-      color: #8b0000;
-    }
-  }
-}
-
-.species-icon {
-  font-size: 2.2rem;
-  line-height: 1;
-  flex-shrink: 0;
-  width: 45px;
-  text-align: center;
-
-  &.sub-icon {
-    font-size: 1.8rem; // Un peu plus petit pour les sous-espèces
-    opacity: 0.8;
-  }
-}
-
-.species-info {
-  flex: 1;
-  min-width: 0;
-  overflow: hidden;
-
-  .header-row {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 0.4rem;
-
-    h2 {
-      margin: 0;
-      font-size: 1rem;
-      color: #34495e;
-      font-weight: 700;
-      text-transform: uppercase;
-      letter-spacing: 0.5px;
-      font-family: inherit; // Override le cinzel du h2 global pour garder lisibilité
-      text-align: left;
-    }
-
-    .check-mark {
-      color: #8b0000;
-      font-weight: bold;
-      font-size: 1.2rem;
-    }
-  }
-}
-
-.species-stats {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.2rem 0.6rem;
-  line-height: 1.3;
-}
-
-.stat {
-  font-size: 0.75rem;
-  color: #555;
-
-  .label {
-    font-weight: 600;
-    color: #7f8c8d;
-    margin-right: 0.2rem;
-  }
-
-  &.darkvision {
-    color: #8e44ad;
-    width: 100%;
-    margin-top: 0.1rem;
-  }
-
-  &.traits {
-    font-style: italic;
-    color: #5c4033;
-    margin-top: 0.2rem;
-    display: block;
-    width: 100%;
-  }
-}
-
-
-// ========================================
-// SECTION SOUS-ESPÈCES
-// ========================================
+// --- SOUS-ESPÈCES ---
 .subspecies-section {
   margin-top: 2rem;
-  padding-top: 1.5rem;
-  border-top: 2px dashed #d4c4a8;
+  padding-top: 2rem;
+  border-top: 1px dashed var(--border-color);
   animation: fadeIn 0.3s ease-in;
 
   h3 {
     margin: 0 0 0.5rem 0;
-    color: #8b0000;
+    color: var(--primary-color);
     font-family: 'Cinzel', serif;
-    font-size: 1.2rem;
+    font-size: 1.5rem;
     text-align: center;
   }
 
   .section-description {
     margin: 0 auto 1.5rem auto;
-    color: #5c4033;
-    font-size: 0.9rem;
+    color: var(--text-muted);
+    font-size: 1rem;
     text-align: center;
   }
 }
 
-@keyframes fadeIn {
-  from { opacity: 0; transform: translateY(10px); }
-  to { opacity: 1; transform: translateY(0); }
-}
-
-// ========================================
-// RÉSUMÉ DE SÉLECTION (Style RPG)
-// ========================================
+// --- RÉSUMÉ (Footer fixe ou bloc bas de page) ---
 .selection-summary {
   margin-top: 2rem;
-  padding: 1rem;
-  background: linear-gradient(135deg, rgba(139, 0, 0, 0.05), rgba(139, 0, 0, 0.1));
+  padding: 1.5rem;
+  background-color: var(--bg-cards);
   border-radius: 8px;
-  border: 1px solid #8b0000;
-
-  // Sticky pour qu'il reste visible si la liste est longue ?
-  // Décommentez si vous voulez qu'il suive le scroll en bas
-  // position: sticky;
-  // bottom: 10px;
-  // z-index: 10;
-  // backdrop-filter: blur(5px);
+  border: 1px solid var(--primary-color);
+  box-shadow: var(--shadow-md);
+  animation: slideUp 0.3s ease-out;
 
   h3 {
-    margin: 0 0 0.8rem 0;
-    color: #8b0000;
+    margin: 0 0 1rem 0;
+    color: var(--primary-color);
     font-family: 'Cinzel', serif;
-    font-size: 1.1rem;
-    text-align: left;
+    font-size: 1.2rem;
+    border-bottom: 1px solid var(--border-color);
+    padding-bottom: 0.5rem;
   }
 }
 
 .summary-content {
   display: flex;
   align-items: center;
-  gap: 1.5rem;
+  gap: 2rem;
   flex-wrap: wrap;
 }
 
 .summary-main {
   display: flex;
   align-items: center;
-  gap: 0.75rem;
+  gap: 1rem;
 
   .summary-icon {
-    font-size: 2rem;
+    font-size: 2.5rem;
   }
 
   .summary-info {
     strong {
-      font-size: 1.1rem;
-      color: #2c1810;
+      font-size: 1.2rem;
+      color: var(--text-main);
       font-family: 'Cinzel', serif;
       display: block;
     }
 
     .subspecies-label {
-      color: #5c4033;
+      color: var(--text-muted);
       font-style: italic;
-      font-size: 0.9rem;
+      font-size: 0.95rem;
     }
   }
 }
 
 .summary-details {
   display: flex;
-  gap: 1.5rem;
+  gap: 2rem;
   flex-wrap: wrap;
   flex: 1;
+  padding-left: 2rem;
+  border-left: 1px solid var(--border-color);
+
+  @media (max-width: 768px) {
+    border-left: none;
+    padding-left: 0;
+  }
 }
 
 .detail-group {
@@ -254,87 +138,46 @@
   flex-direction: column;
 
   .detail-label {
-    font-size: 0.65rem;
-    color: #5c4033;
+    font-size: 0.75rem;
+    color: var(--text-muted);
     text-transform: uppercase;
     font-weight: 700;
+    letter-spacing: 0.5px;
   }
 
   .detail-value {
     font-weight: 600;
-    color: #2c1810;
-    font-size: 0.9rem;
+    color: var(--text-main);
+    font-size: 1rem;
 
-    &.bonus { color: #8b0000; }
+    &.bonus { color: var(--color-success, #27ae60); }
   }
 }
 
 .clear-btn {
   margin-left: auto;
-  padding: 0.4rem 0.8rem;
-  background: #fff;
-  color: #8b0000;
-  border: 1px solid #8b0000;
+  padding: 0.6rem 1.2rem;
+  background-color: transparent;
+  color: var(--color-danger, #c0392b);
+  border: 1px solid var(--color-danger, #c0392b);
   border-radius: 4px;
   cursor: pointer;
   font-weight: 600;
-  font-size: 0.85rem;
   transition: all 0.2s;
 
   &:hover {
-    background: #8b0000;
+    background-color: var(--color-danger, #c0392b);
     color: white;
   }
 }
 
-// ========================================
-// MEDIA QUERIES (Adaptés pour la compacité)
-// ========================================
-
-// Très grands écrans (4 colonnes si possible)
-@media screen and (min-width: 1400px) {
-  .species-grid {
-    grid-template-columns: repeat(4, 1fr);
-  }
+// Animations
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
 }
 
-// Desktop standard (3 colonnes)
-@media screen and (min-width: 900px) and (max-width: 1399px) {
-  .species-grid {
-    grid-template-columns: repeat(3, 1fr);
-  }
-}
-
-// Tablette (2 colonnes)
-@media screen and (min-width: 600px) and (max-width: 899px) {
-  .species-grid {
-    grid-template-columns: repeat(2, 1fr);
-  }
-
-  .species-cardable {
-    padding: 0.6rem;
-  }
-}
-
-// Mobile (1 colonne)
-@media screen and (max-width: 599px) {
-  .species-grid {
-    grid-template-columns: 1fr;
-  }
-
-  .summary-content {
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 1rem;
-  }
-
-  .summary-details {
-    width: 100%;
-    justify-content: space-between;
-  }
-
-  .clear-btn {
-    margin-left: 0;
-    width: 100%;
-  }
+@keyframes slideUp {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
 }

@@ -1,109 +1,126 @@
-<!-- features/character-creation/steps/identity-step/identity-step.component.html -->
-<div class="identity-step">
-  <h2>Identité de votre personnage</h2>
-  <p class="step-description">Donnez vie à votre personnage avec un nom et une personnalité.</p>
+<div class="step-container">
+  <div class="step-header">
+    <h2>Identité du Personnage</h2>
+    <p class="step-description">
+      Donnez vie à votre avatar en définissant son nom, son apparence et sa personnalité.
+    </p>
+  </div>
 
-  <div class="form-grid">
-    <div class="form-group full-width">
-      <label for="name">Nom du personnage *</label>
-      <input
-        type="text"
-        id="name"
-        [ngModel]="creationService.character().name"
-        (ngModelChange)="updateIdentity('name', $event)"
-        placeholder="Entrez le nom de votre personnage"
-      />
+  <div class="form-container">
+    <div class="form-section">
+      <h3 class="section-title">🌟 L'Essentiel</h3>
+      <div class="form-grid">
+        <div class="form-group full-width">
+          <label for="name">Nom du personnage <span class="required">*</span></label>
+          <input
+            type="text"
+            id="name"
+            [ngModel]="creationService.character().name"
+            (ngModelChange)="updateIdentity('name', $event)"
+            placeholder="Ex: Aragorn, Gandalf..."
+            autocomplete="off"
+          />
+        </div>
+
+        <div class="form-group">
+          <label for="alignment">Alignement</label>
+          <select
+            id="alignment"
+            [ngModel]="creationService.character().alignment"
+            (ngModelChange)="updateIdentity('alignment', $event)"
+          >
+            <option value="">-- Choisir un alignement --</option>
+            @for (align of alignments; track align) {
+            <option [value]="align">{{ align }}</option>
+            }
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label for="background">Historique (Background)</label>
+          <input
+            type="text"
+            id="background"
+            [ngModel]="creationService.character().background"
+            (ngModelChange)="updateIdentity('background', $event)"
+            placeholder="Ex: Soldat, Artisan, Ermite..."
+          />
+        </div>
+      </div>
     </div>
 
-    <div class="form-group">
-      <label for="alignment">Alignement</label>
-      <select
-        id="alignment"
-        [ngModel]="creationService.character().alignment"
-        (ngModelChange)="updateIdentity('alignment', $event)"
-      >
-        <option value="">-- Choisir --</option>
-        @for (align of alignments; track align) {
-        <option [value]="align">{{ align }}</option>
-        }
-      </select>
+    <div class="form-section">
+      <h3 class="section-title">👀 Apparence</h3>
+      <div class="form-group full-width">
+        <label for="description">Description physique</label>
+        <textarea
+          id="description"
+          [ngModel]="creationService.character().description"
+          (ngModelChange)="updateIdentity('description', $event)"
+          placeholder="Taille, poids, couleur des yeux, cicatrices, style vestimentaire..."
+          rows="3"
+        ></textarea>
+      </div>
+
+      <div class="form-group full-width">
+        <label for="handicap">Particularité / Handicap (Optionnel)</label>
+        <textarea
+          id="handicap"
+          [ngModel]="creationService.character().handicap"
+          (ngModelChange)="updateIdentity('handicap', $event)"
+          placeholder="Si votre personnage a un handicap visible ou une particularité physique marquante..."
+          rows="2"
+        ></textarea>
+      </div>
     </div>
 
-    <div class="form-group">
-      <label for="background">Historique</label>
-      <input
-        type="text"
-        id="background"
-        [ngModel]="creationService.character().background"
-        (ngModelChange)="updateIdentity('background', $event)"
-        placeholder="Ex: Soldat, Artisan, Noble..."
-      />
-    </div>
+    <div class="form-section">
+      <h3 class="section-title">🧠 Personnalité</h3>
+      <div class="form-grid personality-grid">
+        <div class="form-group">
+          <label for="traits">Traits de personnalité</label>
+          <textarea
+            id="traits"
+            [ngModel]="creationService.character().traits"
+            (ngModelChange)="updateIdentity('traits', $event)"
+            placeholder="Comment se comporte-t-il au quotidien ?"
+            rows="3"
+          ></textarea>
+        </div>
 
-    <div class="form-group full-width">
-      <label for="description">Description physique</label>
-      <textarea
-        id="description"
-        [ngModel]="creationService.character().description"
-        (ngModelChange)="updateIdentity('description', $event)"
-        placeholder="Décrivez l'apparence de votre personnage..."
-        rows="3"
-      ></textarea>
-    </div>
+        <div class="form-group">
+          <label for="ideal">Idéal</label>
+          <textarea
+            id="ideal"
+            [ngModel]="creationService.character().ideal"
+            (ngModelChange)="updateIdentity('ideal', $event)"
+            placeholder="Qu'est-ce qui le pousse à avancer ?"
+            rows="3"
+          ></textarea>
+        </div>
 
-    <div class="form-group">
-      <label for="traits">Traits de personnalité</label>
-      <textarea
-        id="traits"
-        [ngModel]="creationService.character().traits"
-        (ngModelChange)="updateIdentity('traits', $event)"
-        placeholder="Comment se comporte votre personnage..."
-        rows="2"
-      ></textarea>
-    </div>
+        <div class="form-group">
+          <label for="bonds">Obligations / Liens</label>
+          <textarea
+            id="bonds"
+            [ngModel]="creationService.character().bonds"
+            (ngModelChange)="updateIdentity('bonds', $event)"
+            placeholder="Envers qui ou quoi est-il loyal ?"
+            rows="3"
+          ></textarea>
+        </div>
 
-    <div class="form-group">
-      <label for="ideal">Idéal</label>
-      <textarea
-        id="ideal"
-        [ngModel]="creationService.character().ideal"
-        (ngModelChange)="updateIdentity('ideal', $event)"
-        placeholder="Ce en quoi vous croyez..."
-        rows="2"
-      ></textarea>
-    </div>
-
-    <div class="form-group">
-      <label for="bonds">Obligations</label>
-      <textarea
-        id="bonds"
-        [ngModel]="creationService.character().bonds"
-        (ngModelChange)="updateIdentity('bonds', $event)"
-        placeholder="Vos liens et engagements..."
-        rows="2"
-      ></textarea>
-    </div>
-
-    <div class="form-group">
-      <label for="flaws">Failles</label>
-      <textarea
-        id="flaws"
-        [ngModel]="creationService.character().flaws"
-        (ngModelChange)="updateIdentity('flaws', $event)"
-        placeholder="Vos faiblesses et défauts..."
-        rows="2"
-      ></textarea>
-    </div>
-
-    <div class="form-group full-width">
-      <label for="handicap">Handicap (optionnel)</label>
-      <textarea
-        id="handicap"
-        [ngModel]="creationService.character().handicap"
-        (ngModelChange)="updateIdentity('handicap', $event)"
-        placeholder="Si votre personnage a un handicap..."
-        rows="2"
-      ></textarea>
+        <div class="form-group">
+          <label for="flaws">Failles / Défauts</label>
+          <textarea
+            id="flaws"
+            [ngModel]="creationService.character().flaws"
+            (ngModelChange)="updateIdentity('flaws', $event)"
+            placeholder="Quelle est sa plus grande faiblesse ?"
+            rows="3"
+          ></textarea>
+        </div>
+      </div>
     </div>
   </div>
 </div>

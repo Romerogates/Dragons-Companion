@@ -1,37 +1,25 @@
-<div class="class-step">
-  <h2>Choisissez votre classe</h2>
-  <p class="step-description">
-    Votre classe définit votre rôle au combat, vos compétences martiales ou magiques, et votre
-    résistance.
-  </p>
+<div class="step-container">
+  <div class="step-header">
+    <h2>Choisissez votre Classe</h2>
+    <p class="step-description">
+      Votre classe définit votre rôle au combat, vos compétences martiales ou magiques, et votre
+      résistance.
+    </p>
+  </div>
 
   @if (loading) {
   <div class="loading">Chargement des classes...</div>
   } @else {
-
   <div class="class-grid">
     @for (c of classes; track c.id) {
-    <div class="class-cardable" [class.selected]="isClassSelected(c.id)" (click)="selectClass(c)">
-      <div class="class-icon">{{ getIcon(c.name) }}</div>
-
-      <div class="class-info">
-        <div class="header-row">
-          <h2>{{ c.name }}</h2>
-          @if(isClassSelected(c.id)) {
-          <span class="check-mark">✓</span>
-          }
-        </div>
-
-        <div class="badges-row">
-          <span class="badge hit-die" [class]="getHitDieColor(c.hitDie)"> 🎲 d{{ c.hitDie }} </span>
-          @if (c.hasSpellcasting) {
-          <span class="badge spellcaster">✨ Sorts</span>
-          } @else {
-          <span class="badge martial">⚔️ Martial</span>
-          }
-        </div>
-      </div>
-    </div>
+    <app-selection-card
+      [title]="c.name"
+      [icon]="getIcon(c.name)"
+      [details]="getClassDetails(c)"
+      [selected]="isClassSelected(c.id)"
+      (cardClick)="selectClass(c)"
+    >
+    </app-selection-card>
     }
   </div>
 
@@ -58,12 +46,14 @@
       <div class="summary-details">
         <div class="detail-group">
           <span class="detail-label">Maîtrises Martiales</span>
+
           <div class="info-row">
             <span class="sub-label">Sauvegardes:</span>
             <span class="value">{{
               selectedClassDetail.proficiencies.savingThrows.join(', ')
             }}</span>
           </div>
+
           <div class="info-row">
             <span class="sub-label">Armures:</span>
             <span class="value">
@@ -74,6 +64,7 @@
               }}
             </span>
           </div>
+
           <div class="info-row">
             <span class="sub-label">Armes:</span>
             <span class="value">

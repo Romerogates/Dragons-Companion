@@ -1,8 +1,17 @@
-// features/character-creation/steps/equipment-step/equipment-step.component.ts
-import { Component, inject, OnInit } from '@angular/core';
+import {
+  Component,
+  inject,
+  OnInit,
+  ChangeDetectionStrategy,
+  ChangeDetectorRef,
+  ViewChildren,
+  QueryList,
+  ElementRef,
+  AfterViewChecked,
+} from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { forkJoin, of } from 'rxjs';
-import { catchError } from 'rxjs/operators';
+import { catchError, finalize } from 'rxjs/operators';
 import { CharacterCreationService } from '../../../../core/services/character-creation.service';
 import { DataService } from '../../../../core/services/data.service';
 import { EquipmentItem } from '../../../../core/models/character.models';
@@ -20,158 +29,117 @@ import {
   imports: [CommonModule],
   templateUrl: './equipment-step.component.html',
   styleUrl: './equipment-step.component.scss',
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class EquipmentStepComponent implements OnInit {
+export class EquipmentStepComponent implements OnInit, AfterViewChecked {
   creationService = inject(CharacterCreationService);
   private dataService = inject(DataService);
+  private cd = inject(ChangeDetectorRef);
 
-  // Stocke le choix sélectionné pour chaque ligne d'équipement (index -> 'A' | 'B' | 'C')
+  @ViewChildren('choiceContainer') choiceContainers!: QueryList<ElementRef>;
+
   selectedChoices: Record<number, string> = {};
-
-  // Cache des détails d'équipement (name lowercase normalisé -> Equipment)
   private equipmentCache = new Map<string, Equipment>();
-
-  // Map nom normalisé -> id pour retrouver les équipements
   private equipmentNameToId = new Map<string, string>();
-
-  // Liste complète des équipements de l'API (pour debug et matching)
   private allEquipments: EquipmentSummary[] = [];
 
-  // État de chargement
   isLoading = true;
+  currentStepIndex = 0;
+  private shouldScroll = false;
 
   ngOnInit(): void {
     this.loadEquipmentData();
   }
 
-  // Normaliser un nom pour le matching (enlever accents, minuscules, espaces multiples)
+  ngAfterViewChecked(): void {
+    if (this.shouldScroll) {
+      this.scrollToLastItem();
+      this.shouldScroll = false;
+    }
+  }
+
   private normalizeName(name: string): string {
     return name
       .toLowerCase()
       .normalize('NFD')
-      .replace(/[\u0300-\u036f]/g, '') // Enlever les accents
-      .replace(/\s+/g, ' ') // Normaliser les espaces
+      .replace(/[\u0300-\u036f]/g, '')
+      .replace(/\s+/g, ' ')
       .trim();
   }
 
   private loadEquipmentData(): void {
-    // 1. Charger la liste complète des équipements
-    this.dataService.getEquipment().subscribe({
-      next: (equipments: EquipmentSummary[]) => {
-        this.allEquipments = equipments;
+    this.dataService
+      .getEquipment()
+      .pipe(
+        finalize(() => {
+          // Fin de chargement globale gérée dans le subscribe
+        })
+      )
+      .subscribe({
+        next: (equipments: EquipmentSummary[]) => {
+          this.allEquipments = equipments;
+          equipments.forEach((eq) => {
+            this.equipmentNameToId.set(this.normalizeName(eq.name), eq.id);
+          });
 
-        console.log('📋 Équipements API chargés:', equipments.length);
+          const allItemNames = this.getAllEquipmentNames();
+          const itemsToLoad: { name: string; id: string }[] = [];
 
-        // Créer le mapping nom normalisé -> id
-        equipments.forEach((eq) => {
-          const normalizedName = this.normalizeName(eq.name);
-          this.equipmentNameToId.set(normalizedName, eq.id);
-          console.log(`  - "${eq.name}" → "${normalizedName}" → ${eq.id}`);
-        });
+          allItemNames.forEach((name) => {
+            const id = this.findEquipmentId(name);
+            if (id) itemsToLoad.push({ name, id });
+          });
 
-        // 2. Identifier tous les noms d'équipements dans les choix de départ
-        const allItemNames = this.getAllEquipmentNames();
-        console.log('🎒 Items dans startingEquipment:', allItemNames);
-
-        // 3. Trouver les IDs correspondants
-        const itemsToLoad: { name: string; id: string }[] = [];
-
-        allItemNames.forEach((name) => {
-          const id = this.findEquipmentId(name);
-          if (id) {
-            itemsToLoad.push({ name, id });
-            console.log(`  ✅ "${name}" → ID trouvé: ${id}`);
-          } else {
-            console.warn(`  ❌ "${name}" → ID NON TROUVÉ`);
-            // Afficher les noms similaires pour debug
-            this.findSimilarNames(name);
+          if (itemsToLoad.length === 0) {
+            this.finishLoading();
+            return;
           }
-        });
 
-        // 4. Charger les détails de chaque équipement trouvé
-        if (itemsToLoad.length === 0) {
-          console.warn('⚠️ Aucun équipement à charger!');
+          const detailRequests = itemsToLoad.map((item) =>
+            this.dataService.getEquipmentById(item.id).pipe(catchError(() => of(null)))
+          );
+
+          forkJoin(detailRequests).subscribe({
+            next: (details) => {
+              details.forEach((detail) => {
+                if (detail) {
+                  this.equipmentCache.set(this.normalizeName(detail.name), detail);
+                }
+              });
+              this.finishLoading();
+            },
+          });
+        },
+        error: (err) => {
+          console.error('Erreur chargement équipement:', err);
           this.isLoading = false;
-          return;
-        }
-
-        const detailRequests = itemsToLoad.map((item) =>
-          this.dataService.getEquipmentById(item.id).pipe(
-            catchError((err) => {
-              console.error(`Erreur chargement ${item.name}:`, err);
-              return of(null);
-            })
-          )
-        );
-
-        forkJoin(detailRequests).subscribe({
-          next: (details) => {
-            details.forEach((detail) => {
-              if (detail) {
-                const normalizedName = this.normalizeName(detail.name);
-                this.equipmentCache.set(normalizedName, detail);
-                console.log(`📦 Détail chargé: "${detail.name}"`, detail.data);
-              }
-            });
-            console.log('✅ Cache rempli:', this.equipmentCache.size, 'items');
-            this.isLoading = false;
-          },
-          error: (err) => {
-            console.error('Erreur lors du chargement des détails:', err);
-            this.isLoading = false;
-          },
-        });
-      },
-      error: (err) => {
-        console.error('Erreur lors du chargement des équipements:', err);
-        this.isLoading = false;
-      },
-    });
+          this.cd.markForCheck();
+        },
+      });
   }
 
-  // Trouver l'ID d'un équipement par son nom (avec plusieurs stratégies)
+  private finishLoading(): void {
+    this.isLoading = false;
+    this.updateSelectedEquipment(); // Restaure les sélections si existantes
+    this.updateVisibleStep(); // Calcule où l'utilisateur en est
+    this.cd.markForCheck();
+  }
+
   private findEquipmentId(name: string): string | null {
     const cleanName = this.extractItemName(name);
     const normalizedName = this.normalizeName(cleanName);
 
-    // 1. Essayer le match exact normalisé
     let id = this.equipmentNameToId.get(normalizedName);
     if (id) return id;
 
-    // 2. Essayer de trouver un nom qui contient notre recherche
     for (const [apiName, apiId] of this.equipmentNameToId.entries()) {
       if (apiName.includes(normalizedName) || normalizedName.includes(apiName)) {
         return apiId;
       }
     }
 
-    // 3. Essayer sans les parenthèses et ce qu'il y a dedans
     const withoutParens = normalizedName.replace(/\s*\([^)]*\)/g, '').trim();
-    id = this.equipmentNameToId.get(withoutParens);
-    if (id) return id;
-
-    return null;
-  }
-
-  // Afficher les noms similaires pour debug
-  private findSimilarNames(searchName: string): void {
-    const normalized = this.normalizeName(this.extractItemName(searchName));
-    const similar: string[] = [];
-
-    this.allEquipments.forEach((eq) => {
-      const eqNormalized = this.normalizeName(eq.name);
-      // Vérifier si les premiers caractères correspondent
-      if (
-        eqNormalized.startsWith(normalized.substring(0, 3)) ||
-        normalized.startsWith(eqNormalized.substring(0, 3))
-      ) {
-        similar.push(eq.name);
-      }
-    });
-
-    if (similar.length > 0) {
-      console.log(`    🔍 Noms similaires dans l'API: ${similar.join(', ')}`);
-    }
+    return this.equipmentNameToId.get(withoutParens) || null;
   }
 
   private getAllEquipmentNames(): string[] {
@@ -185,45 +153,28 @@ export class EquipmentStepComponent implements OnInit {
         ...(choice.choiceB || []),
         ...(choice.choiceC || []),
       ];
-
-      allChoices.forEach((item) => {
-        const cleanName = this.extractItemName(item);
-        names.add(cleanName);
-      });
+      allChoices.forEach((item) => names.add(this.extractItemName(item)));
     });
-
     return Array.from(names);
   }
 
   private extractItemName(itemString: string): string {
-    // Gérer les formats comme "Javeline x5" ou "Flèches (20)"
     const quantityMatch = itemString.match(/^(.+?)\s*(?:x\d+|\(\d+\))$/i);
     return quantityMatch ? quantityMatch[1].trim() : itemString.trim();
   }
 
   private extractQuantity(itemString: string): number {
     const match = itemString.match(/x(\d+)|\((\d+)\)/i);
-    if (match) {
-      return parseInt(match[1] || match[2], 10);
-    }
-    return 1;
+    return match ? parseInt(match[1] || match[2], 10) : 1;
   }
 
   private getEquipmentDetail(name: string): Equipment | null {
-    const cleanName = this.extractItemName(name);
-    const normalizedName = this.normalizeName(cleanName);
-
-    // Essayer le match exact
-    let detail = this.equipmentCache.get(normalizedName);
-    if (detail) return detail;
-
-    // Essayer de trouver un match partiel
+    const normalizedName = this.normalizeName(this.extractItemName(name));
+    if (this.equipmentCache.has(normalizedName)) return this.equipmentCache.get(normalizedName)!;
     for (const [cachedName, cachedDetail] of this.equipmentCache.entries()) {
-      if (cachedName.includes(normalizedName) || normalizedName.includes(cachedName)) {
+      if (cachedName.includes(normalizedName) || normalizedName.includes(cachedName))
         return cachedDetail;
-      }
     }
-
     return null;
   }
 
@@ -243,17 +194,55 @@ export class EquipmentStepComponent implements OnInit {
 
   getChoiceItems(choice: EquipmentChoice, option: 'A' | 'B' | 'C'): string[] {
     const key = `choice${option}` as keyof EquipmentChoice;
-    const value = choice[key];
-    return (value as string[]) ?? [];
+    return (choice[key] as string[]) ?? [];
   }
 
   selectChoice(choiceIndex: number, option: 'A' | 'B' | 'C'): void {
     this.selectedChoices[choiceIndex] = option;
     this.updateSelectedEquipment();
+    this.updateVisibleStep();
+    this.cd.markForCheck();
   }
 
   isChoiceSelected(choiceIndex: number, option: 'A' | 'B' | 'C'): boolean {
     return this.selectedChoices[choiceIndex] === option;
+  }
+
+  // Logique séquentielle
+  private updateVisibleStep(): void {
+    const equipmentList = this.getStartingEquipment();
+    let nextIndex = 0;
+
+    for (let i = 0; i < equipmentList.length; i++) {
+      const choice = equipmentList[i];
+      // Si fixe ou déjà choisi, on passe au suivant
+      if (this.isFixedChoice(choice) || this.selectedChoices[i]) {
+        nextIndex = i + 1;
+      } else {
+        // Bloque ici
+        nextIndex = i;
+        break;
+      }
+    }
+
+    // On déclenche le scroll seulement si on a avancé
+    if (nextIndex > this.currentStepIndex) {
+      this.shouldScroll = true;
+    }
+    this.currentStepIndex = nextIndex;
+  }
+
+  private scrollToLastItem(): void {
+    try {
+      if (this.choiceContainers && this.choiceContainers.last) {
+        this.choiceContainers.last.nativeElement.scrollIntoView({
+          behavior: 'smooth',
+          block: 'center',
+        });
+      }
+    } catch (err) {
+      console.warn('Scroll error', err);
+    }
   }
 
   private updateSelectedEquipment(): void {
@@ -263,22 +252,18 @@ export class EquipmentStepComponent implements OnInit {
     startingEquipment.forEach((choice, index) => {
       if (this.isFixedChoice(choice)) {
         (choice.fixed ?? []).forEach((itemName) => {
-          const item = this.createEquipmentItem(itemName);
-          equipment.push(item);
+          equipment.push(this.createEquipmentItem(itemName));
         });
       } else {
         const selectedOption = this.selectedChoices[index];
         if (selectedOption) {
           const items = this.getChoiceItems(choice, selectedOption as 'A' | 'B' | 'C');
           items.forEach((itemName) => {
-            const item = this.createEquipmentItem(itemName);
-            equipment.push(item);
+            equipment.push(this.createEquipmentItem(itemName));
           });
         }
       }
     });
-
-    console.log('🎒 Équipement final sélectionné:', equipment);
     this.creationService.setEquipmentChoice(equipment);
   }
 
@@ -286,39 +271,25 @@ export class EquipmentStepComponent implements OnInit {
     const name = this.extractItemName(itemString);
     const quantity = this.extractQuantity(itemString);
     const detail = this.getEquipmentDetail(name);
-
-    const item: EquipmentItem = {
-      name,
-      quantity,
-    };
+    const item: EquipmentItem = { name, quantity };
 
     if (detail) {
-      console.log(`  ✅ Détail trouvé pour "${name}":`, detail);
       item.weight = detail.weightKg;
       item.type = detail.type;
       item.subtype = detail.subtype;
-
-      // Si c'est une arme, ajouter les données de combat
       if (detail.type === 'Weapon' && detail.data) {
-        const weaponData = detail.data as WeaponData;
-        item.damage = weaponData.damage_dice;
-        item.damageType = weaponData.damage_type;
-        item.properties = weaponData.properties;
-        console.log(`    ⚔️ Arme: ${weaponData.damage_dice} ${weaponData.damage_type}`);
+        const d = detail.data as WeaponData;
+        item.damage = d.damage_dice;
+        item.damageType = d.damage_type;
+        item.properties = d.properties;
       }
-
-      // Si c'est une armure, ajouter les données de défense
       if (detail.type === 'Armor' && detail.data) {
-        const armorData = detail.data as ArmorData;
-        item.baseAC = armorData.ac_base;
-        item.addDexMod = armorData.add_dex_mod;
-        item.maxDexBonus = armorData.max_dex_bonus;
-        console.log(`    🛡️ Armure: CA ${armorData.ac_base}`);
+        const d = detail.data as ArmorData;
+        item.baseAC = d.ac_base;
+        item.addDexMod = d.add_dex_mod;
+        item.maxDexBonus = d.max_dex_bonus;
       }
-    } else {
-      console.warn(`  ❌ Pas de détail trouvé pour "${name}"`);
     }
-
     return item;
   }
 
@@ -330,40 +301,26 @@ export class EquipmentStepComponent implements OnInit {
     const startingEquipment = this.getStartingEquipment();
     let choiceCount = 0;
     let selectedCount = 0;
-
     startingEquipment.forEach((choice, index) => {
       if (!this.isFixedChoice(choice)) {
         choiceCount++;
-        if (this.selectedChoices[index]) {
-          selectedCount++;
-        }
+        if (this.selectedChoices[index]) selectedCount++;
       }
     });
-
     return choiceCount === selectedCount;
-  }
-
-  getChoiceIcon(option: 'A' | 'B' | 'C'): string {
-    const icons: Record<string, string> = { A: '🅰️', B: '🅱️', C: '©️' };
-    return icons[option] ?? '📦';
   }
 
   getItemInfo(itemName: string): string {
     const detail = this.getEquipmentDetail(itemName);
     if (!detail) return '';
-
     if (detail.type === 'Weapon' && detail.data) {
-      const weaponData = detail.data as WeaponData;
-      return `${weaponData.damage_dice} ${weaponData.damage_type}`;
+      const d = detail.data as WeaponData;
+      return `${d.damage_dice} ${d.damage_type}`;
     }
-
     if (detail.type === 'Armor' && detail.data) {
-      const armorData = detail.data as ArmorData;
-      if (armorData.ac_base) {
-        return `CA ${armorData.ac_base}`;
-      }
+      const d = detail.data as ArmorData;
+      return d.ac_base ? `CA ${d.ac_base}` : '';
     }
-
     return '';
   }
 }

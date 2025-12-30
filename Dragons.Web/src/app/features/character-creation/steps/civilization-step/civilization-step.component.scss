@@ -1,143 +1,91 @@
-// ========================================
-// VARIABLES & BASE STYLE
-// ========================================
-.civilization-step {
-  padding: 0.5rem;
-  max-width: 1400px;
+.step-container {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  animation: fadeIn 0.4s ease-out;
+}
+
+// --- HEADER ---
+.step-header {
+  text-align: center;
+  max-width: 800px;
   margin: 0 auto;
 
   h2 {
-    margin: 0 0 0.5rem 0;
-    color: #8b0000;
+    font-size: 2rem;
+    color: var(--primary-color);
+    margin-bottom: 1rem;
     font-family: 'Cinzel', serif;
-    font-size: 1.5rem;
-    text-align: center;
   }
 
   .step-description {
-    margin: 0 auto 1.5rem auto;
-    color: #5c4033;
-    font-size: 0.95rem;
-    text-align: center;
-    max-width: 800px;
+    color: var(--text-main);
+    font-size: 1.1rem;
+    line-height: 1.6;
+    opacity: 0.8;
   }
 }
 
 .loading {
   text-align: center;
   padding: 3rem;
-  color: #7f8c8d;
+  color: var(--text-muted);
   font-size: 1.2rem;
 }
 
-// ========================================
-// GRID LAYOUT
-// ========================================
+// --- GRID LAYOUT ---
 .civilization-grid {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 0.8rem;
-  justify-items: center;
-  width: 100%;
-}
-
-// ========================================
-// CARTE CIVILISATION SIMPLIFIÉE
-// ========================================
-.civ-cardable {
-  display: flex;
-  align-items: center; // Centré verticalement parfaitement
+  // On garde des colonnes assez étroites pour la densité
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
   gap: 1rem;
-  padding: 1.2rem 1rem; // Un peu plus de padding vertical car il n'y a pas de tags
   width: 100%;
-  background: #fff;
-  border-radius: 10px;
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.08);
-  border: 2px solid transparent;
-  box-sizing: border-box;
-  cursor: pointer;
-  transition: all 0.2s ease-in-out;
-
-  &:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.12);
-    border-color: #f1c40f;
-    background: #fffef5;
-  }
-
-  &.selected {
-    background: linear-gradient(135deg, #fff, #fff5f5);
-    border-color: #8b0000;
-    box-shadow: 0 0 0 1px rgba(139, 0, 0, 0.2), 0 4px 12px rgba(139, 0, 0, 0.15);
-
-    .civ-info h2 {
-      color: #8b0000;
-    }
-  }
 }
 
-.civ-icon {
-  font-size: 2.2rem;
-  line-height: 1;
-  flex-shrink: 0;
-  width: 50px;
-  text-align: center;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
+// --- OVERRIDE DU STYLE DES CARTES ---
+app-selection-card {
+  ::ng-deep .selection-card {
+    // Ajusté pour contenir l'icône, le titre et 1 ligne de tags
+    min-height: 160px;
+    padding: 1rem;
+  }
 
-.civ-info {
-  flex: 1;
-  min-width: 0;
-  overflow: hidden;
+  ::ng-deep .card-icon {
+    font-size: 2rem;
+    margin-bottom: 0.5rem;
+  }
 
-  .header-row {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
+  ::ng-deep .card-title {
+    font-size: 1rem;
+    margin-bottom: 0.5rem;
+  }
 
-    h2 {
-      margin: 0;
-      font-size: 1.1rem;
-      color: #34495e;
-      font-weight: 700;
-      text-transform: uppercase;
-      letter-spacing: 0.5px;
-      font-family: inherit;
-    }
-
-    .check-mark {
-      color: #8b0000;
-      font-weight: bold;
-      font-size: 1.2rem;
-      margin-left: 0.5rem;
-    }
+  // Style des tags à l'intérieur de la carte
+  ::ng-deep .detail-tag {
+    font-size: 0.7rem;
+    padding: 0.15rem 0.4rem;
+    background-color: var(--bg-page); // Un peu plus clair que la carte
   }
 }
 
-// ========================================
-// RÉSUMÉ DE SÉLECTION (DÉTAILS)
-// ========================================
+// --- RÉSUMÉ DE SÉLECTION ---
 .selection-summary {
   margin-top: 2rem;
-  padding: 1.25rem;
-  background: linear-gradient(135deg, rgba(139, 0, 0, 0.05), rgba(139, 0, 0, 0.1));
+  padding: 1.5rem;
+  background-color: var(--bg-cards);
   border-radius: 12px;
-  border: 1px solid #8b0000;
-  animation: fadeIn 0.3s ease-in;
+  border: 1px solid var(--primary-color);
+  box-shadow: var(--shadow-md);
+  animation: slideUp 0.3s ease-in;
 
   h3 {
     margin: 0 0 1rem 0;
-    color: #8b0000;
+    color: var(--primary-color);
     font-family: 'Cinzel', serif;
-    font-size: 1.1rem;
+    font-size: 1.2rem;
+    border-bottom: 1px solid var(--border-color);
+    padding-bottom: 0.5rem;
   }
-}
-
-@keyframes fadeIn {
-  from { opacity: 0; transform: translateY(10px); }
-  to { opacity: 1; transform: translateY(0); }
 }
 
 .summary-content {
@@ -162,7 +110,7 @@
 
     strong {
       font-size: 1.4rem;
-      color: #2c1810;
+      color: var(--text-main);
       font-family: 'Cinzel', serif;
       display: block;
       margin-bottom: 0.5rem;
@@ -170,7 +118,7 @@
 
     .lore-text {
       margin: 0;
-      color: #5c4033;
+      color: var(--text-muted);
       line-height: 1.5;
       font-size: 0.95rem;
       font-style: italic;
@@ -183,7 +131,7 @@
   flex-wrap: wrap;
   gap: 2rem;
   padding-top: 1rem;
-  border-top: 1px dashed rgba(139, 0, 0, 0.3);
+  border-top: 1px dashed var(--border-color);
 }
 
 .detail-group {
@@ -192,8 +140,8 @@
 
   .detail-label {
     display: block;
-    font-size: 0.7rem;
-    color: #8b0000;
+    font-size: 0.75rem;
+    color: var(--primary-color);
     text-transform: uppercase;
     letter-spacing: 0.5px;
     font-weight: 700;
@@ -201,6 +149,7 @@
   }
 }
 
+// --- TAGS (Résumé du bas) ---
 .tags {
   display: flex;
   flex-wrap: wrap;
@@ -208,17 +157,17 @@
 
   .tag {
     padding: 0.3rem 0.6rem;
-    background: #fff;
-    color: #2c3e50;
-    border: 1px solid #ddd;
+    background-color: var(--section-alt-bg);
+    color: var(--text-main);
+    border: 1px solid var(--border-color);
     border-radius: 6px;
     font-size: 0.85rem;
     font-weight: 500;
 
     &.keyword {
-      background: rgba(139, 0, 0, 0.05);
-      color: #8b0000;
-      border-color: rgba(139, 0, 0, 0.2);
+      background-color: rgba(var(--primary-color), 0.1);
+      color: var(--primary-color);
+      border-color: var(--primary-color);
     }
   }
 }
@@ -227,51 +176,40 @@
   align-self: flex-end;
   padding: 0.5rem 1rem;
   background: transparent;
-  color: #8b0000;
-  border: 1px solid #8b0000;
+  color: var(--color-danger, #c0392b);
+  border: 1px solid var(--color-danger, #c0392b);
   border-radius: 6px;
   cursor: pointer;
   font-weight: 600;
   transition: all 0.2s;
 
   &:hover {
-    background: #8b0000;
+    background-color: var(--color-danger, #c0392b);
     color: white;
   }
 }
 
-// ========================================
-// MEDIA QUERIES
-// ========================================
-
-// Desktop standard (3 colonnes)
-@media screen and (min-width: 900px) {
-  .civilization-grid {
-    grid-template-columns: repeat(3, 1fr);
-  }
+// Animations
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
 }
 
-// Tablette (2 colonnes)
-@media screen and (min-width: 600px) and (max-width: 899px) {
-  .civilization-grid {
-    grid-template-columns: repeat(2, 1fr);
-  }
+@keyframes slideUp {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
 }
 
-// Mobile (1 colonne)
+// Media Queries
 @media screen and (max-width: 599px) {
   .civilization-grid {
-    grid-template-columns: 1fr;
+    grid-template-columns: repeat(2, 1fr);
   }
 
   .summary-main {
     flex-direction: column;
     align-items: center;
     text-align: center;
-
-    .summary-icon {
-      margin-top: 0;
-    }
   }
 
   .summary-details {

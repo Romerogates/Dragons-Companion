@@ -1,5 +1,10 @@
-// features/character-creation/steps/species-step/species-step.component.ts
-import { Component, OnInit, inject } from '@angular/core';
+import {
+  Component,
+  OnInit,
+  inject,
+  ChangeDetectionStrategy,
+  ChangeDetectorRef,
+} from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { DataService } from '../../../../core/services/data.service';
 import { CharacterCreationService } from '../../../../core/services/character-creation.service';
@@ -9,13 +14,18 @@ import { Species, SpeciesSummary, Subspecies } from '../../../../core/models/gam
 @Component({
   selector: 'app-species-step',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, SelectionCardComponent],
   templateUrl: './species-step.component.html',
   styleUrl: './species-step.component.scss',
+  // On garde OnPush pour la performance, mais on va le gérer correctement avec le cd.markForCheck()
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class SpeciesStepComponent implements OnInit {
   private dataService = inject(DataService);
   creationService = inject(CharacterCreationService);
+
+  // Correction #1 : On injecte le détecteur de changement
+  private cd = inject(ChangeDetectorRef);
 
   speciesList: SpeciesSummary[] = [];
   selectedSpeciesDetail: Species | null = null;
@@ -23,11 +33,13 @@ export class SpeciesStepComponent implements OnInit {
 
   private speciesIcons: Record<string, string> = {
     Drakéide: '🐲',
-    Elfe: '🏹',
+    Elfe: '🧝',
     Gnome: '⚙️',
     Halfelin: '🍀',
-    Humain: '⚔️',
-    Nain: '🪓',
+    Humain: '👨‍👩‍👧',
+    Nain: '⛏️',
+    'Demi-Orc': '🦷',
+    Tieffelin: '😈',
   };
 
   ngOnInit(): void {
@@ -40,19 +52,34 @@ export class SpeciesStepComponent implements OnInit {
         if (currentSpeciesId) {
           this.loadSpeciesDetail(currentSpeciesId);
         }
+
+        // Correction #1 : On dit à Angular "Les données sont là, mets à jour l'écran maintenant !"
+        this.cd.markForCheck();
       },
       error: (err) => {
         console.error('Erreur chargement espèces:', err);
         this.loading = false;
+        this.cd.markForCheck();
       },
     });
   }
 
   getIcon(name: string): string {
-    return this.speciesIcons[name] ?? '👤';
+    const key = Object.keys(this.speciesIcons).find((k) => name.includes(k));
+    return key ? this.speciesIcons[key] : '👤';
   }
 
-  formatAbilityBonuses(bonuses: Record<string, number>): string {
+  // Correction #2 : Retourne un tableau de strings [] au lieu d'une string unique
+  formatAbilityBonusesList(bonuses: Record<string, number>): string[] {
+    if (!bonuses) return [];
+    return Object.entries(bonuses).map(
+      ([ability, value]) => `+${value} ${this.capitalize(ability)}`
+    );
+  }
+
+  // Garde l'ancienne méthode pour le résumé en bas de page (string unique)
+  formatAbilityBonusesString(bonuses: Record<string, number>): string {
+    if (!bonuses) return '';
     return Object.entries(bonuses)
       .map(([ability, value]) => `+${value} ${this.capitalize(ability)}`)
       .join(', ');
@@ -63,19 +90,37 @@ export class SpeciesStepComponent implements OnInit {
     return sizes[size] ?? size;
   }
 
+  // Prépare les données pour <app-selection-card>
   getSpeciesDetails(species: SpeciesSummary): string[] {
     const details: string[] = [
       this.getSizeLabel(species.baseStats.sizeCategory),
       species.baseStats.speedMeters + 'm',
     ];
+
+    // Correction #2 : On ajoute chaque bonus comme un tag séparé
+    const bonuses = this.formatAbilityBonusesList(species.baseStats.abilityBonuses);
+    details.push(...bonuses);
+
     if (species.baseStats.hasDarkvision) {
-      details.push('👁️ Vision nuit');
+      details.push('Vision nuit');
     }
     return details;
   }
 
-  getSubspeciesTraitNames(subspecies: Subspecies): string[] {
-    return subspecies.additionalTraits.map((t) => t.name);
+  getSubspeciesDetails(sub: Subspecies): string[] {
+    const details: string[] = [];
+
+    // Bonus stats de la sous-espèce (séparés aussi)
+    if (sub.additionalStats.abilityBonuses) {
+      const bonuses = this.formatAbilityBonusesList(sub.additionalStats.abilityBonuses);
+      details.push(...bonuses);
+    }
+
+    // Traits spécifiques
+    if (sub.additionalTraits) {
+      details.push(...sub.additionalTraits.map((t) => t.name));
+    }
+    return details;
   }
 
   selectSpecies(species: SpeciesSummary): void {
@@ -90,8 +135,13 @@ export class SpeciesStepComponent implements OnInit {
         if (detail.subspecies.length === 0) {
           this.confirmSpeciesSelection(detail, null);
         }
+        // Mise à jour de l'interface après chargement du détail
+        this.cd.markForCheck();
       },
-      error: (err) => console.error('Erreur chargement détail espèce:', err),
+      error: (err) => {
+        console.error('Erreur chargement détail espèce:', err);
+        this.cd.markForCheck();
+      },
     });
   }
 

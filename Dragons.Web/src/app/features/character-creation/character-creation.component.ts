@@ -1,8 +1,9 @@
-// features/character-creation/character-creation.component.ts
-import { Component, OnInit, inject } from '@angular/core';
+import { Component, OnInit, inject, ChangeDetectionStrategy } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Router, RouterLink } from '@angular/router';
 import { CharacterCreationService } from '../../core/services/character-creation.service';
+
+// Import des Steps (Je garde ceux que tu m'as donnés)
 import { SpeciesStepComponent } from './steps/species-step/species-step.component';
 import { CivilizationStepComponent } from './steps/civilization-step/civilization-step.component';
 import { ClassStepComponent } from './steps/class-step/class-step.component';
@@ -37,11 +38,15 @@ interface Step {
   ],
   templateUrl: './character-creation.component.html',
   styleUrl: './character-creation.component.scss',
+  // PERFORMANCE : Indispensable pour une application fluide
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class CharacterCreationComponent implements OnInit {
+  // Service injecté
   creationService = inject(CharacterCreationService);
   private router = inject(Router);
 
+  // Définition statique des étapes
   steps: Step[] = [
     { number: 1, title: 'Espèce', icon: '🧬' },
     { number: 2, title: 'Civilisation', icon: '🏰' },
@@ -56,6 +61,7 @@ export class CharacterCreationComponent implements OnInit {
 
   ngOnInit(): void {
     // Vérifier si on est en mode édition (venant de /characters)
+    // J'assume que cette méthode existe dans ton service d'après ton code original
     this.creationService.checkForEditMode();
   }
 
@@ -66,6 +72,7 @@ export class CharacterCreationComponent implements OnInit {
   }
 
   finishCreation(): void {
+    // Ici, on pourrait ajouter une logique de sauvegarde finale si besoin
     this.router.navigate(['/character-sheet']);
   }
 }

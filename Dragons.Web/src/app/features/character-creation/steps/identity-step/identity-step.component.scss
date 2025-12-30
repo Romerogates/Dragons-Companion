@@ -1,13 +1,54 @@
-// features/character-creation/steps/identity-step/identity-step.component.scss
-.identity-step {
+.step-container {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  animation: fadeIn 0.4s ease-out;
+}
+
+// --- HEADER ---
+.step-header {
+  text-align: center;
+  max-width: 800px;
+  margin: 0 auto;
+
   h2 {
-    margin: 0 0 0.5rem 0;
-    color: #2c3e50;
+    font-size: 2rem;
+    color: var(--primary-color);
+    margin-bottom: 0.5rem;
+    font-family: 'Cinzel', serif;
   }
 
   .step-description {
+    color: var(--text-main);
+    font-size: 1.1rem;
+    opacity: 0.8;
+  }
+}
+
+// --- FORMULAIRE ---
+.form-container {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  max-width: 900px;
+  margin: 0 auto;
+  width: 100%;
+}
+
+.form-section {
+  background-color: var(--bg-cards);
+  border: 1px solid var(--border-color);
+  border-radius: 12px;
+  padding: 1.5rem;
+  box-shadow: var(--shadow-sm);
+
+  .section-title {
     margin: 0 0 1.5rem 0;
-    color: #7f8c8d;
+    color: var(--primary-color);
+    font-family: 'Cinzel', serif;
+    font-size: 1.3rem;
+    border-bottom: 1px solid var(--border-color);
+    padding-bottom: 0.5rem;
   }
 }
 
@@ -16,8 +57,14 @@
   grid-template-columns: repeat(2, 1fr);
   gap: 1.5rem;
 
-  @media (max-width: 768px) {
+  @media (max-width: 600px) {
     grid-template-columns: 1fr;
+  }
+}
+
+.personality-grid {
+  @media (min-width: 768px) {
+    grid-template-columns: repeat(2, 1fr);
   }
 }
 
@@ -27,46 +74,75 @@
   gap: 0.5rem;
 
   &.full-width {
-    grid-column: span 2;
-
-    @media (max-width: 768px) {
-      grid-column: span 1;
-    }
+    grid-column: 1 / -1;
   }
 
   label {
     font-weight: 600;
-    color: #2c3e50;
-    font-size: 0.9rem;
+    color: var(--text-main);
+    font-size: 0.95rem;
+
+    .required {
+      color: var(--color-danger, #c0392b);
+      margin-left: 0.2rem;
+    }
   }
 
   input,
   select,
   textarea {
-    padding: 0.75rem 1rem;
-    border: 2px solid #ecf0f1;
-    border-radius: 8px;
+    width: 100%;
+    padding: 0.8rem 1rem;
+    border: 1px solid var(--border-color);
+    border-radius: 6px;
     font-size: 1rem;
     font-family: inherit;
-    transition: border-color 0.2s;
+    background-color: var(--bg-input, #fff); // Variable pour fond input
+    color: var(--text-main);
+    transition: all 0.2s;
+    box-shadow: inset 0 1px 2px rgba(0,0,0,0.05);
+
+    // Placeholder color
+    &::placeholder { color: var(--text-muted); opacity: 0.7; }
 
     &:focus {
       outline: none;
-      border-color: #3498db;
+      border-color: var(--primary-color);
+      box-shadow: 0 0 0 3px rgba(var(--primary-color), 0.1);
     }
 
-    &::placeholder {
-      color: #bdc3c7;
+    // Exception Dark Mode pour l'input
+    body.dark-mode & {
+      background-color: rgba(255, 255, 255, 0.05);
+      border-color: rgba(255, 255, 255, 0.2);
+
+      &:focus { border-color: var(--primary-color); }
     }
   }
 
   textarea {
     resize: vertical;
-    min-height: 60px;
+    min-height: 80px;
+    line-height: 1.5;
   }
 
   select {
     cursor: pointer;
-    background: white;
+    appearance: none; // Pour styliser la flèche si besoin, ou garder natif
+    background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e");
+    background-repeat: no-repeat;
+    background-position: right 1rem center;
+    background-size: 1em;
+    padding-right: 2.5rem;
+
+    // Pour Dark Mode, on peut changer la couleur de la flèche SVG via filter invert ou une autre image
+    body.dark-mode & {
+      filter: invert(1) grayscale(100%); // Astuce rapide pour inverser la flèche noire en blanche
+    }
   }
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
 }

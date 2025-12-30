@@ -1,14 +1,20 @@
-// navbar.component.scss
-
 .navbar {
   display: flex;
   justify-content: space-between;
   align-items: center;
   padding: 0.8rem 2rem;
-  background: linear-gradient(135deg, #2c3e50, #34495e);
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+
+  // Utilisation des variables globales pour le thème
+  background-color: var(--bg-cards);
+  border-bottom: 1px solid var(--border-color);
+  color: var(--text-main);
+
+  box-shadow: var(--shadow-sm);
   position: relative;
   z-index: 1000;
+
+  // Transition douce lors du changement de thème
+  transition: background-color 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
 }
 
 // ========================================
@@ -30,7 +36,8 @@
 .logo {
   height: 45px;
   width: auto;
-  filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.3));
+  // Ombre portée adaptée pour être visible sur fond clair ou sombre
+  filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.2));
   transition: transform 0.3s ease;
 
   .brand:hover & {
@@ -42,16 +49,18 @@
   font-family: 'Cinzel', serif;
   font-size: 1.4rem;
   font-weight: bold;
-  color: #f1c40f;
+  // Couleur "Or" définie globalement
+  color: var(--primary-color);
   letter-spacing: 1px;
-  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3);
+  // Plus d'ombre noire forcée, pour rester propre sur fond clair
+  text-shadow: none;
 }
 
 // ========================================
-// MENU HAMBURGER (caché par défaut sur desktop)
+// MENU HAMBURGER (Mobile)
 // ========================================
 .menu-toggle {
-  display: none;
+  display: none; // Caché sur desktop
   flex-direction: column;
   justify-content: space-between;
   width: 28px;
@@ -66,7 +75,8 @@
     display: block;
     width: 100%;
     height: 3px;
-    background-color: #ecf0f1;
+    // Les barres prennent la couleur du texte principal (noir ou blanc selon le mode)
+    background-color: var(--text-main);
     border-radius: 2px;
     transition: all 0.3s ease;
   }
@@ -93,24 +103,59 @@
   align-items: center;
 
   a {
-    color: #ecf0f1;
+    color: var(--text-main); // Couleur dynamique
     text-decoration: none;
     padding: 0.5rem 0.8rem;
-    border-radius: 6px;
+    border-radius: var(--radius-sm);
     font-weight: 600;
     font-size: 0.95rem;
     transition: background 0.2s, color 0.2s, transform 0.2s;
     white-space: nowrap;
+    border: 1px solid transparent; // Pour éviter le saut au hover si on ajoute une bordure
 
     &:hover {
-      background: rgba(255, 255, 255, 0.1);
+      background-color: rgba(0, 0, 0, 0.05); // Hover léger universel
+      // Ajustement spécifique Dark Mode via nesting CSS
+      body.dark-mode & { background-color: rgba(255, 255, 255, 0.1); }
+
       transform: translateY(-1px);
+      color: var(--primary-color);
     }
 
     &.active {
-      background: #f1c40f;
-      color: #2c3e50;
+      background-color: var(--primary-color);
+      color: #ffffff; // Toujours blanc sur fond or
+
+      // En dark mode, texte noir sur or pour contraste
+      body.dark-mode & { color: #000000; }
     }
+  }
+}
+
+// ========================================
+// BOUTON THEME (Soleil / Lune)
+// ========================================
+.theme-btn {
+  background: transparent;
+  border: 1px solid var(--border-color);
+  color: var(--text-main);
+  cursor: pointer;
+  font-size: 1.2rem;
+  padding: 0;
+  border-radius: 50%;
+  width: 36px;
+  height: 36px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.3s ease;
+  margin-left: 0.5rem;
+
+  &:hover {
+    transform: rotate(20deg);
+    background-color: var(--bg-page); // Fond du hover
+    border-color: var(--primary-color);
+    color: var(--primary-color);
   }
 }
 
@@ -133,7 +178,7 @@
 }
 
 // ========================================
-// RESPONSIVE - TABLETTE
+// RESPONSIVE - TABLETTE (Menu Déroulant)
 // ========================================
 @media screen and (max-width: 768px) {
   .navbar {
@@ -149,25 +194,29 @@
   }
 
   .menu-toggle {
-    display: flex;
+    display: flex; // Apparition du burger
   }
 
   .nav-links {
     position: absolute;
-    top: 100%;
+    top: 100%; // Juste en dessous de la navbar
     left: 0;
     right: 0;
     flex-direction: column;
-    background: linear-gradient(135deg, #34495e, #2c3e50);
+
+    // Le menu déroulant prend la même couleur que la navbar
+    background-color: var(--bg-cards);
+    border-bottom: 1px solid var(--border-color);
+
     padding: 0;
     gap: 0;
     max-height: 0;
     overflow: hidden;
     transition: max-height 0.3s ease, padding 0.3s ease;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    box-shadow: var(--shadow-md);
 
     &.open {
-      max-height: 400px;
+      max-height: 500px; // Assez grand pour tout contenir
       padding: 0.5rem 0;
     }
 
@@ -177,21 +226,41 @@
       border-radius: 0;
       text-align: left;
       font-size: 1rem;
-      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+      border: none; // Reset desktop border
+      border-bottom: 1px solid var(--border-color);
 
       &:last-child {
         border-bottom: none;
       }
 
       &:hover {
-        background: rgba(255, 255, 255, 0.15);
+        background-color: rgba(0, 0, 0, 0.03);
         transform: none;
+        // Ajustement dark mode
+        body.dark-mode & { background-color: rgba(255, 255, 255, 0.05); }
       }
 
       &.active {
-        background: rgba(241, 196, 15, 0.2);
-        color: #f1c40f;
-        border-left: 4px solid #f1c40f;
+        // Style "Bande latérale" sur mobile au lieu du bouton plein
+        background-color: transparent;
+        color: var(--primary-color);
+        border-left: 4px solid var(--primary-color);
+        padding-left: calc(1.5rem - 4px); // Compensation du padding pour le texte
+      }
+    }
+
+    // Centrage du bouton thème dans le menu mobile
+    .theme-btn {
+      margin: 1rem auto;
+      width: 100%;
+      max-width: 200px;
+      border-radius: 8px; // Forme bouton rectangulaire arrondi sur mobile
+      display: flex;
+      gap: 0.5rem; // Si tu ajoutes du texte "Changer thème" plus tard
+
+      &:hover {
+        background-color: rgba(0,0,0,0.05);
+        transform: none;
       }
     }
   }
@@ -229,28 +298,6 @@
   }
 
   .brand-text {
-    display: none;
-  }
-
-  .nav-links a {
-    padding: 0.8rem 1rem;
-    font-size: 0.9rem;
-  }
-}
-
-// ========================================
-// PRINT
-// ========================================
-@media print {
-  :host {
-    display: none !important;
-    visibility: hidden !important;
-    height: 0 !important;
-    width: 0 !important;
-    overflow: hidden !important;
-  }
-
-  .navbar {
-    display: none !important;
+    display: none; // On cache le texte s'il n'y a plus de place
   }
 }

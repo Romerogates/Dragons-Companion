@@ -1,14 +1,20 @@
-<!-- shared/components/selection-card/selection-card.component.html -->
 <div
   class="selection-card"
   [class.selected]="selected"
   [class.disabled]="disabled"
-  (click)="onClick()"
+  (click)="onClick($event)"
+  (keydown.enter)="onClick($event)"
+  (keydown.space)="onClick($event)"
+  role="button"
+  [attr.aria-pressed]="selected"
+  [attr.aria-disabled]="disabled"
+  tabindex="0"
 >
   <div class="card-icon">{{ icon }}</div>
 
   <div class="card-content">
     <h3 class="card-title">{{ title }}</h3>
+
     @if (subtitle) {
     <p class="card-subtitle">{{ subtitle }}</p>
     } @if (details.length > 0) {

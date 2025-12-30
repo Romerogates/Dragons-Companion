@@ -1,0 +1,92 @@
+src
+├── 📂 environments
+│   ├── environment.prod.ts
+│   └── environment.ts
+│
+├── 📂 app
+│   │   # --- Config Racine ---
+│   ├── app.component.html
+│   ├── app.component.scss
+│   ├── app.component.ts
+│   ├── app.config.ts
+│   ├── app.routes.ts
+│   │
+│   │   # --- CORE (Services & Modèles Uniques) ---
+│   ├── 📂 core
+│   │   ├── 📂 models
+│   │   │   ├── character.models.ts
+│   │   │   └── game-data.models.ts
+│   │   └── 📂 services
+│   │       ├── character-creation.service.ts
+│   │       ├── data.service.ts
+│   │       └── theme.service.ts  <-- (Notre service de Dark Mode)
+│   │
+│   │   # --- SHARED (Composants Réutilisables) ---
+│   ├── 📂 shared
+│   │   └── 📂 components
+│   │       ├── 📂 navbar
+│   │       │   ├── navbar.component.html
+│   │       │   ├── navbar.component.scss
+│   │       │   └── navbar.component.ts
+│   │       └── 📂 selection-card
+│   │           ├── selection-card.component.html
+│   │           ├── selection-card.component.scss
+│   │           └── selection-card.component.ts
+│   │
+│   │   # --- FEATURES (Les Pages de l'application) ---
+│   └── 📂 features
+│       │
+│       │   # 1. Accueil
+│       ├── 📂 home
+│       │   ├── home.component.html
+│       │   ├── home.component.scss
+│       │   └── home.component.ts
+│       │
+│       │   # 2. Création de Personnage (Le Wizard)
+│       ├── 📂 character-creation
+│       │   ├── character-creation.component.html
+│       │   ├── character-creation.component.scss
+│       │   ├── character-creation.component.ts
+│       │   └── 📂 steps
+│       │       ├── 📂 abilities-step   { .html, .scss, .ts }
+│       │       ├── 📂 civilization-step { .html, .scss, .ts }
+│       │       ├── 📂 class-step       { .html, .scss, .ts }
+│       │       ├── 📂 equipment-step   { .html, .scss, .ts }
+│       │       ├── 📂 identity-step    { .html, .scss, .ts }
+│       │       ├── 📂 languages-step   { .html, .scss, .ts }
+│       │       ├── 📂 skills-step      { .html, .scss, .ts }
+│       │       ├── 📂 species-step     { .html, .scss, .ts }
+│       │       └── 📂 summary-step     { .html, .scss, .ts }
+│       │
+│       │   # 3. Fiche Personnage & Liste
+│       ├── 📂 character-sheet
+│       │   ├── 📂 services
+│       │   │   └── pdf-generator.service.ts
+│       │   ├── character-sheet.component.html
+│       │   ├── character-sheet.component.scss
+│       │   └── character-sheet.component.ts
+│       ├── 📂 characters
+│       │   ├── characters.component.html
+│       │   ├── characters.component.scss
+│       │   └── characters.component.ts
+│       │
+│       │   # 4. Modules Encyclopédie (Listes + Détails)
+│       ├── 📂 civilizations
+│       │   ├── 📂 civilization-detail { .html, .scss, .ts }
+│       │   └── 📂 civilization-list   { .html, .scss, .ts }
+│       ├── 📂 classes
+│       │   ├── 📂 class-detail        { .html, .scss, .ts }
+│       │   └── 📂 class-list          { .html, .scss, .ts }
+│       ├── 📂 equipments
+│       │   ├── 📂 equipment-detail    { .html, .scss, .ts }
+│       │   └── 📂 equipments-list     { .html, .scss, .ts }
+│       ├── 📂 languages
+│       │   ├── 📂 language-detail     { .html, .scss, .ts }
+│       │   └── 📂 language-list       { .html, .scss, .ts }
+│       └── 📂 species
+│           ├── 📂 species-detail      { .html, .scss, .ts }
+│           └── 📂 species-list        { .html, .scss, .ts }
+│
+├── index.html
+├── main.ts
+└── styles.scss

@@ -1,20 +1,31 @@
-import { Component, OnInit, inject } from '@angular/core';
+import {
+  Component,
+  OnInit,
+  inject,
+  ChangeDetectionStrategy,
+  ChangeDetectorRef,
+} from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { DataService } from '../../../../core/services/data.service';
 import { CharacterCreationService } from '../../../../core/services/character-creation.service';
+// IMPORT DU COMPOSANT PARTAGÉ
+import { SelectionCardComponent } from '../../../../shared/components/selection-card/selection-card.component';
 import { CharacterClassSummary, CharacterClass } from '../../../../core/models/game-data.models';
 import { FeatureInfo } from '../../../../core/models/character.models';
 
 @Component({
   selector: 'app-class-step',
   standalone: true,
-  imports: [CommonModule], // Plus besoin de SelectionCardComponent
+  imports: [CommonModule, SelectionCardComponent], // Ajout ici
   templateUrl: './class-step.component.html',
   styleUrl: './class-step.component.scss',
+  // PERFORMANCE
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ClassStepComponent implements OnInit {
   private dataService = inject(DataService);
   creationService = inject(CharacterCreationService);
+  private cd = inject(ChangeDetectorRef);
 
   classes: CharacterClassSummary[] = [];
   selectedClassDetail: CharacterClass | null = null;
@@ -46,10 +57,13 @@ export class ClassStepComponent implements OnInit {
         if (currentClassId) {
           this.loadClassDetail(currentClassId);
         }
+
+        this.cd.markForCheck();
       },
       error: (err) => {
         console.error('Erreur chargement classes:', err);
         this.loading = false;
+        this.cd.markForCheck();
       },
     });
   }
@@ -58,11 +72,21 @@ export class ClassStepComponent implements OnInit {
     return this.classIcons[name] ?? '⚔️';
   }
 
-  getHitDieColor(hitDie: number): string {
-    if (hitDie >= 12) return 'very-high';
-    if (hitDie >= 10) return 'high';
-    if (hitDie >= 8) return 'medium';
-    return 'low';
+  // NOUVEAU : Prépare les tags pour la carte
+  getClassDetails(c: CharacterClassSummary): string[] {
+    const details = [];
+
+    // Tag Dés de vie
+    details.push(`PV: d${c.hitDie}`);
+
+    // Tag Type (Sorts ou Martial)
+    if (c.hasSpellcasting) {
+      details.push('✨ Lanceur de sorts');
+    } else {
+      details.push('⚔️ Martial');
+    }
+
+    return details;
   }
 
   selectClass(charClass: CharacterClassSummary): void {
@@ -94,8 +118,13 @@ export class ClassStepComponent implements OnInit {
           level1Features,
           detail.startingEquipment
         );
+
+        this.cd.markForCheck();
       },
-      error: (err) => console.error('Erreur chargement détail classe:', err),
+      error: (err) => {
+        console.error('Erreur chargement détail classe:', err);
+        this.cd.markForCheck();
+      },
     });
   }
 

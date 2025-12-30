@@ -1,52 +1,25 @@
-<div class="species-step">
-  <h2>Choisissez votre espèce</h2>
-  <p class="step-description">
-    Votre espèce détermine vos bonus aux caractéristiques, vos traits raciaux et vos langues de
-    départ.
-  </p>
+<div class="step-container">
+  <div class="step-header">
+    <h2>Choisissez votre espèce</h2>
+    <p class="step-description">
+      Votre espèce détermine vos bonus aux caractéristiques, vos traits raciaux et vos langues de
+      départ.
+    </p>
+  </div>
 
   @if (loading) {
   <div class="loading">Chargement des espèces...</div>
   } @else {
-
   <div class="species-grid">
     @for (s of speciesList; track s.id) {
-    <div
-      class="species-cardable"
-      [class.selected]="isSpeciesSelected(s.id)"
-      (click)="selectSpecies(s)"
+    <app-selection-card
+      [title]="s.name"
+      [icon]="getIcon(s.name)"
+      [details]="getSpeciesDetails(s)"
+      [selected]="isSpeciesSelected(s.id)"
+      (cardClick)="selectSpecies(s)"
     >
-      <div class="species-icon">{{ getIcon(s.name) }}</div>
-
-      <div class="species-info">
-        <div class="header-row">
-          <h2>{{ s.name }}</h2>
-          @if(isSpeciesSelected(s.id)) {
-          <span class="check-mark">✓</span>
-          }
-        </div>
-
-        <div class="species-stats">
-          <span class="stat">
-            <span class="label">Bonus:</span>
-            {{ formatAbilityBonuses(s.baseStats.abilityBonuses) }}
-          </span>
-          <span class="stat">
-            <span class="label">Taille:</span>
-            {{ getSizeLabel(s.baseStats.sizeCategory) }}
-          </span>
-          <span class="stat">
-            <span class="label">Vitesse:</span>
-            {{ s.baseStats.speedMeters }}m
-          </span>
-          @if (s.baseStats.hasDarkvision) {
-          <span class="stat darkvision">
-            👁️ Vision nocturne ({{ s.baseStats.darkvisionRadiusMeters }}m)
-          </span>
-          }
-        </div>
-      </div>
-    </div>
+    </app-selection-card>
     }
   </div>
 
@@ -59,32 +32,14 @@
 
     <div class="species-grid">
       @for (sub of selectedSpeciesDetail.subspecies; track sub.id) {
-      <div
-        class="species-cardable subspecies-card"
-        [class.selected]="isSubspeciesSelected(sub.id)"
-        (click)="selectSubspecies(sub)"
+      <app-selection-card
+        [title]="sub.name"
+        [icon]="getIcon(selectedSpeciesDetail.name)"
+        [details]="getSubspeciesDetails(sub)"
+        [selected]="isSubspeciesSelected(sub.id)"
+        (cardClick)="selectSubspecies(sub)"
       >
-        <div class="species-icon sub-icon">{{ getIcon(selectedSpeciesDetail.name) }}</div>
-
-        <div class="species-info">
-          <div class="header-row">
-            <h2>{{ sub.name }}</h2>
-            @if(isSubspeciesSelected(sub.id)) {
-            <span class="check-mark">✓</span>
-            }
-          </div>
-
-          <div class="species-stats">
-            <span class="stat">
-              <span class="label">Bonus Extra:</span>
-              {{ formatAbilityBonuses(sub.additionalStats.abilityBonuses) }}
-            </span>
-            <span class="stat traits">
-              {{ getSubspeciesTraitNames(sub) }}
-            </span>
-          </div>
-        </div>
-      </div>
+      </app-selection-card>
       }
     </div>
   </div>
@@ -106,7 +61,7 @@
         <div class="detail-group">
           <span class="detail-label">Total Bonus</span>
           <span class="detail-value bonus">{{
-            formatAbilityBonuses(creationService.character().racialBonuses)
+            formatAbilityBonusesString(creationService.character().racialBonuses)
           }}</span>
         </div>
         <div class="detail-group">

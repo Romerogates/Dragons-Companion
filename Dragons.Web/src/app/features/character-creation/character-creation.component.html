@@ -1,14 +1,11 @@
-<!-- features/character-creation/character-creation.component.html -->
 <div class="creation-container">
-  <!-- Header -->
   <header class="creation-header">
     <a routerLink="/" class="back-link">← Retour</a>
     <h1>🐉 Création de personnage</h1>
     <button class="reset-btn" (click)="onReset()">🔄 Recommencer</button>
   </header>
 
-  <!-- Stepper -->
-  <nav class="stepper">
+  <nav class="stepper" aria-label="Progression de la création">
     @for (step of steps; track step.number) {
     <div
       class="step"
@@ -18,6 +15,7 @@
       (click)="
         step.number <= creationService.currentStep() ? creationService.goToStep(step.number) : null
       "
+      [attr.aria-current]="creationService.currentStep() === step.number ? 'step' : null"
     >
       <div class="step-icon">
         @if (creationService.currentStep() > step.number) {
@@ -28,6 +26,7 @@
       </div>
       <span class="step-title">{{ step.title }}</span>
     </div>
+
     @if (step.number < steps.length) {
     <div
       class="step-connector"
@@ -36,30 +35,14 @@
     } }
   </nav>
 
-  <!-- Contenu de l'étape -->
   <main class="step-content">
-    @switch (creationService.currentStep()) { @case (1) {
-    <app-species-step />
-    } @case (2) {
-    <app-civilization-step />
-    } @case (3) {
-    <app-class-step />
-    } @case (4) {
-    <app-abilities-step />
-    } @case (5) {
-    <app-skills-step />
-    } @case (6) {
-    <app-equipment-step />
-    } @case (7) {
-    <app-languages-step />
-    } @case (8) {
-    <app-identity-step />
-    } @case (9) {
-    <app-summary-step />
-    } }
+    @switch (creationService.currentStep()) { @case (1) { <app-species-step /> } @case (2) {
+    <app-civilization-step /> } @case (3) { <app-class-step /> } @case (4) {
+    <app-abilities-step /> } @case (5) { <app-skills-step /> } @case (6) { <app-equipment-step /> }
+    @case (7) { <app-languages-step /> } @case (8) { <app-identity-step /> } @case (9) {
+    <app-summary-step /> } }
   </main>
 
-  <!-- Navigation -->
   <footer class="creation-footer">
     <button
       class="nav-btn prev"

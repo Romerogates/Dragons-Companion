@@ -1,492 +1,378 @@
-// features/home/home.component.scss
-
-// Variables
-$primary: #8b0000;
-$primary-light: #a52a2a;
-$gold: #f1c40f;
-$dark: #2c3e50;
-$parchment: #fdfaf6;
-$parchment-dark: #f5e6d3;
+// On n'importe plus de variables locales ici, on utilise celles de styles.scss !
 
 .home-container {
-  width: 100%;
-  overflow-x: hidden;
-  background: $parchment;
-}
-
-// ========================================
-// HERO SECTION
-// ========================================
-.hero {
-  position: relative;
-  min-height: 100vh;
   display: flex;
   flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  padding: 2rem;
-  text-align: center;
-  overflow: hidden;
+  min-height: 100vh;
+  // Utilisation des variables globales
+  background-color: var(--bg-page);
+  color: var(--text-main);
+  box-sizing: border-box;
 }
 
-.hero-background {
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background:
-    radial-gradient(ellipse at top, rgba(139, 0, 0, 0.1) 0%, transparent 50%),
-    radial-gradient(ellipse at bottom, rgba(241, 196, 15, 0.1) 0%, transparent 50%),
-    linear-gradient(180deg, $parchment 0%, $parchment-dark 100%);
-  z-index: 0;
-}
-
-.hero-content {
+/* --- HERO SECTION --- */
+.hero {
   position: relative;
-  z-index: 1;
-  max-width: 700px;
-}
+  height: 90vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  padding: 0 1.5rem;
+  overflow: hidden;
+  color: #ffffff; // Le texte du Hero reste blanc (sur image sombre) quel que soit le thème
 
-.hero-logo {
-  width: 150px;
-  height: auto;
-  margin-bottom: 1.5rem;
-  filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.2));
-  animation: float 3s ease-in-out infinite;
-}
+  .hero-background {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    // On garde l'image sombre pour le contraste
+    background: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.8)),
+                url('/assets/images/hero-bg.jpg') center/cover no-repeat;
+    z-index: 0;
+  }
 
-@keyframes float {
-  0%, 100% { transform: translateY(0); }
-  50% { transform: translateY(-10px); }
-}
+  .hero-content {
+    position: relative;
+    z-index: 1;
+    width: 100%;
+    max-width: 800px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
 
-.hero-title {
-  font-family: 'Cinzel', serif;
-  font-size: clamp(2.5rem, 6vw, 4rem);
-  color: $primary;
-  margin: 0 0 1rem 0;
-  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
-  letter-spacing: 2px;
-}
+  .hero-logo {
+    width: 120px;
+    height: auto;
+    margin-bottom: 1rem;
+    animation: fadeInDown 1s ease-out;
+    filter: drop-shadow(0 0 10px rgba(255,255,255,0.2));
+  }
 
-.hero-subtitle {
-  font-size: clamp(1rem, 2.5vw, 1.3rem);
-  color: $dark;
-  margin: 0 0 2.5rem 0;
-  line-height: 1.6;
+  .hero-title {
+    font-size: clamp(2rem, 5vw, 4rem);
+    margin-bottom: 1rem;
+    color: #ffffff; // Blanc sur l'image
+    text-shadow: 0 2px 4px rgba(0,0,0,0.5);
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    line-height: 1.1;
+  }
 
-  strong {
-    color: $primary;
+  .hero-subtitle {
+    font-size: clamp(1rem, 3vw, 1.25rem);
+    line-height: 1.6;
+    margin-bottom: 2.5rem;
+    color: rgba(255, 255, 255, 0.9);
+    max-width: 600px;
+    text-shadow: 0 1px 2px rgba(0,0,0,0.5);
   }
 }
 
+/* --- ACTIONS & BOUTONS --- */
 .hero-actions {
   display: flex;
-  gap: 1rem;
   justify-content: center;
+  align-items: center;
+  gap: 1.5rem;
   flex-wrap: wrap;
+  width: 100%;
+
+  // CORRECTION MOBILE
+  @media (max-width: 768px) {
+    flex-direction: column;
+    gap: 1rem;
+
+    .btn {
+      width: 100%;
+      max-width: 280px;
+    }
+  }
 }
 
-// Buttons
 .btn {
   display: inline-flex;
   align-items: center;
-  gap: 0.5rem;
-  padding: 1rem 2rem;
-  border-radius: 8px;
-  font-size: 1.1rem;
-  font-weight: 600;
+  justify-content: center;
+  padding: 0.8rem 1.5rem;
+  border-radius: 4px;
   text-decoration: none;
+  font-weight: bold;
   transition: all 0.3s ease;
-  border: 2px solid transparent;
   cursor: pointer;
+  border: 1px solid transparent;
+  white-space: nowrap;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.2);
 
   .btn-icon {
-    font-size: 1.3rem;
+    margin-right: 0.5rem;
+    font-size: 1.2em;
+    display: flex;
+    align-items: center;
+  }
+
+  &.btn-primary {
+    background-color: var(--primary-color);
+    color: #ffffff; // Blanc par défaut sur l'or
+    text-shadow: 0 1px 2px rgba(0,0,0,0.2);
+
+    // Exception : En dark mode, on met le texte en noir pour la lisibilité sur l'or
+    body.dark-mode & {
+      color: #000000;
+      text-shadow: none;
+    }
+
+    &:hover {
+      filter: brightness(1.1); // Éclaircit légèrement au survol
+      transform: translateY(-2px);
+    }
+  }
+
+  &.btn-secondary {
+    background-color: rgba(255, 255, 255, 0.15); // Transparence
+    backdrop-filter: blur(5px);
+    color: #ffffff;
+    border: 1px solid rgba(255, 255, 255, 0.4);
+
+    &:hover {
+      background-color: rgba(255, 255, 255, 0.25);
+    }
   }
 }
 
-.btn-primary {
-  background: linear-gradient(135deg, $primary 0%, $primary-light 100%);
+.badge {
+  background: var(--color-danger, #c0392b);
   color: white;
-  box-shadow: 0 4px 15px rgba(139, 0, 0, 0.3);
-
-  &:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 6px 20px rgba(139, 0, 0, 0.4);
-  }
+  border-radius: 50%;
+  padding: 0.2em 0.5em;
+  font-size: 0.8em;
+  margin-left: 0.5rem;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 20px;
 }
 
-.btn-secondary {
-  background: white;
-  color: $dark;
-  border-color: $dark;
-  position: relative;
-
-  &:hover {
-    background: $dark;
-    color: white;
-    transform: translateY(-2px);
-  }
-
-  .badge {
-    position: absolute;
-    top: -8px;
-    right: -8px;
-    background: $gold;
-    color: $dark;
-    font-size: 0.75rem;
-    font-weight: 700;
-    padding: 0.2rem 0.5rem;
-    border-radius: 10px;
-    min-width: 20px;
-  }
-}
-
-.btn-large {
-  padding: 1.2rem 2.5rem;
-  font-size: 1.2rem;
-}
-
+/* --- SCROLL INDICATOR --- */
 .scroll-indicator {
   position: absolute;
   bottom: 2rem;
+  z-index: 1;
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 0.5rem;
-  color: $dark;
-  opacity: 0.6;
-  animation: bounce 2s ease-in-out infinite;
+  opacity: 0.8;
+  animation: bounce 2s infinite;
+  color: #ffffff;
 
   span {
-    font-size: 0.85rem;
+    font-size: 0.9rem;
     text-transform: uppercase;
     letter-spacing: 1px;
-  }
-
-  .scroll-arrow {
-    font-size: 1.5rem;
+    margin-bottom: 0.5rem;
   }
 }
 
-@keyframes bounce {
-  0%, 100% { transform: translateY(0); }
-  50% { transform: translateY(5px); }
-}
-
-// ========================================
-// STATS SECTION
-// ========================================
+/* --- STATS SECTION --- */
 .stats-section {
-  background: linear-gradient(135deg, $dark 0%, #34495e 100%);
-  padding: 2rem;
+  background-color: var(--bg-cards); // S'adapte au thème
+  padding: 3rem 1rem;
+  border-bottom: 1px solid var(--border-color);
 }
 
 .stats-grid {
   display: flex;
   justify-content: center;
-  gap: 3rem;
+  gap: 2rem 4rem;
   flex-wrap: wrap;
-  max-width: 800px;
-  margin: 0 auto;
+
+  .stat-item {
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    min-width: 100px;
+
+    .stat-value {
+      font-size: 2.5rem;
+      font-weight: bold;
+      color: var(--primary-color);
+    }
+
+    .stat-label {
+      text-transform: uppercase;
+      font-size: 0.85rem;
+      color: var(--text-muted);
+    }
+  }
 }
 
-.stat-item {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 0.3rem;
-}
-
-.stat-value {
-  font-family: 'Cinzel', serif;
-  font-size: 2.5rem;
-  font-weight: 700;
-  color: $gold;
-}
-
-.stat-label {
-  font-size: 0.9rem;
-  color: rgba(255, 255, 255, 0.8);
-  text-transform: uppercase;
-  letter-spacing: 1px;
-}
-
-// ========================================
-// FEATURES SECTION
-// ========================================
+/* --- FEATURES SECTION --- */
 .features-section {
-  padding: 4rem 2rem;
-  max-width: 1200px;
-  margin: 0 auto;
-}
-
-.section-title {
-  font-family: 'Cinzel', serif;
-  font-size: clamp(1.5rem, 4vw, 2rem);
-  color: $dark;
+  padding: 5rem 1rem;
   text-align: center;
-  margin-bottom: 2.5rem;
+  background-color: var(--bg-page); // Fond de page standard
+
+  .section-title {
+    font-size: 2.5rem;
+    margin-bottom: 3rem;
+    color: var(--primary-color);
+  }
 }
 
 .features-grid {
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: 1.5rem;
-  justify-items: center;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 2rem;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 1rem;
 }
 
 .feature-card {
-  background: white;
-  padding: 1.5rem;
-  border-radius: 12px;
-  text-align: center;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
-  transition: transform 0.3s, box-shadow 0.3s;
-  max-width: 260px;
-  width: 100%;
+  background: var(--bg-cards); // Carte qui ressort
+  padding: 2rem;
+  border-radius: 8px;
+  transition: transform 0.3s;
+  border: 1px solid var(--border-color);
+  box-shadow: var(--shadow-sm);
 
   &:hover {
     transform: translateY(-5px);
-    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.12);
+    border-color: var(--primary-color);
+    box-shadow: var(--shadow-md);
+  }
+
+  .feature-icon {
+    font-size: 3rem;
+    margin-bottom: 1rem;
+  }
+
+  .feature-title {
+    font-size: 1.5rem;
+    margin-bottom: 1rem;
+    color: var(--text-main);
+  }
+
+  .feature-description {
+    color: var(--text-muted);
+    line-height: 1.6;
   }
 }
 
-.feature-icon {
-  font-size: 3rem;
-  margin-bottom: 1rem;
-}
-
-.feature-title {
-  font-size: 1.1rem;
-  font-weight: 700;
-  color: $dark;
-  margin: 0 0 0.5rem 0;
-}
-
-.feature-description {
-  font-size: 0.9rem;
-  color: #666;
-  margin: 0;
-  line-height: 1.5;
-}
-
-// ========================================
-// QUICK ACCESS SECTION
-// ========================================
+/* --- QUICK ACCESS --- */
 .quick-access-section {
-  padding: 3rem 2rem;
-  background: $parchment-dark;
+  padding: 4rem 1rem;
+  background: var(--section-alt-bg); // Fond alternatif pour casser la monotonie
+  text-align: center;
+  border-top: 1px solid var(--border-color);
+  border-bottom: 1px solid var(--border-color);
+
+  .section-title {
+    font-size: 2rem;
+    margin-bottom: 2rem;
+    color: var(--primary-color);
+  }
 }
 
 .quick-links {
   display: flex;
   justify-content: center;
-  gap: 1rem;
+  gap: 1.5rem;
   flex-wrap: wrap;
-  max-width: 800px;
-  margin: 0 auto;
 }
 
 .quick-link {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 0.5rem;
-  padding: 1.2rem 1.5rem;
-  background: white;
-  border-radius: 10px;
+  justify-content: center;
+  width: 120px;
+  height: 120px;
+  background: var(--bg-cards);
+  border-radius: 12px;
   text-decoration: none;
-  color: $dark;
-  transition: all 0.3s;
-  min-width: 120px;
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
+  color: var(--text-main);
+  border: 1px solid var(--border-color);
+  transition: all 0.2s;
+  box-shadow: var(--shadow-sm);
 
   &:hover {
+    background: var(--bg-cards); // Garde le fond, change la bordure
+    border-color: var(--primary-color);
+    color: var(--primary-color);
     transform: translateY(-3px);
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
-    background: $gold;
-  }
-}
-
-.quick-icon {
-  font-size: 2rem;
-}
-
-.quick-label {
-  font-size: 0.9rem;
-  font-weight: 600;
-}
-
-// ========================================
-// CTA SECTION
-// ========================================
-.cta-section {
-  padding: 4rem 2rem;
-  background: linear-gradient(135deg, $primary 0%, $primary-light 100%);
-  text-align: center;
-}
-
-.cta-content {
-  max-width: 600px;
-  margin: 0 auto;
-
-  h2 {
-    font-family: 'Cinzel', serif;
-    font-size: clamp(1.5rem, 4vw, 2rem);
-    color: white;
-    margin: 0 0 0.5rem 0;
-  }
-
-  p {
-    font-size: 1.1rem;
-    color: rgba(255, 255, 255, 0.9);
-    margin: 0 0 2rem 0;
-  }
-
-  .btn-primary {
-    background: $gold;
-    color: $dark;
-
-    &:hover {
-      background: white;
-    }
-  }
-}
-
-// ========================================
-// FOOTER
-// ========================================
-.home-footer {
-  padding: 2rem;
-  text-align: center;
-  background: $dark;
-  color: rgba(255, 255, 255, 0.7);
-
-  p {
-    margin: 0.3rem 0;
-    font-size: 0.9rem;
-  }
-
-  a {
-    color: $gold;
-    text-decoration: none;
-
-    &:hover {
-      text-decoration: underline;
-    }
-  }
-
-  .footer-note {
-    font-size: 0.8rem;
-    opacity: 0.6;
-  }
-}
-
-// ========================================
-// RESPONSIVE - TABLETTE
-// ========================================
-@media screen and (max-width: 1024px) {
-  .features-grid {
-    grid-template-columns: repeat(2, 1fr);
-    max-width: 600px;
-    margin: 0 auto;
-  }
-}
-
-// ========================================
-// RESPONSIVE - MOBILE
-// ========================================
-@media screen and (max-width: 768px) {
-  .hero {
-    min-height: 90vh;
-    padding: 1.5rem;
-  }
-
-  .hero-logo {
-    width: 120px;
-  }
-
-  .hero-actions {
-    flex-direction: column;
-    width: 100%;
-    max-width: 300px;
-  }
-
-  .btn {
-    width: 100%;
-    justify-content: center;
-  }
-
-  .stats-grid {
-    gap: 2rem;
-  }
-
-  .stat-value {
-    font-size: 2rem;
-  }
-
-  .features-section {
-    padding: 3rem 1rem;
-  }
-
-  .features-grid {
-    grid-template-columns: 1fr;
-    max-width: 350px;
-  }
-
-  .quick-links {
-    gap: 0.8rem;
-  }
-
-  .quick-link {
-    min-width: 100px;
-    padding: 1rem;
+    box-shadow: var(--shadow-md);
   }
 
   .quick-icon {
-    font-size: 1.5rem;
-  }
-
-  .quick-label {
-    font-size: 0.8rem;
+    font-size: 2rem;
+    margin-bottom: 0.5rem;
   }
 }
 
-// ========================================
-// RESPONSIVE - PETIT MOBILE
-// ========================================
-@media screen and (max-width: 480px) {
-  .hero-logo {
-    width: 100px;
+/* --- CTA SECTION --- */
+.cta-section {
+  padding: 6rem 1rem;
+  text-align: center;
+  // Fond sombre fixe pour le CTA pour le style dramatique
+  background: linear-gradient(to top, #1a1a1d, #2c3e50);
+  color: #ffffff;
+
+  .cta-content {
+    max-width: 600px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    h2 {
+      font-size: clamp(1.8rem, 4vw, 2.5rem);
+      margin-bottom: 1rem;
+      color: #ffffff;
+    }
+
+    p {
+      font-size: 1.2rem;
+      margin-bottom: 2rem;
+      color: rgba(255, 255, 255, 0.8);
+    }
   }
 
-  .scroll-indicator {
-    display: none;
+  .btn-large {
+    padding: 1rem 2.5rem;
+    font-size: 1.2rem;
   }
+}
 
-  .stats-grid {
-    gap: 1.5rem;
-  }
+/* --- FOOTER --- */
+.home-footer {
+  padding: 2rem;
+  text-align: center;
+  background-color: var(--bg-cards);
+  border-top: 1px solid var(--border-color);
+  font-size: 0.9rem;
+  color: var(--text-muted);
 
-  .stat-value {
-    font-size: 1.8rem;
+  a {
+    color: var(--primary-color);
+    text-decoration: none;
+    font-weight: bold;
+    &:hover { text-decoration: underline; }
   }
+}
 
-  .stat-label {
-    font-size: 0.8rem;
-  }
+/* Animations */
+@keyframes fadeInDown {
+  from { opacity: 0; transform: translateY(-20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
 
-  .quick-links {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    max-width: 320px;
-  }
-
-  .quick-link {
-    min-width: auto;
-    padding: 0.8rem;
-  }
+@keyframes bounce {
+  0%, 20%, 50%, 80%, 100% { transform: translateY(0); }
+  40% { transform: translateY(-10px); }
+  60% { transform: translateY(-5px); }
 }

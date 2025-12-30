@@ -1,18 +1,34 @@
-// features/character-creation/steps/summary-step/summary-step.component.scss
-.summary-step {
+.step-container {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  animation: fadeIn 0.4s ease-out;
+}
+
+// --- HEADER ---
+.step-header {
+  text-align: center;
+  max-width: 800px;
+  margin: 0 auto;
+
   h2 {
-    margin: 0 0 0.5rem 0;
-    color: #2c3e50;
+    font-size: 2rem;
+    color: var(--primary-color);
+    margin-bottom: 0.5rem;
+    font-family: 'Cinzel', serif;
   }
 
   .step-description {
-    margin: 0 0 1.5rem 0;
-    color: #7f8c8d;
+    color: var(--text-main);
+    font-size: 1.1rem;
+    opacity: 0.8;
   }
 }
 
+// --- GRILLE PRINCIPALE ---
 .summary-grid {
   display: grid;
+  // Layout complexe : Identité en haut, puis 2 colonnes
   grid-template-columns: repeat(2, 1fr);
   gap: 1.5rem;
 
@@ -21,184 +37,240 @@
   }
 }
 
+// CARTE GÉNÉRIQUE
 .summary-card {
-  background: white;
+  background-color: var(--bg-cards);
+  border: 1px solid var(--border-color);
   border-radius: 12px;
   padding: 1.5rem;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  box-shadow: var(--shadow-sm);
 
-  h3 {
-    margin: 0 0 1rem 0;
-    color: #2c3e50;
-    font-size: 1.2rem;
+  .card-header {
+    border-bottom: 1px solid var(--border-color);
+    margin-bottom: 1rem;
+    padding-bottom: 0.5rem;
+
+    h3 {
+      margin: 0;
+      color: var(--primary-color);
+      font-family: 'Cinzel', serif;
+      font-size: 1.2rem;
+    }
   }
 }
 
-.identity {
-  grid-column: span 2;
+// 1. IDENTITÉ (Prend toute la largeur)
+.identity-card {
+  grid-column: 1 / -1;
 
-  @media (max-width: 768px) {
-    grid-column: span 1;
+  .identity-content {
+    display: flex;
+    gap: 1.5rem;
+    align-items: center;
+
+    @media (max-width: 600px) {
+      flex-direction: column;
+      text-align: center;
+    }
   }
 
-  .identity-header {
-    margin-bottom: 1rem;
+  .char-avatar-placeholder {
+    width: 80px;
+    height: 80px;
+    background-color: var(--primary-color);
+    color: white;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 2.5rem;
+    font-weight: 700;
+    font-family: 'Cinzel', serif;
+    box-shadow: var(--shadow-md);
+  }
+
+  .char-info {
+    flex: 1;
 
     .character-name {
+      margin: 0 0 0.5rem 0;
       font-size: 2rem;
-      font-weight: 700;
-      color: #8e44ad;
+      color: var(--text-main);
+      font-family: 'Cinzel', serif;
     }
-  }
 
-  .identity-details {
-    p {
-      margin: 0.5rem 0;
-      color: #555;
+    .char-meta {
+      display: flex;
+      gap: 0.5rem;
+      flex-wrap: wrap;
+      margin-bottom: 0.8rem;
 
-      strong {
-        color: #2c3e50;
+      @media (max-width: 600px) { justify-content: center; }
+
+      .meta-tag {
+        background-color: var(--section-alt-bg);
+        padding: 0.3rem 0.6rem;
+        border-radius: 4px;
+        font-size: 0.85rem;
+        color: var(--text-muted);
+        border: 1px solid var(--border-color);
+
+        &.class-tag {
+          color: var(--primary-color);
+          border-color: var(--primary-color);
+          font-weight: 600;
+        }
+
+        &.align-tag { font-style: italic; }
       }
+    }
+
+    .char-background {
+      font-size: 0.95rem;
+      color: var(--text-main);
+      strong { color: var(--text-muted); }
     }
   }
 }
 
+// 2. CARACTÉRISTIQUES
 .abilities-grid {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  gap: 0.75rem;
+  gap: 0.8rem;
 }
 
-.ability-item {
+.ability-box {
+  background-color: var(--section-alt-bg);
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  padding: 0.8rem;
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding: 0.75rem;
-  background: #f8f9fa;
-  border-radius: 8px;
 
   .ability-label {
-    font-size: 0.8rem;
-    color: #7f8c8d;
-    font-weight: 600;
+    font-size: 0.75rem;
+    font-weight: 700;
+    color: var(--text-muted);
   }
 
   .ability-value {
-    font-size: 1.5rem;
+    font-size: 1.4rem;
     font-weight: 700;
-    color: #2c3e50;
+    color: var(--text-main);
+    line-height: 1.2;
   }
 
   .ability-mod {
-    font-size: 1rem;
+    font-size: 0.9rem;
     font-weight: 600;
-    color: #3498db;
+    color: var(--primary-color);
   }
 }
 
+// 3. COMBAT
 .combat-stats {
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: 0.75rem;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 0.8rem;
 }
 
 .stat-box {
+  background: linear-gradient(135deg, var(--primary-color), #c0392b); // Par défaut rouge pour HP
+  border-radius: 8px;
+  padding: 1rem;
+  color: white;
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding: 1rem;
-  background: linear-gradient(135deg, #e74c3c, #c0392b);
-  border-radius: 8px;
-  color: white;
+  justify-content: center;
 
-  .stat-value {
-    font-size: 1.5rem;
-    font-weight: 700;
-  }
+  .stat-value { font-size: 1.5rem; font-weight: 700; line-height: 1; }
+  .stat-label { font-size: 0.75rem; opacity: 0.9; text-transform: uppercase; }
 
-  .stat-label {
-    font-size: 0.8rem;
-    opacity: 0.9;
-  }
+  &.ac { background: linear-gradient(135deg, #2980b9, #3498db); } // Bleu
+  &.init { background: linear-gradient(135deg, #f39c12, #f1c40f); color: #fff; text-shadow: 0 1px 2px rgba(0,0,0,0.2); } // Jaune
+  &.speed { background: linear-gradient(135deg, #27ae60, #2ecc71); } // Vert
 }
 
-.proficiencies {
-  grid-column: span 2;
-
-  @media (max-width: 768px) {
-    grid-column: span 1;
-  }
+// 4. MAÎTRISES
+.proficiencies-card {
+  grid-row: span 2; // Prend plus de hauteur si possible
 }
 
-.proficiency-group {
-  margin-bottom: 1rem;
+.prof-group {
+  margin-bottom: 1.2rem;
 
-  &:last-child {
-    margin-bottom: 0;
-  }
-
-  .prof-label {
+  .group-label {
     display: block;
-    font-size: 0.85rem;
-    color: #7f8c8d;
-    margin-bottom: 0.5rem;
+    font-size: 0.8rem;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    margin-bottom: 0.4rem;
+    font-weight: 600;
   }
 }
 
-.tags {
+.tags-list {
   display: flex;
   flex-wrap: wrap;
   gap: 0.4rem;
 
   .tag {
-    padding: 0.3rem 0.6rem;
-    border-radius: 6px;
     font-size: 0.85rem;
+    padding: 0.2rem 0.5rem;
+    border-radius: 4px;
+    border: 1px solid transparent;
 
-    &.save {
-      background: #e8f5e9;
-      color: #2e7d32;
-    }
-
-    &.skill {
-      background: #fff3e0;
-      color: #ef6c00;
-    }
-
-    &.lang {
-      background: #e3f2fd;
-      color: #1565c0;
-    }
+    &.save { background-color: rgba(39, 174, 96, 0.1); color: #27ae60; border-color: #27ae60; }
+    &.skill { background-color: rgba(243, 156, 18, 0.1); color: #d35400; border-color: #f39c12; }
+    &.lang { background-color: rgba(41, 128, 185, 0.1); color: #2980b9; border-color: #2980b9; }
   }
 }
 
-.traits {
-  grid-column: span 2;
-
-  @media (max-width: 768px) {
-    grid-column: span 1;
-  }
-}
-
-.traits-list {
+// 5. EXTRAS (Équipement)
+.extras-content {
   display: flex;
   flex-direction: column;
-  gap: 0.75rem;
+  gap: 1.5rem;
+
+  .sub-section {
+    h4 {
+      font-size: 0.95rem;
+      color: var(--text-main);
+      margin: 0 0 0.5rem 0;
+      border-bottom: 1px dashed var(--border-color);
+      padding-bottom: 0.2rem;
+    }
+  }
 }
 
-.trait-item {
-  padding: 0.75rem;
-  background: #f8f9fa;
-  border-radius: 8px;
-  border-left: 4px solid #9b59b6;
+.simple-list {
+  margin: 0;
+  padding-left: 1.2rem;
+  font-size: 0.9rem;
+  color: var(--text-main);
+  li { margin-bottom: 0.2rem; }
+}
 
-  strong {
-    color: #2c3e50;
-  }
+.traits-mini-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
 
-  p {
-    margin: 0.25rem 0 0 0;
-    color: #555;
-    font-size: 0.9rem;
+  .trait-pill {
+    font-size: 0.8rem;
+    background-color: var(--section-alt-bg);
+    border: 1px solid var(--border-color);
+    padding: 0.2rem 0.5rem;
+    border-radius: 12px;
+    color: var(--text-muted);
+    cursor: help;
   }
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
 }

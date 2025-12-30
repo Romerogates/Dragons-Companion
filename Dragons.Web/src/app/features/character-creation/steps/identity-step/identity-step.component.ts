@@ -1,5 +1,4 @@
-// features/character-creation/steps/identity-step/identity-step.component.ts
-import { Component, inject } from '@angular/core';
+import { Component, inject, ChangeDetectionStrategy } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { CharacterCreationService } from '../../../../core/services/character-creation.service';
@@ -11,6 +10,8 @@ import { ALIGNMENTS } from '../../../../core/models/character.models';
   imports: [CommonModule, FormsModule],
   templateUrl: './identity-step.component.html',
   styleUrl: './identity-step.component.scss',
+  // PERFORMANCE
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class IdentityStepComponent {
   creationService = inject(CharacterCreationService);

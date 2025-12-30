@@ -1,5 +1,4 @@
-// features/character-creation/steps/summary-step/summary-step.component.ts
-import { Component, inject } from '@angular/core';
+import { Component, inject, ChangeDetectionStrategy } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { CharacterCreationService } from '../../../../core/services/character-creation.service';
 import { ABILITY_NAMES } from '../../../../core/models/character.models';
@@ -10,6 +9,8 @@ import { ABILITY_NAMES } from '../../../../core/models/character.models';
   imports: [CommonModule],
   templateUrl: './summary-step.component.html',
   styleUrl: './summary-step.component.scss',
+  // PERFORMANCE
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class SummaryStepComponent {
   creationService = inject(CharacterCreationService);

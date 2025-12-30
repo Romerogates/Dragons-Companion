@@ -1,0 +1,23 @@
+src
+├── 📂 app
+│   ├── 📂 core
+│   │   ├── 📂 guards ✨
+│   │   │   └── form-completed.guard.ts
+│   │   ├── 📂 interceptors ✨
+│   │   │   └── error.interceptor.ts
+│   │   ├── 📂 models
+│   │   └── 📂 services
+│   │
+│   ├── 📂 shared
+│   │   ├── 📂 components
+│   │   │   ├── 📂 toast ✨         # Pour les notifications (Succès/Erreur)
+│   │   │   ├── 📂 loader ✨        # Pour les temps de chargement
+│   │   │   ├── 📂 navbar
+│   │   │   └── 📂 selection-card
+│   │   ├── 📂 pipes ✨
+│   │   │   └── modifier.pipe.ts   # Transforme 18 en "+4"
+│   │   └── 📂 directives ✨
+│   │       └── tooltip.directive.ts # Pour expliquer les stats au survol
+│   │
+│   └── 📂 features
+│       # ... (Le reste est parfait)
