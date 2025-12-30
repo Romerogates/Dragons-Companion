@@ -112,6 +112,7 @@ export interface CharacterCreation {
   bonds: string;
   flaws: string;
   handicap: string;
+  story: string;
 }
 
 // === PERSONNAGE FINAL CALCULÉ ===
@@ -180,6 +181,7 @@ export interface Character {
   bonds: string;
   flaws: string;
   handicap: string;
+  story: string;
 }
 
 // === CONSTANTES ===

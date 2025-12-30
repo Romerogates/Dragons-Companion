@@ -788,6 +788,18 @@ $dark: #2c1810;
   @include font-sm;
 }
 
+// --- ÉPOPÉE ---
+.f3-story {
+  top: 50.90%;             // Ajuster ici pour positionner verticalement
+  left: 12.50%;
+  width: 42.5%;           // Prend presque toute la largeur
+  height: 60%;          // Zone plus grande pour le texte long
+  @include font-sm;
+  white-space: pre-line; // Garde les retours à la ligne
+  overflow: hidden;
+  line-height: 3.25;
+}
+
 // =============================================
 // === PAGE 4 - POSSESSIONS ===
 // =============================================

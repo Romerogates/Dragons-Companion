@@ -122,5 +122,40 @@
         </div>
       </div>
     </div>
+
+    <div class="form-section">
+      <h3 class="section-title">📜 Épopée</h3>
+
+      <div class="form-group full-width">
+        <label for="story">Le récit de votre personnage</label>
+        <textarea
+          id="story"
+          [ngModel]="creationService.character().story"
+          (ngModelChange)="updateIdentity('story', $event)"
+          placeholder="D'où vient votre personnage ? Qu'a-t-il vécu avant de devenir aventurier ? Quels événements l'ont marqué ?"
+          rows="8"
+        ></textarea>
+      </div>
+
+      <div class="ai-generation">
+        <button
+          type="button"
+          class="generate-btn"
+          (click)="generateStory()"
+          [disabled]="isGenerating()"
+        >
+          @if (isGenerating()) {
+          <span class="spinner"></span>
+          Génération en cours... } @else { ✨ Générer avec l'IA }
+        </button>
+        <p class="ai-hint">
+          L'IA utilisera le nom, l'espèce, la civilisation, la classe et la personnalité pour créer
+          une épopée unique.
+        </p>
+        @if (generationError()) {
+        <p class="error-message">{{ generationError() }}</p>
+        }
+      </div>
+    </div>
   </div>
 </div>

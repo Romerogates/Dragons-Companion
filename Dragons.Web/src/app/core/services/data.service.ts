@@ -64,4 +64,22 @@ export class DataService {
   getEquipmentById(id: string): Observable<Equipment> {
     return this.http.get<Equipment>(`${this.apiUrl}/equipment/${id}`);
   }
+
+  generateBackstory(request: {
+    name: string;
+    speciesName: string;
+    subspeciesName?: string | null;
+    civilizationName: string;
+    className: string;
+    alignment?: string | null;
+    traits?: string | null;
+    bonds?: string | null;
+    flaws?: string | null;
+    background?: string | null; // <-- AJOUTÉ
+  }): Observable<{ story: string }> {
+    return this.http.post<{ story: string }>(
+      `${this.apiUrl}/characters/generate-backstory`,
+      request
+    );
+  }
 }

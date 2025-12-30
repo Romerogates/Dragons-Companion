@@ -92,6 +92,7 @@ export class CharacterCreationService {
     bonds: '',
     flaws: '',
     handicap: '',
+    story: '', // <-- AJOUTÉ
   };
 
   // === SIGNAUX RÉACTIFS ===
@@ -343,6 +344,7 @@ export class CharacterCreationService {
       bonds: savedChar.bonds || '',
       flaws: savedChar.flaws || '',
       handicap: savedChar.handicap || '',
+      story: savedChar.story || '', // <-- AJOUTÉ
     });
 
     // Aller à l'étape 9 (résumé)
@@ -645,6 +647,7 @@ export class CharacterCreationService {
     bonds?: string;
     flaws?: string;
     handicap?: string;
+    story?: string; // <-- AJOUTÉ
   }): void {
     this.character.update((c) => ({
       ...c,
@@ -756,6 +759,7 @@ export class CharacterCreationService {
       bonds: c.bonds,
       flaws: c.flaws,
       handicap: c.handicap,
+      story: c.story, // <-- AJOUTÉ
     };
   }
 }

@@ -22,7 +22,8 @@
             <span class="meta-tag">{{ character.civilizationName }}</span>
             <span class="meta-tag class-tag">{{ character.className }}</span>
             @if (character.alignment) {
-            <span class="meta-tag align-tag">{{ character.alignment }}</span> }
+            <span class="meta-tag align-tag">{{ character.alignment }}</span>
+            }
           </div>
 
           @if (character.background) {
@@ -33,6 +34,17 @@
         </div>
       </div>
     </section>
+
+    @if (character.story) {
+    <section class="summary-card story-card">
+      <div class="card-header">
+        <h3>📜 Épopée</h3>
+      </div>
+      <div class="story-content">
+        <p>{{ character.story }}</p>
+      </div>
+    </section>
+    }
 
     <section class="summary-card abilities-card">
       <div class="card-header">

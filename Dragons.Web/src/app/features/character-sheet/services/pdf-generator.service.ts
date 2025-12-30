@@ -187,6 +187,24 @@ export class PdfGeneratorService {
     pdf.text(String(text), pxToMmX(xPx), pxToMmY(yPx));
   }
 
+  // Helper pour écrire du texte multiligne avec retour à la ligne automatique
+  private textWrapped(
+    pdf: jsPDF,
+    text: string,
+    xPx: number,
+    yPx: number,
+    maxWidthMm: number,
+    lineHeightMm: number = 4
+  ): void {
+    if (!text) return;
+    const lines = pdf.splitTextToSize(text, maxWidthMm);
+    let currentY = pxToMmY(yPx);
+    lines.forEach((line: string) => {
+      pdf.text(line, pxToMmX(xPx), currentY);
+      currentY += lineHeightMm;
+    });
+  }
+
   private drawPage1(pdf: jsPDF, c: Character, hitDie: number): void {
     const dark = '#2c1810';
     pdf.setTextColor(dark);
@@ -431,6 +449,21 @@ export class PdfGeneratorService {
 
     // Handicap
     if (c.handicap) this.text(pdf, c.handicap, 402, 457);
+
+    // === ÉPOPÉE (Story) ===
+    // Texte multiligne avec retour à la ligne automatique
+    // Position : en dessous de description/background, prend ~90% de la largeur
+    if (c.story) {
+      pdf.setFontSize(8);
+      // Nettoyer le texte : supprimer les paragraphes vides
+      const cleanedStory = c.story
+        .replace(/\n\s*\n/g, ' ') // Supprime les doubles sauts de ligne
+        .replace(/\n/g, ' ') // Remplace les sauts de ligne simples par des espaces
+        .replace(/\s+/g, ' ') // Supprime les espaces multiples
+        .trim();
+
+      this.textWrapped(pdf, cleanedStory, 72, 441, 97, 8.4);
+    }
   }
 
   private drawPage4(pdf: jsPDF, c: Character): void {
